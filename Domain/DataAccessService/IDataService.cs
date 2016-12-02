@@ -14,8 +14,9 @@ namespace DataAccessService
     {
         [OperationContract]
         User GetUserByID(int value);
+        
 
-       
+
 
         // TODO: Add your service operations here
     }

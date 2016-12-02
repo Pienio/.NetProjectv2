@@ -10,9 +10,9 @@ namespace DatabaseAccess.Model
     [DataContract]
     public enum DocOrPat
     {
-        [DataMember]
+        [EnumMember]
         Doctor = 0,
-        [DataMember]
+        [EnumMember]
         Patient = 1,
     }
 }
