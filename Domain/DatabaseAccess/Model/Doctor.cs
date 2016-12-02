@@ -48,6 +48,7 @@ namespace DatabaseAccess.Model
             {
                 IApplicationData db = new ApplicationDataFactory().CreateApplicationData();
                 DateTime current = NextSlot(DateTime.Now.AddMinutes(60));
+                //zmiana
                 var visits = (from v in Visits
                               where v.Date >= current
                               select v.Date).ToList();

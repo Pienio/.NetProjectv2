@@ -14,7 +14,9 @@ namespace DataAccessService
     {
         [OperationContract]
         User GetUserByID(int value);
-        
+
+        [OperationContract]
+        IEnumerable<Doctor> GetDoctors();
 
 
 

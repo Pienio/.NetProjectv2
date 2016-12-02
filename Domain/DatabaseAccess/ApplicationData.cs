@@ -26,8 +26,11 @@ namespace DatabaseAccess.Model
         
         public ApplicationData(bool runTransaction) : base()
         {
-           
+            //Database.SetInitializer(new DropCreateDatabaseIfModelChanges<ApplicationData>());
+          
             Configuration.ProxyCreationEnabled = false;
+          //  var objectContext = ((IObjectContextAdapter)this).ObjectContext;
+          //  objectContext.ContextOptions.LazyLoadingEnabled = false;
             var x = System.Data.Entity.SqlServer.SqlProviderServices.Instance;
             if (runTransaction)
             {
@@ -37,13 +40,12 @@ namespace DatabaseAccess.Model
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            
-            modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Visit>().HasRequired(t=>t.Patient).WithRequiredPrincipal().WillCascadeOnDelete(false);//.WithRequired().WillCascadeOnDelete(false);
+            modelBuilder.Entity<Doctor>().HasMany(p=>p.Visits).WithRequired().WillCascadeOnDelete(false);
+            modelBuilder.Entity<Patient>().HasMany(p => p.Visits).WithRequired().WillCascadeOnDelete(false);
         }
-        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
-        //}
+        
         public void Fill()
         {
             Specialization[] specs = {
