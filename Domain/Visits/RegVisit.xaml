@@ -1,0 +1,65 @@
+﻿<metro:MetroWindow x:Class="Visits.RegVisit"
+        x:Name="mainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Visits"
+        xmlns:viewmodel="clr-namespace:Visits.ViewModels"
+        xmlns:conv="clr-namespace:Visits.Converters"
+        xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        mc:Ignorable="d" Style="{StaticResource windowStyle}"
+        Title="Wybierz termin wizyty" Height="431" Width="597" Loaded="mainWindow_Loaded">
+    <metro:MetroWindow.Resources>
+        <conv:DoctorsNameConverter x:Key="doctorsName"/>
+        <conv:ReversedBoolVisibilityConverter x:Key="visibility"/>
+    </metro:MetroWindow.Resources>
+    <DockPanel>
+        <TextBlock Margin="10" Text="{Binding CurrentDoctor.User.Name, Converter={StaticResource doctorsName}}" FontSize="16" FontWeight="SemiBold" DockPanel.Dock="Top"/>
+        <TextBlock x:Name="weekTxt" Margin="10,5,10,10" Text="{Binding CurrentWeek.Title}" DockPanel.Dock="Top" FontSize="13"/>
+        <Grid DockPanel.Dock="Bottom" Height="42">
+            <Button x:Name="nextWeek" Content="Następny tydzień" HorizontalAlignment="Right" Margin="0,0,19,12" Width="120" Command="{Binding ChangeWeekCmd}" CommandParameter="7"/>
+            <Button x:Name="prevWeek" Content="Poprzedni tydzień" HorizontalAlignment="Left" Margin="11,0,0,10" Width="120" Command="{Binding ChangeWeekCmd}" CommandParameter="-7"/>
+        </Grid>
+        <Grid>
+            <ScrollViewer Margin="0,0,0,10">
+                <DataGrid x:Name="daysOfWeek" Margin="10,0,0,0" ItemsSource="{Binding CurrentWeek.Days}" AutoGenerateColumns="False" RowHeaderWidth="0" 
+                      GridLinesVisibility="Horizontal" IsEnabled="{Binding AnyVisits}">
+                    <DataGrid.Resources>
+                        <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                            <Setter Property="Cursor" Value="Hand"/>
+                        </Style>
+                    </DataGrid.Resources>
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="Dzień">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel HorizontalAlignment="Left" Margin="10">
+                                        <TextBlock Text="{Binding DayName}" FontWeight="Bold" FontSize="15"/>
+                                        <TextBlock Text="{Binding Date, StringFormat={}{0:dd.MM.yyyy}}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="Dostępne wizyty" Width="*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ListBox x:Name="hoursList" ItemStringFormat="{}{0:HH:mm}" ItemsSource="{Binding Slots}">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseDoubleClick">
+                                                <i:InvokeCommandAction Command="{Binding ElementName=mainWindow, Path=DataContext.RegisterVisitCmd}" 
+                                                                   CommandParameter="{Binding ElementName=hoursList, Path=SelectedItem}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </ListBox>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </ScrollViewer>
+            <TextBlock Text="Brak wizyt do wyświetlenia" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Visibility="{Binding AnyVisits, Converter={StaticResource visibility}}"/>
+        </Grid>
+    </DockPanel>
+</metro:MetroWindow>

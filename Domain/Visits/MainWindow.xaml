@@ -1,0 +1,56 @@
+﻿<metro:MetroWindow x:Class="Visits.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Visits"
+        xmlns:conv="clr-namespace:Visits.Converters"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+        mc:Ignorable="d" Style="{StaticResource windowStyle}"
+        Title="System rezerwacji wizyt" SizeToContent="Height" Width="789.729" Loaded="Window_Loaded" Closed="Window_Closed">
+    <metro:MetroWindow.RightWindowCommands>
+        <metro:WindowCommands>
+            <metro:WindowCommands.Resources>
+                <conv:LoginButtonContentConverter x:Key="loginContent"/>
+                <conv:VisibilityConverter x:Key="visibilityParam"/>
+                <conv:UserNameConverter x:Key="userName"/>
+            </metro:WindowCommands.Resources>
+            <TextBlock Text="{Binding LoggedUserName, Converter={StaticResource userName}}" HorizontalAlignment="Left" FontWeight="SemiBold" FontSize="13" FontStyle="Italic"/>
+            <Button x:Name="Login" Content="{Binding LoggedUserName, Converter={StaticResource loginContent}, FallbackValue='Zaloguj się'}" Command="{Binding LoginCmd}"/>
+            <Button x:Name="Register" Content="Zarejestruj się" Command="{Binding RegisterCmd}" Visibility="{Binding LoggedUserName, Converter={StaticResource visibilityParam}, ConverterParameter=True}"/>
+            <Button x:Name="EdProf" Content="Edytuj profil" Command="{Binding EditProfileCmd}" Visibility="{Binding LoggedUserName, Converter={StaticResource visibilityParam}, ConverterParameter=False}"/>
+            <Button x:Name="TwWiz" Content="Twoje wizyty" Command="{Binding VisitsViewCmd}" Visibility="{Binding LoggedUserName, Converter={StaticResource visibilityParam}, ConverterParameter=False}"/>
+        </metro:WindowCommands>
+    </metro:MetroWindow.RightWindowCommands>
+    <metro:MetroWindow.Resources>
+        <conv:ReversedBoolVisibilityConverter x:Key="visibilityBool"/>
+    </metro:MetroWindow.Resources>
+    <DockPanel Margin="10" IsEnabled="{Binding}">
+        <GroupBox Header="Filtry" Width="225">
+            <StackPanel Margin="5">
+                <Label x:Name="Lsz" Content="Specjalizacja"/>
+                <ComboBox x:Name="Spec" ItemsSource="{Binding Specializations}" SelectedItem="{Binding SelectedSpecialization}" SelectedIndex="0"/>
+                <Label x:Name="Lsz2" Content="Nazwisko"/>
+                <TextBox x:Name="Nazwisko" Height="26" Margin="0,0,0,10" Text="{Binding SearchByNameText, UpdateSourceTrigger=PropertyChanged}"/>
+                <DockPanel>
+                    <Button Content="Wyczyść filtry" Margin="15,0,5,0" Background="LightGray" Command="{Binding ClearFilters}"/>
+                    <Button x:Name="Search" Content="Wyszukaj" Margin="5,0,15,0" Command="{Binding SearchCmd}"/>
+                </DockPanel>
+            </StackPanel>
+        </GroupBox>
+        <Button x:Name="button" Content="Zarezerwuj wizytę" Command="{Binding RegisterVisitCmd}" Margin="10,10,0,5" DockPanel.Dock="Bottom" Height="26"/>
+        <Grid>
+            <DataGrid x:Name="WynikiWyszukiwania" Margin="10,10,0,0" ItemsSource="{Binding Doctors}" SelectedItem="{Binding SelectedDoctor, Mode=OneWayToSource}" SelectionMode="Single"
+                  AutoGenerateColumns="False" IsReadOnly="True" IsEnabled="{Binding AnyDoctors}">
+                <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding User.Name}" Header="Nazwisko lekarza" Width="*"/>
+                <DataGridTextColumn Binding="{Binding Specialization}" Header="Specjalizacja" Width="*"/>
+                <DataGridTextColumn Binding="{Binding FirstFreeSlot, StringFormat=\{0:dd.MM.yyyy HH:mm\}}" Header="Następna możliwa wizyta" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+            <TextBlock Text="Brak lekarzy do wyświetlenia" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"
+                       Visibility="{Binding AnyDoctors, Converter={StaticResource visibilityBool}}"/>
+        </Grid>
+    </DockPanel>
+</metro:MetroWindow>
