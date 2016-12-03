@@ -29,19 +29,22 @@ namespace Visits.ViewModels
 
         public ICommand AcceptCmd => new Command(async p =>
         {
-        //    var db = _applicationDataFactory.CreateTransactionalApplicationData();
-        //    bool res = await Task.Run(() => db.Specializations.Any(s => Specialization.Name == s.Name));
-        //    if (res)
-        //    {
-        //        MessageBox.Show("Specjalizacja o danej nazwie już istnieje.", App.Name, MessageBoxButton.OK, MessageBoxImage.Error);
-        //        return;
-        //    }
-        //    await App.Current.Dispatcher.BeginInvoke((Action)(() => db.Specializations.Add(Specialization)));
-        //    db.Commit();
-        //    OnCloseRequested(true);
-        //}, p =>
-        //{
-        //    return !string.IsNullOrWhiteSpace(Specialization?.Name);
+            //    var db = _applicationDataFactory.CreateTransactionalApplicationData();
+            bool res = await Task.Run(() => _service.GetSpecializationsList().Any(s => Specialization.Name == s.Name));
+            if (res)
+            {
+                MessageBox.Show("Specjalizacja o danej nazwie już istnieje.", App.Name, MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            var c = await Task.Run(() => _service.AddSpecialization(Specialization));
+            if (!c)
+                MessageBox.Show("Nie udało sie dodać specjalizacji");
+            //await App.Current.Dispatcher.BeginInvoke((Action)(() => _service.AddSpecialization(Specialization)));
+            //db.Commit();
+            OnCloseRequested(true);
+        }, p =>
+        {
+            return !string.IsNullOrWhiteSpace(Specialization?.Name);
         });
 
         public ICommand CancelCmd => new Command(p =>

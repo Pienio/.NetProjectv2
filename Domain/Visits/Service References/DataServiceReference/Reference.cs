@@ -81,6 +81,12 @@ namespace Visits.DataServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/UpdatePatient", ReplyAction="http://tempuri.org/IDataService/UpdatePatientResponse")]
         System.Threading.Tasks.Task<bool> UpdatePatientAsync(DatabaseAccess.Model.Patient toUpdate);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/UpdateUserPassword", ReplyAction="http://tempuri.org/IDataService/UpdateUserPasswordResponse")]
+        bool UpdateUserPassword(int id, string pass);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/UpdateUserPassword", ReplyAction="http://tempuri.org/IDataService/UpdateUserPasswordResponse")]
+        System.Threading.Tasks.Task<bool> UpdateUserPasswordAsync(int id, string pass);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/UpdateDoctor", ReplyAction="http://tempuri.org/IDataService/UpdateDoctorResponse")]
         bool UpdateDoctor(DatabaseAccess.Model.Doctor toUpdate);
         
@@ -110,6 +116,12 @@ namespace Visits.DataServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/AddDoctor", ReplyAction="http://tempuri.org/IDataService/AddDoctorResponse")]
         System.Threading.Tasks.Task<bool> AddDoctorAsync(DatabaseAccess.Model.Doctor toAdd);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/AddSpecialization", ReplyAction="http://tempuri.org/IDataService/AddSpecializationResponse")]
+        bool AddSpecialization(DatabaseAccess.Model.Specialization toAdd);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/AddSpecialization", ReplyAction="http://tempuri.org/IDataService/AddSpecializationResponse")]
+        System.Threading.Tasks.Task<bool> AddSpecializationAsync(DatabaseAccess.Model.Specialization toAdd);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/RegisterVisit", ReplyAction="http://tempuri.org/IDataService/RegisterVisitResponse")]
         bool RegisterVisit(System.DateTime selected, int patientId, int doctorId);
@@ -233,6 +245,14 @@ namespace Visits.DataServiceReference {
             return base.Channel.UpdatePatientAsync(toUpdate);
         }
         
+        public bool UpdateUserPassword(int id, string pass) {
+            return base.Channel.UpdateUserPassword(id, pass);
+        }
+        
+        public System.Threading.Tasks.Task<bool> UpdateUserPasswordAsync(int id, string pass) {
+            return base.Channel.UpdateUserPasswordAsync(id, pass);
+        }
+        
         public bool UpdateDoctor(DatabaseAccess.Model.Doctor toUpdate) {
             return base.Channel.UpdateDoctor(toUpdate);
         }
@@ -271,6 +291,14 @@ namespace Visits.DataServiceReference {
         
         public System.Threading.Tasks.Task<bool> AddDoctorAsync(DatabaseAccess.Model.Doctor toAdd) {
             return base.Channel.AddDoctorAsync(toAdd);
+        }
+        
+        public bool AddSpecialization(DatabaseAccess.Model.Specialization toAdd) {
+            return base.Channel.AddSpecialization(toAdd);
+        }
+        
+        public System.Threading.Tasks.Task<bool> AddSpecializationAsync(DatabaseAccess.Model.Specialization toAdd) {
+            return base.Channel.AddSpecializationAsync(toAdd);
         }
         
         public bool RegisterVisit(System.DateTime selected, int patientId, int doctorId) {

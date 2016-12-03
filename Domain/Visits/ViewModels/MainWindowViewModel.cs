@@ -137,6 +137,7 @@ namespace Visits.ViewModels
             wnd.ShowDialog();
             OnPropertyChanged(nameof(LoggedUserName));
             SearchCmd.Execute(null);
+            Specializations = _service.GetSpecializationsList();
         });
 
         public ICommand VisitsViewCmd => new Command(p =>

@@ -37,6 +37,8 @@ namespace DataAccessService
         [OperationContract]
         bool UpdatePatient(Patient toUpdate);
         [OperationContract]
+        bool UpdateUserPassword(int id,string pass);
+        [OperationContract]
         bool UpdateDoctor(Doctor toUpdate);
         [OperationContract]
         bool DeleteDoctor(Doctor toDelete);
@@ -46,6 +48,8 @@ namespace DataAccessService
         bool AddPatient(Patient toAdd);
         [OperationContract]
         bool AddDoctor(Doctor toAdd);
+        [OperationContract]
+        bool AddSpecialization(Specialization toAdd);
         [OperationContract]
         bool RegisterVisit(DateTime selected,int patientId,int doctorId);
 

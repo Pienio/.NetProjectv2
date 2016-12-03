@@ -102,7 +102,39 @@ namespace DataAccessService
 
         public bool UpdatePatient(Patient toUpdate)
         {
-            return true;
+            var a = new ApplicationDataFactory().CreateTransactionalApplicationData();
+            var o = a.Patients.Find(toUpdate.Key);
+            o.User.Name = toUpdate.User.Name;
+            o.User.PESEL = toUpdate.User.PESEL;
+            o.User.Password = toUpdate.User.Password;
+            o.Visits = toUpdate.Visits;
+
+            try
+            {
+                a.Commit();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public bool UpdateUserPassword(int id, string pass)
+        {
+            var a = new ApplicationDataFactory().CreateTransactionalApplicationData();
+            var c = a.Users.Find(id);
+            c.Password = pass;
+            a.Commit();
+            try
+            {
+                a.Commit();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
 
         public bool UpdateDoctor(Doctor toUpdate)
@@ -134,14 +166,81 @@ namespace DataAccessService
 
         public bool DeleteDoctor(Doctor toDelete)
         {
-            return true;
+            var a = new ApplicationDataFactory().CreateTransactionalApplicationData();
+            // Patient asd = _loggedUser.Logged as Patient;
+            var b = a.Doctors.Find(toDelete.Key);
+            IEnumerable<Visit> obw = GetDoctorVisits((int)b.Key, true);
+            if (obw==null||obw.ToList().Count == 0)
+            {
+                User adfg = b.User;
+                a.Doctors.Attach(b);
+                a.Doctors.Remove(b);
+                a.Users.Attach(adfg);
+                a.Users.Remove(adfg);
+            }
+            else
+            {
+                for (int i = 0; i < toDelete.Visits.Count; i++)
+                {
+                    if (b.Visits[i].Date > DateTime.Now)
+                    {
+                        a.Visits.Attach(b.Visits[i]);
+                        a.Visits.Remove(b.Visits[i]);
+
+                    }
+                }
+                b.User.Active = false;
+            }
+            try
+            {
+                a.Commit();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
 
         
 
         public bool DeletePatient(Patient toDelete)
         {
-            return true;
+            var a = new ApplicationDataFactory().CreateTransactionalApplicationData();
+           // Patient asd = _loggedUser.Logged as Patient;
+            var b = a.Patients.Find(toDelete.Key);
+            IEnumerable<Visit> obw = GetPatientVisits((int)b.Key, true);
+            if (obw==null||obw.ToList().Count == 0)
+            {
+                User adfg = b.User;
+                a.Patients.Attach(b);
+                a.Patients.Remove(b);
+                a.Users.Attach(adfg);
+                a.Users.Remove(adfg);
+            }
+            else
+            {
+                for (int i = 0; i < toDelete.Visits.Count; i++)
+                {
+                    if (b.Visits[i].Date > DateTime.Now)
+                    {
+                        a.Visits.Attach(b.Visits[i]);
+                        a.Visits.Remove(b.Visits[i]);
+
+                    }
+                }
+                b.User.Active = false;
+            }
+            try
+            {
+                a.Commit();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            //return true;
         }
 
         public bool AddPatient(Patient toAdd)
@@ -210,6 +309,21 @@ namespace DataAccessService
             a.Doctors.Add(toAdd);
             a.Commit();
             return true;
+        }
+
+        public bool AddSpecialization(Specialization toAdd)
+        {
+            var a = new ApplicationDataFactory().CreateTransactionalApplicationData();
+            a.Specializations.Add(toAdd);
+            try
+            {
+                a.Commit();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
 
         public bool RegisterVisit(DateTime selected, int patientId, int doctorId)

@@ -73,6 +73,12 @@
   <wsdl:message name="IDataService_UpdatePatient_OutputMessage">
     <wsdl:part name="parameters" element="tns:UpdatePatientResponse" />
   </wsdl:message>
+  <wsdl:message name="IDataService_UpdateUserPassword_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateUserPassword" />
+  </wsdl:message>
+  <wsdl:message name="IDataService_UpdateUserPassword_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateUserPasswordResponse" />
+  </wsdl:message>
   <wsdl:message name="IDataService_UpdateDoctor_InputMessage">
     <wsdl:part name="parameters" element="tns:UpdateDoctor" />
   </wsdl:message>
@@ -102,6 +108,12 @@
   </wsdl:message>
   <wsdl:message name="IDataService_AddDoctor_OutputMessage">
     <wsdl:part name="parameters" element="tns:AddDoctorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDataService_AddSpecialization_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddSpecialization" />
+  </wsdl:message>
+  <wsdl:message name="IDataService_AddSpecialization_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddSpecializationResponse" />
   </wsdl:message>
   <wsdl:message name="IDataService_RegisterVisit_InputMessage">
     <wsdl:part name="parameters" element="tns:RegisterVisit" />
@@ -154,6 +166,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IDataService/UpdatePatient" message="tns:IDataService_UpdatePatient_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IDataService/UpdatePatientResponse" message="tns:IDataService_UpdatePatient_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="UpdateUserPassword">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDataService/UpdateUserPassword" message="tns:IDataService_UpdateUserPassword_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDataService/UpdateUserPasswordResponse" message="tns:IDataService_UpdateUserPassword_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="UpdateDoctor">
       <wsdl:input wsaw:Action="http://tempuri.org/IDataService/UpdateDoctor" message="tns:IDataService_UpdateDoctor_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IDataService/UpdateDoctorResponse" message="tns:IDataService_UpdateDoctor_OutputMessage" />
@@ -173,6 +189,10 @@
     <wsdl:operation name="AddDoctor">
       <wsdl:input wsaw:Action="http://tempuri.org/IDataService/AddDoctor" message="tns:IDataService_AddDoctor_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IDataService/AddDoctorResponse" message="tns:IDataService_AddDoctor_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddSpecialization">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDataService/AddSpecialization" message="tns:IDataService_AddSpecialization_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDataService/AddSpecializationResponse" message="tns:IDataService_AddSpecialization_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="RegisterVisit">
       <wsdl:input wsaw:Action="http://tempuri.org/IDataService/RegisterVisit" message="tns:IDataService_RegisterVisit_InputMessage" />
@@ -280,6 +300,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="UpdateUserPassword">
+      <soap:operation soapAction="http://tempuri.org/IDataService/UpdateUserPassword" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="UpdateDoctor">
       <soap:operation soapAction="http://tempuri.org/IDataService/UpdateDoctor" style="document" />
       <wsdl:input>
@@ -318,6 +347,15 @@
     </wsdl:operation>
     <wsdl:operation name="AddDoctor">
       <soap:operation soapAction="http://tempuri.org/IDataService/AddDoctor" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddSpecialization">
+      <soap:operation soapAction="http://tempuri.org/IDataService/AddSpecialization" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

@@ -18,7 +18,7 @@ namespace DatabaseAccess.Model
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Key { get; set; }
 
-      //  [Required]
+        //[Required]
         [DataMember]
         [Timestamp]
         public byte[] Version { get; set; } 
