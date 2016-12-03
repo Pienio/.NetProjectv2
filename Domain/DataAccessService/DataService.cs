@@ -78,7 +78,7 @@ namespace DataAccessService
 
         public IEnumerable<Specialization> GetSpecializationsList()
         {
-            IEnumerable<Specialization> a = db.Specializations.Select(p => p).Include(p => p.Doctors);
+            IEnumerable<Specialization> a = db.Specializations.Select(p => p);//.Include(p => p.Doctors);
             return a;
         }
 
@@ -86,15 +86,15 @@ namespace DataAccessService
         {
             //IEnumerable<Visit> a = db.Visits.Select(p => p).Where(p=>p.Patient.Key==id).Include(p=>p.Doctor);
             DateTime now = DateTime.Now;
-            //IEnumerable<Visit> a = from v in db.Visits.Local
-            //                       where v.Patient.Key == id && (tr ? v.Date <= now : v.Date > now)
-            //                       select v;
-            return null; //a;
+            IEnumerable<Visit> a = from v in db.Visits.Local
+                                   where v.Patient.Key == id && (tr ? v.Date <= now : v.Date > now)
+                                   select v;
+            return a;
         }
         public IEnumerable<Visit> GetDoctorVisits(int id,bool tr)
         {
             DateTime now=DateTime.Now;
-            IEnumerable<Visit> a = from v in db.Visits.Local
+            IEnumerable<Visit> a = from v in db.Visits
                 where v.Doctor.Key == id && (tr ? v.Date <= now : v.Date > now)
                 select v;//db.Visits.Select(p => p).Where(p => p.Doctor.Key == id).Include(p => p.Doctor);
             return a;
@@ -141,16 +141,18 @@ namespace DataAccessService
         {
             var a = new ApplicationDataFactory().CreateTransactionalApplicationData();
             var o = a.Doctors.Find(toUpdate.Key);
+           // toUpdate.Specialization.Doctors.Add(toUpdate);
             o.User.Name = toUpdate.User.Name;
             o.User.PESEL = toUpdate.User.PESEL;
             o.User.Password = toUpdate.User.Password;
             o.Specialization = a.Specializations.Find(toUpdate.Specialization.Key);
             o.MondayWorkingTime = toUpdate.MondayWorkingTime;
+            o.WednesdayWorkingTime = toUpdate.WednesdayWorkingTime;
             o.FridayWorkingTime = toUpdate.FridayWorkingTime;
             o.TuesdayWorkingTime = toUpdate.TuesdayWorkingTime;
             o.ThursdayWorkingTime = toUpdate.ThursdayWorkingTime;
             o.Visits = toUpdate.Visits;
-
+            
             try
             {
                 a.Commit();

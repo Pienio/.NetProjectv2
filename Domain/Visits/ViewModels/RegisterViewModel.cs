@@ -83,8 +83,10 @@ namespace Visits.ViewModels
         });
         public ICommand RegisterSpecialization => new Command(p =>
         {
-            //AddSpec a = App.Container.Resolve<AddSpec>();
-            //a.ShowDialog();
+            AddSpec a = App.Container.Resolve<AddSpec>();
+            a.ShowDialog();
+            SpecList = _service.GetSpecializationsList();
+            Spec = SpecList.Last();
             //if (!a.DialogResult.GetValueOrDefault(false))
             //    return;
             //var db = _applicationDataFactory.CreateApplicationData();
@@ -429,7 +431,8 @@ namespace Visits.ViewModels
          
            //  spec.AddRange(db.Specializations);
             SpecList = _service.GetSpecializationsList();
-           //// OnPropertyChanged(nameof(SpecList));
+            Spec = SpecList.First();
+            //// OnPropertyChanged(nameof(SpecList));
         }
 
     }

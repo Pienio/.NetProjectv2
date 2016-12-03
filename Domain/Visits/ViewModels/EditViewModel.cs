@@ -295,8 +295,12 @@ namespace Visits.ViewModels
             if (Pas == _User.Password)
             {
                 //db.Commit();
-                if(_User.Kind == DocOrPat.Doctor)
+                if (_User.Kind == DocOrPat.Doctor)
+                {
+                    //MessageBox.Show(us.Specialization.ToString());
                     _service.UpdateDoctor(us);
+
+                }   
                 else
                 {
                     _service.UpdatePatient(_Patient);
@@ -442,7 +446,15 @@ namespace Visits.ViewModels
                 _User = us.User;
                 Who = true;
                 var spec = _service.GetSpecializationsList();
-                Spec = us.Specialization;
+                foreach (var VARIABLE in spec)
+                {
+                    if (VARIABLE.Key == us.Specialization.Key)
+                    {
+                        Spec = VARIABLE;
+                        break;
+                    }
+                }
+                //Spec = us.Specialization;
                 SpecList = spec;
                 OnPropertyChanged("PS");
                 OnPropertyChanged("PE");

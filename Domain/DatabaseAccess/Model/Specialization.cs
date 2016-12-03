@@ -14,8 +14,8 @@ namespace DatabaseAccess.Model
         [Required]
         [DataMember]
         public virtual string Name { get; set; }
-        [DataMember]
-        public IList<Doctor> Doctors { get; set; } = new List<Doctor>();
+        //[DataMember]
+        //public IList<Doctor> Doctors { get; set; } = new List<Doctor>();
          
         public Specialization() : base() { }
         public Specialization(string name) : base()
