@@ -11,7 +11,7 @@ namespace DatabaseAccess.Model
     [DataContract]
     public class Visit : Entity
     {
-        [Required]
+      //  [Required]
         [DataMember]
         public virtual Patient Patient { get; set; }
         [Required]
@@ -19,13 +19,13 @@ namespace DatabaseAccess.Model
         public virtual Doctor Doctor { get; set; }
         [Required]
         [DataMember]
-        public DateTime Date { get; set; } 
+        public DateTime Date { get; set; } =DateTime.Today;
 
         public Visit() { }
 
         public Visit(Patient patient, Doctor doctor, DateTime date)
         {
-            Patient = patient;
+            //Patient = patient;
             Doctor = doctor;
             Date = date;
         }

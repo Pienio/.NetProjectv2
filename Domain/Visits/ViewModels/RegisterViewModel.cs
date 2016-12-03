@@ -20,14 +20,14 @@ namespace Visits.ViewModels
     {
         private User _User;
         private IEnumerable<Specialization> _SpecList;
-        private Patient _Patient;
-        private Doctor us;
+        private Patient _Patient = new Patient();
+        private Doctor us = new Doctor();
         private string _pas = "";
         private string _pasp = "";
         private bool _Who;
 
 
-        public RegisterViewModel(ILogUserService user) : base( user) { }
+        public RegisterViewModel(ILogUserService user) : base( user) { _Patient.User=new User(); }
 
         public bool Who
         {
@@ -428,7 +428,7 @@ namespace Visits.ViewModels
            // var spec = new List<Specialization>();
          
            //  spec.AddRange(db.Specializations);
-           // SpecList = spec;
+            SpecList = _service.GetSpecializationsList();
            //// OnPropertyChanged(nameof(SpecList));
         }
 

@@ -289,27 +289,28 @@ namespace Visits.ViewModels
         });
         public ICommand UpdateUser => new Command(p =>
         {
-           
-                //var db = _applicationDataFactory.CreateTransactionalApplicationData();
 
-                //if (Pas == _User.Password)
-                //{
-                //    db.Commit();
-                    
-                 
+            //var db = _applicationDataFactory.CreateTransactionalApplicationData();
+
+            if (Pas == _User.Password)
+            {
+                //db.Commit();
+                _service.UpdateDoctor(us);
 
 
-                //    Window k = p as Window;
-                //    k.Close();
-                //}
-                //else
-                //{
-                //    MessageBox.Show("Hasło nieprawidłowe");
-                //    Pas = "";
-                //}
-          
-            
-                
+
+
+                Window k = p as Window;
+                k.Close();
+            }
+            else
+            {
+                MessageBox.Show("Hasło nieprawidłowe");
+                Pas = "";
+            }
+
+
+
 
         });
         public ICommand DeleteUser => new Command(p =>
@@ -418,38 +419,37 @@ namespace Visits.ViewModels
         }
         public void Initialize()
         {
-           
-        //    var db = _applicationDataFactory.CreateApplicationData();
-        //    if(_loggedUser.Logged is Patient)
-        //    {
-        //        _Patient = _loggedUser.Logged as Patient;  
-        //        _User = _Patient.User;
-        //        Who = false;
-        //    }
-        //    else
-        //    {
-        //        us = _loggedUser.Logged as Doctor; 
-        //        _User = us.User;
-        //        Who = true;
-        //        var spec = new List<Specialization>();
-        //        spec.AddRange(db.Specializations);
-        //        SpecList = spec;
-        //        OnPropertyChanged("PS");
-        //        OnPropertyChanged("PE");
-        //        OnPropertyChanged("WS");
-        //        OnPropertyChanged("WE");
-        //        OnPropertyChanged("SS");
-        //        OnPropertyChanged("SE");
-        //        OnPropertyChanged("CS");
-        //        OnPropertyChanged("CE");
-        //        OnPropertyChanged("PIS");
-        //        OnPropertyChanged("PIE");
-        //        OnPropertyChanged("Spec");
-        //    }
-        //    OnPropertyChanged("Pesel");
-        //    OnPropertyChanged("Who");
-        //    OnPropertyChanged("FirstName");
-        //    OnPropertyChanged("LastName");
+
+           // var db = _applicationDataFactory.CreateApplicationData();
+            if (_loggedUser.Logged is Patient)
+            {
+                _Patient = _loggedUser.Logged as Patient;
+                _User = _Patient.User;
+                Who = false;
+            }
+            else
+            {
+                us = _loggedUser.Logged as Doctor;
+                _User = us.User;
+                Who = true;
+                var spec = _service.GetSpecializationsList();
+                SpecList = spec;
+                OnPropertyChanged("PS");
+                OnPropertyChanged("PE");
+                OnPropertyChanged("WS");
+                OnPropertyChanged("WE");
+                OnPropertyChanged("SS");
+                OnPropertyChanged("SE");
+                OnPropertyChanged("CS");
+                OnPropertyChanged("CE");
+                OnPropertyChanged("PIS");
+                OnPropertyChanged("PIE");
+                OnPropertyChanged("Spec");
+            }
+            OnPropertyChanged("Pesel");
+            OnPropertyChanged("Who");
+            OnPropertyChanged("FirstName");
+            OnPropertyChanged("LastName");
 
         }
     }

@@ -21,6 +21,8 @@ namespace DataAccessService
         [OperationContract]
         Patient GetPatientById(int value);
         [OperationContract]
+        void Fill();
+        [OperationContract]
         IEnumerable<Doctor> GetDoctorsList();
 
         [OperationContract]

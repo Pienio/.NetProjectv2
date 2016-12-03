@@ -18,7 +18,7 @@
   <xs:complexType name="Entity">
     <xs:sequence>
       <xs:element minOccurs="0" name="Key" type="xs:long" />
-      <xs:element minOccurs="0" name="Version" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="Version" type="xs:dateTime" />
     </xs:sequence>
     <xs:attribute ref="ser:Id" />
     <xs:attribute ref="ser:Ref" />

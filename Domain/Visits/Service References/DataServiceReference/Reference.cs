@@ -39,6 +39,12 @@ namespace Visits.DataServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetPatientById", ReplyAction="http://tempuri.org/IDataService/GetPatientByIdResponse")]
         System.Threading.Tasks.Task<DatabaseAccess.Model.Patient> GetPatientByIdAsync(int value);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/Fill", ReplyAction="http://tempuri.org/IDataService/FillResponse")]
+        void Fill();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/Fill", ReplyAction="http://tempuri.org/IDataService/FillResponse")]
+        System.Threading.Tasks.Task FillAsync();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetDoctorsList", ReplyAction="http://tempuri.org/IDataService/GetDoctorsListResponse")]
         DatabaseAccess.Model.Doctor[] GetDoctorsList();
         
@@ -169,6 +175,14 @@ namespace Visits.DataServiceReference {
         
         public System.Threading.Tasks.Task<DatabaseAccess.Model.Patient> GetPatientByIdAsync(int value) {
             return base.Channel.GetPatientByIdAsync(value);
+        }
+        
+        public void Fill() {
+            base.Channel.Fill();
+        }
+        
+        public System.Threading.Tasks.Task FillAsync() {
+            return base.Channel.FillAsync();
         }
         
         public DatabaseAccess.Model.Doctor[] GetDoctorsList() {

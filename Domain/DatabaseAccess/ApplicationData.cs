@@ -41,7 +41,8 @@ namespace DatabaseAccess.Model
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Visit>().HasRequired(t=>t.Patient).WithRequiredPrincipal().WillCascadeOnDelete(false);//.WithRequired().WillCascadeOnDelete(false);
+            //modelBuilder.Entity<Visit>().HasRequired(t=>t.Patient).WithRequiredPrincipal().WillCascadeOnDelete(false);//.WithRequired().WillCascadeOnDelete(false);
+            //modelBuilder.Entity<Visit>().HasRequired(p => p.Patient).WithOptional(p => p.Visits);
             modelBuilder.Entity<Doctor>().HasMany(p=>p.Visits).WithRequired().WillCascadeOnDelete(false);
             modelBuilder.Entity<Patient>().HasMany(p => p.Visits).WithRequired().WillCascadeOnDelete(false);
         }

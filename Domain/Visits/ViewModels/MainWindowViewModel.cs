@@ -97,12 +97,12 @@ namespace Visits.ViewModels
         public ICommand RegisterVisitCmd => new Command(parameter =>
         {
         //    var db = _applicationDataFactory.CreateApplicationData();
-        //    var wnd = App.Container.Resolve<RegVisit>();
-        //   wnd.SelectedDoctor = SelectedDoctor;
-        //    wnd.Show();
-        //}, p =>
-        //{
-        //    return !(_loggedUser.Logged is Doctor) && SelectedDoctor != null;
+            var wnd = App.Container.Resolve<RegVisit>();
+           wnd.SelectedDoctor = SelectedDoctor;
+            wnd.Show();
+        }, p =>
+        {
+            return !(_loggedUser.Logged is Doctor) && SelectedDoctor != null;
         });
 
         //async 
@@ -133,10 +133,10 @@ namespace Visits.ViewModels
         public ICommand EditProfileCmd => new Command(parameter =>
         {
             //var db = _applicationDataFactory.CreateApplicationData();
-            //var wnd = App.Container.Resolve<Edit>();
-            //wnd.ShowDialog();
-            //OnPropertyChanged(nameof(LoggedUserName));
-            //SearchCmd.Execute(null);
+            var wnd = App.Container.Resolve<Edit>();
+            wnd.ShowDialog();
+            OnPropertyChanged(nameof(LoggedUserName));
+            SearchCmd.Execute(null);
         });
 
         public ICommand VisitsViewCmd => new Command(p =>
@@ -159,7 +159,7 @@ namespace Visits.ViewModels
 
         public void Initialize()
         {
-            
+            _service.Fill();
             Specializations = _service.GetSpecializationsList();
             Doctors = _service.GetDoctorsList();
             //var db = _applicationDataFactory.CreateApplicationData();

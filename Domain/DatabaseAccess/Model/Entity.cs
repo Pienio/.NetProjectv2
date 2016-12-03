@@ -21,6 +21,6 @@ namespace DatabaseAccess.Model
       //  [Required]
         [DataMember]
         [Timestamp]
-        public byte[] Version { get; set; }
+        public byte[] Version { get; set; } 
     }
 }

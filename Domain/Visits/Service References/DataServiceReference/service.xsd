@@ -58,6 +58,16 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="Fill">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FillResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
   <xs:element name="GetDoctorsList">
     <xs:complexType>
       <xs:sequence />
