@@ -11,7 +11,8 @@ namespace DatabaseAccess.Model
     /// <summary>
     /// Tutaj będą lądować wspólne metody i właściwości dla Doctor i Patient by wywoływać je z GUI
     /// </summary>
-    [DataContract]
+    
+    [DataContract(IsReference = true)]
     public abstract class Person : Entity
     {
         [Required]

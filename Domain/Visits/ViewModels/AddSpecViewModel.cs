@@ -25,23 +25,23 @@ namespace Visits.ViewModels
             set { _specialization = value; OnPropertyChanged(nameof(Specialization)); }
         }
 
-        public AddSpecViewModel(ILogUserService user, IApplicationDataFactory factory) : base(factory, user) { }
+        public AddSpecViewModel(ILogUserService user, DataServiceReference.IDataService factory) : base(factory, user) { }
 
         public ICommand AcceptCmd => new Command(async p =>
         {
-            var db = _applicationDataFactory.CreateTransactionalApplicationData();
-            bool res = await Task.Run(() => db.Specializations.Any(s => Specialization.Name == s.Name));
-            if (res)
-            {
-                MessageBox.Show("Specjalizacja o danej nazwie już istnieje.", App.Name, MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-            await App.Current.Dispatcher.BeginInvoke((Action)(() => db.Specializations.Add(Specialization)));
-            db.Commit();
-            OnCloseRequested(true);
-        }, p =>
-        {
-            return !string.IsNullOrWhiteSpace(Specialization?.Name);
+        //    var db = _applicationDataFactory.CreateTransactionalApplicationData();
+        //    bool res = await Task.Run(() => db.Specializations.Any(s => Specialization.Name == s.Name));
+        //    if (res)
+        //    {
+        //        MessageBox.Show("Specjalizacja o danej nazwie już istnieje.", App.Name, MessageBoxButton.OK, MessageBoxImage.Error);
+        //        return;
+        //    }
+        //    await App.Current.Dispatcher.BeginInvoke((Action)(() => db.Specializations.Add(Specialization)));
+        //    db.Commit();
+        //    OnCloseRequested(true);
+        //}, p =>
+        //{
+        //    return !string.IsNullOrWhiteSpace(Specialization?.Name);
         });
 
         public ICommand CancelCmd => new Command(p =>

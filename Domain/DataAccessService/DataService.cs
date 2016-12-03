@@ -14,25 +14,100 @@ namespace DataAccessService
    
     public class DataService : IDataService
     {
+        IApplicationData db = new ApplicationDataFactory().CreateApplicationData();
         public User GetUserByID(int id)
         {
-            IApplicationData db = new ApplicationDataFactory().CreateApplicationData();
+            
             db.Fill();
             var a = db.Users.Find(id);
             return a;
         }
 
-        public IEnumerable<Doctor> GetDoctors()
+        public IEnumerable<Doctor> GetDoctorsList()
         {
-            IApplicationData db = new ApplicationDataFactory().CreateApplicationData();
-            //db.Fill();
             
-             db.Doctors.Load();
-            var c = db.Doctors.Local;
-         
-            return c;
-            //IEnumerable<Doctor> a = db.Doctors.Select(b=>b);
-            //return a;
+            IEnumerable<Doctor> a = db.Doctors.Select(b=>b).Include(p=>p.User).Include(p=>p.Specialization).Include(p=>p.Visits);
+            return a;
+        }
+
+        public IEnumerable<Specialization> GetSpecializationsList()
+        {
+            IEnumerable<Specialization> a = db.Specializations.Select(p => p).Include(p => p.Doctors);
+            return a;
+        }
+
+        public IEnumerable<Visit> GetPatientVisits(int id)
+        {
+            IEnumerable<Visit> a = db.Visits.Select(p => p).Where(p=>p.Patient.Key==id).Include(p=>p.Doctor);
+            return a;
+        }
+        public IEnumerable<Visit> GetDoctorVisits(int id)
+        {
+            IEnumerable<Visit> a = db.Visits.Select(p => p).Where(p => p.Doctor.Key == id).Include(p => p.Doctor);
+            return a;
+        }
+
+        public bool UpdatePatient(Patient toUpdate)
+        {
+            return true;
+        }
+
+        public bool UpdateDoctor(Doctor toUpdate)
+        {
+            return true;
+        }
+
+        public bool DeleteDoctor(Doctor toDelete)
+        {
+            return true;
+        }
+
+        
+
+        public bool DeletePatient(Patient toDelete)
+        {
+            return true;
+        }
+
+        public bool AddPatient(Patient toAdd)
+        {
+            var a = new ApplicationDataFactory().CreateTransactionalApplicationData();
+            a.Patients.Add(toAdd);
+            a.Commit();
+            return true;
+        }
+
+        public bool AddDoctor(Doctor toAdd)
+        {
+            var a = new ApplicationDataFactory().CreateTransactionalApplicationData();
+            Doctor d=new Doctor();
+            d.User=new User();
+            d.User.Kind=DocOrPat.Doctor;
+            d.User.Name=new PersonName();
+            d.User.Name.Name = "a";
+            d.User.Name.Surname = "b";
+            d.User.PESEL = "12341234123";
+            d.User.Password="popaospaodpsa";
+            d.Specialization=new Specialization("pupa");
+            d.MondayWorkingTime=new WorkingTime();
+            d.MondayWorkingTime.Start = 1;
+            d.MondayWorkingTime.End = 2;
+            d.TuesdayWorkingTime=new WorkingTime();
+            d.TuesdayWorkingTime.Start = 1;
+            d.TuesdayWorkingTime.End = 2;
+            d.WednesdayWorkingTime = new WorkingTime();
+            d.WednesdayWorkingTime.Start = 1;
+            d.WednesdayWorkingTime.End=2; 
+            d.ThursdayWorkingTime = new WorkingTime();
+            d.ThursdayWorkingTime.Start = 1;
+            d.ThursdayWorkingTime.End = 2;
+            d.FridayWorkingTime = new WorkingTime();
+            d.FridayWorkingTime.Start = 1;
+            d.FridayWorkingTime.End = 2;
+
+            a.Doctors.Add(d);
+            a.Commit();
+            return true;
         }
     }
 }

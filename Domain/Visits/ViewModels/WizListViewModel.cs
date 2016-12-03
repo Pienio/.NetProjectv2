@@ -19,7 +19,7 @@ namespace Visits.ViewModels
         private IEnumerable<Visit> _visits;
         private VisitsType _selectedType;
 
-        public WizListViewModel(ILogUserService user, IApplicationDataFactory factory) : base(factory, user) { }
+        public WizListViewModel(ILogUserService user, DataServiceReference.IDataService factory) : base(factory, user) { }
 
         public Person LoggedUser => _loggedUser.Logged;
         public bool AnyVisits => _visits == null ? false : _visits.Count() > 0;
@@ -52,15 +52,15 @@ namespace Visits.ViewModels
 
         public ICommand DeleteVisitCmd => new Command(async p =>
         {
-            Visit v = p as Visit;
-        //    if (MessageBox.Show("Czy na pewno chcesz odwołać zaznaczoną wizytę?", App.Name, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
-          //      return;
-            var db = _applicationDataFactory.CreateTransactionalApplicationData();
-            await Task.Run(() => db.Visits.Remove(v));
-            db.Commit();
-            await SetVisits();
+        //    Visit v = p as Visit;
+        ////    if (MessageBox.Show("Czy na pewno chcesz odwołać zaznaczoną wizytę?", App.Name, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
+        //  //      return;
+        //    var db = _applicationDataFactory.CreateTransactionalApplicationData();
+        //    await Task.Run(() => db.Visits.Remove(v));
+        //    db.Commit();
+        //    await SetVisits();
 
-            MessageBox.Show("Odwołano wizytę z powodzeniem", App.Name, MessageBoxButton.OK, MessageBoxImage.Information);
+        //    MessageBox.Show("Odwołano wizytę z powodzeniem", App.Name, MessageBoxButton.OK, MessageBoxImage.Information);
         });
 
         public void Invoke()
@@ -69,18 +69,18 @@ namespace Visits.ViewModels
         }
         private async Task SetVisits()
         {
-            var db = _applicationDataFactory.CreateApplicationData();
-            DateTime now = DateTime.Now;
-            IEnumerable<Visit> visits = null;
-            if (_loggedUser.Logged is Patient)
-                visits = await Task.Run(() => from v in db.Visits.Local
-                                            where v.Patient.Key == _loggedUser.Logged.Key && (SelectedType == VisitsType.Archiwalne ? v.Date <= now : v.Date > now)
-                                            select v);
-            else if (_loggedUser.Logged is Doctor)
-                visits = await Task.Run(() => from v in db.Visits.Local
-                                            where v.Doctor.Key == _loggedUser.Logged.Key && (SelectedType == VisitsType.Archiwalne ? v.Date <= now : v.Date > now)
-                                            select v);
-            Visits = visits;
+            //var db = _applicationDataFactory.CreateApplicationData();
+            //DateTime now = DateTime.Now;
+            //IEnumerable<Visit> visits = null;
+            //if (_loggedUser.Logged is Patient)
+            //    visits = await Task.Run(() => from v in db.Visits.Local
+            //                                where v.Patient.Key == _loggedUser.Logged.Key && (SelectedType == VisitsType.Archiwalne ? v.Date <= now : v.Date > now)
+            //                                select v);
+            //else if (_loggedUser.Logged is Doctor)
+            //    visits = await Task.Run(() => from v in db.Visits.Local
+            //                                where v.Doctor.Key == _loggedUser.Logged.Key && (SelectedType == VisitsType.Archiwalne ? v.Date <= now : v.Date > now)
+            //                                select v);
+            //Visits = visits;
         }
 
         public enum VisitsType { Planowane, Archiwalne }

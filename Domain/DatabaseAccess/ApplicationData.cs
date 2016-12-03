@@ -26,11 +26,11 @@ namespace DatabaseAccess.Model
         
         public ApplicationData(bool runTransaction) : base()
         {
-            //Database.SetInitializer(new DropCreateDatabaseIfModelChanges<ApplicationData>());
+            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<ApplicationData>());
           
             Configuration.ProxyCreationEnabled = false;
-          //  var objectContext = ((IObjectContextAdapter)this).ObjectContext;
-          //  objectContext.ContextOptions.LazyLoadingEnabled = false;
+            var objectContext = ((IObjectContextAdapter)this).ObjectContext;
+            objectContext.ContextOptions.LazyLoadingEnabled = false;
             var x = System.Data.Entity.SqlServer.SqlProviderServices.Instance;
             if (runTransaction)
             {

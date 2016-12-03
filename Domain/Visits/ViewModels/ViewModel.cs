@@ -12,14 +12,14 @@ namespace Visits.ViewModels
 {
     public abstract class ViewModel : INotifyPropertyChanged
     {
-        protected IApplicationDataFactory _applicationDataFactory;
+        protected DataServiceReference.IDataService _service;
         protected ILogUserService _loggedUser;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected ViewModel(IApplicationDataFactory factory, ILogUserService userLog)
+        protected ViewModel(DataServiceReference.IDataService factory, ILogUserService userLog)
         {
-            _applicationDataFactory = factory;
+            _service = factory;
             _loggedUser = userLog;
         }
 

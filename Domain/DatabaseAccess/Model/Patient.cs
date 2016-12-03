@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DatabaseAccess.Model
 {
-    [DataContract]
+    [DataContract(IsReference = true)]
     public class Patient : Person
     {
         public override string ToString()

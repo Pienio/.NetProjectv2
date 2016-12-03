@@ -10,7 +10,7 @@ using System.Runtime.Serialization;
 
 namespace DatabaseAccess.Model
 {
-    [DataContract]
+    [DataContract(IsReference = true)]
     public class Entity
     { 
         [Key]
@@ -18,8 +18,9 @@ namespace DatabaseAccess.Model
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Key { get; set; }
 
-        [Required]
+      //  [Required]
         [DataMember]
-        public DateTime Version { get; set; } = DateTime.Now;
+        [Timestamp]
+        public byte[] Version { get; set; }
     }
 }

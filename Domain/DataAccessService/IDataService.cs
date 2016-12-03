@@ -16,7 +16,27 @@ namespace DataAccessService
         User GetUserByID(int value);
 
         [OperationContract]
-        IEnumerable<Doctor> GetDoctors();
+        IEnumerable<Doctor> GetDoctorsList();
+
+        [OperationContract]
+        IEnumerable<Specialization> GetSpecializationsList();
+        [OperationContract]
+        IEnumerable<Visit> GetPatientVisits(int id);
+        [OperationContract]
+        IEnumerable<Visit> GetDoctorVisits(int id);
+        [OperationContract]
+        bool UpdatePatient(Patient toUpdate);
+        [OperationContract]
+        bool UpdateDoctor(Doctor toUpdate);
+        [OperationContract]
+        bool DeleteDoctor(Doctor toDelete);
+        [OperationContract]
+        bool DeletePatient(Patient toDelete);
+        [OperationContract]
+        bool AddPatient(Patient toAdd);
+        [OperationContract]
+        bool AddDoctor(Doctor toAdd);
+
 
 
 

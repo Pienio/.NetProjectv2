@@ -21,7 +21,7 @@ namespace Visits.ViewModels
         private string _pas = "";
         private string _pasp = "";
 
-        public ChangePassViewModel(ILogUserService user, IApplicationDataFactory factory) : base(factory, user) { }
+        public ChangePassViewModel(ILogUserService user, DataServiceReference.IDataService factory) : base(factory, user) { }
 
         public string Error
         {
@@ -106,19 +106,19 @@ namespace Visits.ViewModels
         public ICommand UpdatePassword => new Command(p =>
         {
 
-            var db = _applicationDataFactory.CreateTransactionalApplicationData();
+            //var db = _applicationDataFactory.CreateTransactionalApplicationData();
             
-            if (PasswordHasher.CreateHash(Org) == _loggedUser.Logged.User.Password)
-            {
-                _loggedUser.Logged.User.Password =PasswordHasher.CreateHash(Pasp);
-                db.Commit();
-                Window k = p as Window;
-                k.Close();
-            }
-            else
-            {
-                MessageBox.Show("Nieprawidłowe hasło");
-            }
+            //if (PasswordHasher.CreateHash(Org) == _loggedUser.Logged.User.Password)
+            //{
+            //    _loggedUser.Logged.User.Password =PasswordHasher.CreateHash(Pasp);
+            //    db.Commit();
+            //    Window k = p as Window;
+            //    k.Close();
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Nieprawidłowe hasło");
+            //}
 
         });
         public ICommand ChangePass1 => new Command(p =>

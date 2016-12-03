@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DatabaseAccess.Model
 {
-    [DataContract]
+    
     public class User : Entity
     {
         [Required]

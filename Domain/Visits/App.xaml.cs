@@ -7,6 +7,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Visits.DataServiceReference;
 using Visits.Services;
 
 namespace Visits
@@ -18,11 +19,11 @@ namespace Visits
     {
         public static string Name => ResourceAssembly.GetName().Name;
         public static IUnityContainer Container { get; private set; }
-        private IApplicationDataFactory _factory;
+        private DataServiceReference.IDataService _factory;
 
         private void Application_Exit(object sender, ExitEventArgs e)
         {
-            _factory?.Dispose();
+           // _factory?.Dispose();
         }
 
         protected override void OnStartup(StartupEventArgs e)
@@ -32,9 +33,9 @@ namespace Visits
             Container = new UnityContainer();
             ContainerInitializer.Initialize(Container);
             Container.RegisterInstance<ILogUserService>(new LogUserService());
-
-            _factory = Container.Resolve<IApplicationDataFactory>();
-            _factory.CreateApplicationData().Fill();
+            //_factory = new DataServiceClient();
+            _factory = Container.Resolve<IDataService>();
+          //  _factory.CreateApplicationData().Fill();
 
             MainWindow = Container.Resolve<MainWindow>();
             MainWindow.Show();

@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace DatabaseAccess.Model
 {
-    [DataContract]
+    
+    [DataContract(IsReference = true)]
     public class Doctor : Person
     {
         [Required]

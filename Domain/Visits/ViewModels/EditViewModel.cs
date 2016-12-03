@@ -25,7 +25,7 @@ namespace Visits.ViewModels
         private string _pas = "";
         private bool _Who;
 
-        public EditViewModel(ILogUserService user, IApplicationDataFactory factory) : base(factory, user) { }
+        public EditViewModel(ILogUserService user, DataServiceReference.IDataService factory) : base(factory, user) { }
         
         public bool Who
         {
@@ -281,32 +281,32 @@ namespace Visits.ViewModels
         public ICommand ChangePassword => new Command(p =>
         {
        
-            var db = _applicationDataFactory.CreateApplicationData();
-            var wnd = App.Container.Resolve<ChangePass>();
-            wnd.ShowDialog();
+            //var db = _applicationDataFactory.CreateApplicationData();
+            //var wnd = App.Container.Resolve<ChangePass>();
+            //wnd.ShowDialog();
         
             
         });
         public ICommand UpdateUser => new Command(p =>
         {
            
-                var db = _applicationDataFactory.CreateTransactionalApplicationData();
+                //var db = _applicationDataFactory.CreateTransactionalApplicationData();
 
-                if (Pas == _User.Password)
-                {
-                    db.Commit();
+                //if (Pas == _User.Password)
+                //{
+                //    db.Commit();
                     
                  
 
 
-                    Window k = p as Window;
-                    k.Close();
-                }
-                else
-                {
-                    MessageBox.Show("Hasło nieprawidłowe");
-                    Pas = "";
-                }
+                //    Window k = p as Window;
+                //    k.Close();
+                //}
+                //else
+                //{
+                //    MessageBox.Show("Hasło nieprawidłowe");
+                //    Pas = "";
+                //}
           
             
                 
@@ -317,78 +317,78 @@ namespace Visits.ViewModels
 
             
 
-            if (Pas == _User.Password)
-            {
-                if (MessageBox.Show("Czy na pewno chcesz usunąć konto", App.Name, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
-                    return;
+            //if (Pas == _User.Password)
+            //{
+            //    if (MessageBox.Show("Czy na pewno chcesz usunąć konto", App.Name, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
+            //        return;
 
-                var db = _applicationDataFactory.CreateTransactionalApplicationData();
-                if(_loggedUser.Logged is Patient)
-                {
-                    Patient asd = _loggedUser.Logged as Patient;
-                    IEnumerable<Visit> obw = db.Visits.Select(d => d).Where(d => d.Patient.Key == asd.Key);
-                    if(obw.ToList().Count==0)
-                    {
-                        User adfg = asd.User;
-                        db.Patients.Attach(asd);
-                        db.Patients.Remove(asd);
-                        db.Users.Attach(adfg);
-                        db.Users.Remove(adfg);
-                    }
-                    else
-                    {
-                       for(int i=0; i<asd.Visits.Count;i++) 
-                        {
-                            if(asd.Visits[i].Date>DateTime.Now)
-                            {
-                                db.Visits.Attach(asd.Visits[i]);
-                                db.Visits.Remove(asd.Visits[i]);
+            //    var db = _applicationDataFactory.CreateTransactionalApplicationData();
+            //    if(_loggedUser.Logged is Patient)
+            //    {
+            //        Patient asd = _loggedUser.Logged as Patient;
+            //        IEnumerable<Visit> obw = db.Visits.Select(d => d).Where(d => d.Patient.Key == asd.Key);
+            //        if(obw.ToList().Count==0)
+            //        {
+            //            User adfg = asd.User;
+            //            db.Patients.Attach(asd);
+            //            db.Patients.Remove(asd);
+            //            db.Users.Attach(adfg);
+            //            db.Users.Remove(adfg);
+            //        }
+            //        else
+            //        {
+            //           for(int i=0; i<asd.Visits.Count;i++) 
+            //            {
+            //                if(asd.Visits[i].Date>DateTime.Now)
+            //                {
+            //                    db.Visits.Attach(asd.Visits[i]);
+            //                    db.Visits.Remove(asd.Visits[i]);
 
-                            }
-                        }
-                        asd.User.Active = false;
-                    }
-                }
-                else
-                {
-                    Doctor asd = _loggedUser.Logged as Doctor;
-                    IEnumerable<Visit> obw = db.Visits.Select(d => d).Where(d => d.Doctor.Key == asd.Key);
-                    if (obw.ToList().Count == 0)
-                    {
-                        User adfg = asd.User;
-                        db.Doctors.Attach(asd);
-                        db.Doctors.Remove(asd);
-                        db.Users.Attach(adfg);
-                        db.Users.Remove(adfg);
-                    }
-                    else
-                    {
-                        for (int i = 0; i < asd.Visits.Count; i++)
-                        {
-                            if (asd.Visits[i].Date > DateTime.Now)
-                            {
-                                db.Visits.Attach(asd.Visits[i]);
-                                db.Visits.Remove(asd.Visits[i]);
+            //                }
+            //            }
+            //            asd.User.Active = false;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        Doctor asd = _loggedUser.Logged as Doctor;
+            //        IEnumerable<Visit> obw = db.Visits.Select(d => d).Where(d => d.Doctor.Key == asd.Key);
+            //        if (obw.ToList().Count == 0)
+            //        {
+            //            User adfg = asd.User;
+            //            db.Doctors.Attach(asd);
+            //            db.Doctors.Remove(asd);
+            //            db.Users.Attach(adfg);
+            //            db.Users.Remove(adfg);
+            //        }
+            //        else
+            //        {
+            //            for (int i = 0; i < asd.Visits.Count; i++)
+            //            {
+            //                if (asd.Visits[i].Date > DateTime.Now)
+            //                {
+            //                    db.Visits.Attach(asd.Visits[i]);
+            //                    db.Visits.Remove(asd.Visits[i]);
 
-                            }
-                        }
-                        asd.User.Active = false;
-                    }
-                }
-                _loggedUser.LogOut();
-                db.Commit();
-
-
+            //                }
+            //            }
+            //            asd.User.Active = false;
+            //        }
+            //    }
+            //    _loggedUser.LogOut();
+            //    db.Commit();
 
 
-                Window k = p as Window;
-                k.Close();
-            }
-            else
-            {
-                MessageBox.Show("Hasło nieprawidłowe");
-                Pas = "";
-            }
+
+
+            //    Window k = p as Window;
+            //    k.Close();
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Hasło nieprawidłowe");
+            //    Pas = "";
+            //}
 
 
 
@@ -398,16 +398,16 @@ namespace Visits.ViewModels
 
         public ICommand RegisterSpecialization => new Command(p =>
         {
-            AddSpec a = App.Container.Resolve<AddSpec>();
-            a.ShowDialog();
-            if (!a.DialogResult.GetValueOrDefault(false))
-                return;
-            var db = _applicationDataFactory.CreateApplicationData();
+            //AddSpec a = App.Container.Resolve<AddSpec>();
+            //a.ShowDialog();
+            //if (!a.DialogResult.GetValueOrDefault(false))
+            //    return;
+            //var db = _applicationDataFactory.CreateApplicationData();
 
-            var epec = new List<Specialization>();
-            epec.AddRange(db.Specializations);
-            SpecList = epec;
-            Spec = epec.Last();
+            //var epec = new List<Specialization>();
+            //epec.AddRange(db.Specializations);
+            //SpecList = epec;
+            //Spec = epec.Last();
 
         });
 
@@ -419,37 +419,37 @@ namespace Visits.ViewModels
         public void Initialize()
         {
            
-            var db = _applicationDataFactory.CreateApplicationData();
-            if(_loggedUser.Logged is Patient)
-            {
-                _Patient = _loggedUser.Logged as Patient;  
-                _User = _Patient.User;
-                Who = false;
-            }
-            else
-            {
-                us = _loggedUser.Logged as Doctor; 
-                _User = us.User;
-                Who = true;
-                var spec = new List<Specialization>();
-                spec.AddRange(db.Specializations);
-                SpecList = spec;
-                OnPropertyChanged("PS");
-                OnPropertyChanged("PE");
-                OnPropertyChanged("WS");
-                OnPropertyChanged("WE");
-                OnPropertyChanged("SS");
-                OnPropertyChanged("SE");
-                OnPropertyChanged("CS");
-                OnPropertyChanged("CE");
-                OnPropertyChanged("PIS");
-                OnPropertyChanged("PIE");
-                OnPropertyChanged("Spec");
-            }
-            OnPropertyChanged("Pesel");
-            OnPropertyChanged("Who");
-            OnPropertyChanged("FirstName");
-            OnPropertyChanged("LastName");
+        //    var db = _applicationDataFactory.CreateApplicationData();
+        //    if(_loggedUser.Logged is Patient)
+        //    {
+        //        _Patient = _loggedUser.Logged as Patient;  
+        //        _User = _Patient.User;
+        //        Who = false;
+        //    }
+        //    else
+        //    {
+        //        us = _loggedUser.Logged as Doctor; 
+        //        _User = us.User;
+        //        Who = true;
+        //        var spec = new List<Specialization>();
+        //        spec.AddRange(db.Specializations);
+        //        SpecList = spec;
+        //        OnPropertyChanged("PS");
+        //        OnPropertyChanged("PE");
+        //        OnPropertyChanged("WS");
+        //        OnPropertyChanged("WE");
+        //        OnPropertyChanged("SS");
+        //        OnPropertyChanged("SE");
+        //        OnPropertyChanged("CS");
+        //        OnPropertyChanged("CE");
+        //        OnPropertyChanged("PIS");
+        //        OnPropertyChanged("PIE");
+        //        OnPropertyChanged("Spec");
+        //    }
+        //    OnPropertyChanged("Pesel");
+        //    OnPropertyChanged("Who");
+        //    OnPropertyChanged("FirstName");
+        //    OnPropertyChanged("LastName");
 
         }
     }

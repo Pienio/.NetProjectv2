@@ -39,47 +39,47 @@ namespace Visits.ViewModels
         }
         public bool AnyVisits => _currentWeek == null ? false : _currentWeek.Days.Length > 0;
 
-        public ICommand ChangeWeekCmd => new Command(async p => CurrentWeek = await Week.Create(CurrentDoctor, CurrentWeek.From.AddDays(int.Parse(p.ToString())), _applicationDataFactory.CreateApplicationData()));
+        //public ICommand ChangeWeekCmd => new Command(async p => CurrentWeek = await Week.Create(CurrentDoctor, CurrentWeek.From.AddDays(int.Parse(p.ToString())), _applicationDataFactory.CreateApplicationData()));
         public ICommand RegisterVisitCmd => new Command(async p =>
         {
-            var selectedDate = (DateTime)p;
-            var db = _applicationDataFactory.CreateApplicationData();
-            if (LoggedPatient == null)
-            {
+        //    var selectedDate = (DateTime)p;
+        //    var db = _applicationDataFactory.CreateApplicationData();
+        //    if (LoggedPatient == null)
+        //    {
 
-                var wnd = App.Container.Resolve<Login>();
-                wnd.ShowDialog();
-                if (_loggedUser.Logged == null)
-                    return;
+        //        var wnd = App.Container.Resolve<Login>();
+        //        wnd.ShowDialog();
+        //        if (_loggedUser.Logged == null)
+        //            return;
 
-                if (!(_loggedUser.Logged is Patient))
-                {
-                    MessageBox.Show("Tylko pacjenci mogą rejestrować się na wizyty", App.Name, MessageBoxButton.OK, MessageBoxImage.Error);
-                    _loggedUser.LogOut();
-                    return;
-                }
-            }
-            if (MessageBox.Show(string.Format("Czy na pewno chcesz zarejestrować się do {0} na termin dnia {1:dd.MM.yyyy} o godzinie {1:HH:mm}?",
-                CurrentDoctor.User.Name, selectedDate), App.ResourceAssembly.GetName().Name,
-                MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
-                return;
-            //dodac sprawdzenie, czy na pewno dany termin jest wolny
+        //        if (!(_loggedUser.Logged is Patient))
+        //        {
+        //            MessageBox.Show("Tylko pacjenci mogą rejestrować się na wizyty", App.Name, MessageBoxButton.OK, MessageBoxImage.Error);
+        //            _loggedUser.LogOut();
+        //            return;
+        //        }
+        //    }
+        //    if (MessageBox.Show(string.Format("Czy na pewno chcesz zarejestrować się do {0} na termin dnia {1:dd.MM.yyyy} o godzinie {1:HH:mm}?",
+        //        CurrentDoctor.User.Name, selectedDate), App.ResourceAssembly.GetName().Name,
+        //        MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
+        //        return;
+        //    //dodac sprawdzenie, czy na pewno dany termin jest wolny
 
-            var db1 = _applicationDataFactory.CreateTransactionalApplicationData();
-            bool contains = await Task.Run(() => (from v in db.Visits
-                                                  where v.Date == selectedDate && v.Doctor.Key == CurrentDoctor.Key
-                                                  select v).Any());
-            if (contains)
-                MessageBox.Show("Dany termin został już zajęty. Nastąpi odświeżenie widoku", App.Name, MessageBoxButton.OK, MessageBoxImage.Error);
-            else
-                await Task.Run(() => LoggedPatient.Visits.Add(new Visit(LoggedPatient, (from d in db1.Doctors where d.Key == CurrentDoctor.Key select d).First(), selectedDate)));
-            db1.Commit();
-            CurrentWeek = await Week.Create(CurrentDoctor, CurrentWeek.Days[0].Date, db1);
-            if (!contains)
-                MessageBox.Show("Wizyta została zarejestrowana", App.ResourceAssembly.GetName().Name, MessageBoxButton.OK, MessageBoxImage.Information);
+        //    var db1 = _applicationDataFactory.CreateTransactionalApplicationData();
+        //    bool contains = await Task.Run(() => (from v in db.Visits
+        //                                          where v.Date == selectedDate && v.Doctor.Key == CurrentDoctor.Key
+        //                                          select v).Any());
+        //    if (contains)
+        //        MessageBox.Show("Dany termin został już zajęty. Nastąpi odświeżenie widoku", App.Name, MessageBoxButton.OK, MessageBoxImage.Error);
+        //    else
+        //        await Task.Run(() => LoggedPatient.Visits.Add(new Visit(LoggedPatient, (from d in db1.Doctors where d.Key == CurrentDoctor.Key select d).First(), selectedDate)));
+        //    db1.Commit();
+        //    CurrentWeek = await Week.Create(CurrentDoctor, CurrentWeek.Days[0].Date, db1);
+        //    if (!contains)
+        //        MessageBox.Show("Wizyta została zarejestrowana", App.ResourceAssembly.GetName().Name, MessageBoxButton.OK, MessageBoxImage.Information);
         });
 
-        public RegVisitViewModel(ILogUserService user, IApplicationDataFactory factory) : base(factory, user)
+        public RegVisitViewModel(ILogUserService user, DataServiceReference.IDataService factory) : base(factory, user)
         {
             if (user.Logged != null && !(user.Logged is Patient))
                 throw new InvalidOperationException("Widok rejestracji wizyt jest dostępny tylko dla pacjentów i anonimowych użytkowników.");
@@ -87,9 +87,9 @@ namespace Visits.ViewModels
 
         public async Task Load()
         {
-            var first = CurrentDoctor.FirstFreeSlot;
-            first = first.AddDays(-Week.DayOfWeekNo(first));
-            CurrentWeek = await Week.Create(CurrentDoctor, first.Date, _applicationDataFactory.CreateApplicationData());
+            //var first = CurrentDoctor.FirstFreeSlot;
+            //first = first.AddDays(-Week.DayOfWeekNo(first));
+            //CurrentWeek = await Week.Create(CurrentDoctor, first.Date, _applicationDataFactory.CreateApplicationData());
         }
 
         private async Task AddVisit(Visit item, ITransactionalApplicationData context)
