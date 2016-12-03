@@ -252,6 +252,10 @@
       <Project>{a4928e46-1fba-4d87-b427-42f69e6bf52a}</Project>
       <Name>DatabaseAccess</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MailService\MailService.csproj">
+      <Project>{239BD250-2253-4238-81AE-2B253A6AFCFC}</Project>
+      <Name>MailService</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\WindowsIcons-license.txt" />

@@ -18,7 +18,7 @@ namespace DataAccessService
         public User GetUserById(int id)
         {
 
-            db.Fill();
+           // db.Fill();
             var a = db.Users.Find(id);
             return a;
         }

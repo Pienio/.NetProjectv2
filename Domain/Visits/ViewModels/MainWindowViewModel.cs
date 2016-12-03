@@ -14,6 +14,7 @@ using System.Windows.Input;
 using Visits.DataServiceReference;
 using Visits.Services;
 using Visits.Utils;
+using MailService;
 
 namespace Visits.ViewModels
 {
@@ -152,6 +153,8 @@ namespace Visits.ViewModels
 
         public ICommand ClearFilters => new Command(p =>
         {
+            MailService.MailServices a = new MailService.MailServices();
+            a.SendSimpleMail();
             SelectedSpecialization = null;
             SearchByNameText = "";
 
