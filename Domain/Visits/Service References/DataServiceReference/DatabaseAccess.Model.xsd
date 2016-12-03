@@ -38,12 +38,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="PersonName" nillable="true" type="tns:PersonName" />
-  <xs:complexType name="ArrayOfDoctor">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="Doctor" nillable="true" type="tns:Doctor" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfDoctor" nillable="true" type="tns:ArrayOfDoctor" />
   <xs:complexType name="Doctor">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Person">
@@ -114,6 +108,12 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="Specialization" nillable="true" type="tns:Specialization" />
+  <xs:complexType name="ArrayOfDoctor">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Doctor" nillable="true" type="tns:Doctor" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDoctor" nillable="true" type="tns:ArrayOfDoctor" />
   <xs:complexType name="ArrayOfSpecialization">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Specialization" nillable="true" type="tns:Specialization" />

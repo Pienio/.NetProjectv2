@@ -13,17 +13,25 @@ namespace DataAccessService
     public interface IDataService
     {
         [OperationContract]
-        User GetUserByID(int value);
-
+        User GetUserById(int value);
+        [OperationContract]
+        User GetUser(string pes,string password);
+        [OperationContract]
+        Doctor GetDoctorById(int value);
+        [OperationContract]
+        Patient GetPatientById(int value);
         [OperationContract]
         IEnumerable<Doctor> GetDoctorsList();
 
         [OperationContract]
+        IEnumerable<Doctor> SearchDoctorsList(Specialization spec,string name);
+
+        [OperationContract]
         IEnumerable<Specialization> GetSpecializationsList();
         [OperationContract]
-        IEnumerable<Visit> GetPatientVisits(int id);
+        IEnumerable<Visit> GetPatientVisits(int id,bool arc);
         [OperationContract]
-        IEnumerable<Visit> GetDoctorVisits(int id);
+        IEnumerable<Visit> GetDoctorVisits(int id,bool arc);
         [OperationContract]
         bool UpdatePatient(Patient toUpdate);
         [OperationContract]
@@ -36,6 +44,8 @@ namespace DataAccessService
         bool AddPatient(Patient toAdd);
         [OperationContract]
         bool AddDoctor(Doctor toAdd);
+        [OperationContract]
+        bool RegisterVisit(DateTime selected,int patientId,int doctorId);
 
 
 

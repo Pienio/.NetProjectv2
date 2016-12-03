@@ -15,12 +15,31 @@ namespace DataAccessService
     public class DataService : IDataService
     {
         IApplicationData db = new ApplicationDataFactory().CreateApplicationData();
-        public User GetUserByID(int id)
+        public User GetUserById(int id)
         {
             
             db.Fill();
             var a = db.Users.Find(id);
             return a;
+        }
+
+        public User GetUser(string pes, string password)
+        {
+            var a = db.Users.Select(p => p).Where(p => p.PESEL == pes && p.Password == password && p.Active);
+            var b = a.First();
+            return b;
+        }
+
+        public Doctor GetDoctorById(int value)
+        {
+            var a = db.Doctors.Select(p=>p).Where(p=>p.User.Key==value);
+            return a.First();
+        }
+
+        public Patient GetPatientById(int value)
+        {
+            var a = db.Patients.Select(p => p).Where(p => p.User.Key == value);
+            return a.First();
         }
 
         public IEnumerable<Doctor> GetDoctorsList()
@@ -30,20 +49,47 @@ namespace DataAccessService
             return a;
         }
 
+        public IEnumerable<Doctor> SearchDoctorsList(Specialization spec, string name)
+        {
+            IEnumerable<Doctor> w;
+            string namez = name?.ToLower();
+            if (spec == null)
+                w = db.Doctors.Select(p => p); //.Include(p => p.User).Include(p => p.Visits).Where(p=>p.User.Active);
+            else
+                w = db.Doctors.Select(p => p).Where(p => p.Specialization.Key == spec.Key&&p.User.Active);//.Include(p=>p.User).Include(p=>p.Visits).Include(p=>p.Specialization);
+            if (string.IsNullOrWhiteSpace(namez))
+            {
+                w = w.Select(p => p).Where(p => p.User.Active);
+
+            }
+            else
+            {
+                w = w.Select(p => p).Where(p => p.User.Name.ToString().ToLower().Contains(namez) && p.User.Active);
+            }
+            return w;
+        }
+
         public IEnumerable<Specialization> GetSpecializationsList()
         {
             IEnumerable<Specialization> a = db.Specializations.Select(p => p).Include(p => p.Doctors);
             return a;
         }
 
-        public IEnumerable<Visit> GetPatientVisits(int id)
+        public IEnumerable<Visit> GetPatientVisits(int id,bool tr)
         {
-            IEnumerable<Visit> a = db.Visits.Select(p => p).Where(p=>p.Patient.Key==id).Include(p=>p.Doctor);
+            //IEnumerable<Visit> a = db.Visits.Select(p => p).Where(p=>p.Patient.Key==id).Include(p=>p.Doctor);
+            DateTime now = DateTime.Now;
+            IEnumerable<Visit> a = from v in db.Visits.Local
+                                   where v.Patient.Key == id && (tr ? v.Date <= now : v.Date > now)
+                                   select v;
             return a;
         }
-        public IEnumerable<Visit> GetDoctorVisits(int id)
+        public IEnumerable<Visit> GetDoctorVisits(int id,bool tr)
         {
-            IEnumerable<Visit> a = db.Visits.Select(p => p).Where(p => p.Doctor.Key == id).Include(p => p.Doctor);
+            DateTime now=DateTime.Now;
+            IEnumerable<Visit> a = from v in db.Visits.Local
+                where v.Doctor.Key == id && (tr ? v.Date <= now : v.Date > now)
+                select v;//db.Visits.Select(p => p).Where(p => p.Doctor.Key == id).Include(p => p.Doctor);
             return a;
         }
 
@@ -71,43 +117,70 @@ namespace DataAccessService
 
         public bool AddPatient(Patient toAdd)
         {
+            IEnumerable<User> asd = db.Users.Select(d => d).Where(d => d.PESEL == toAdd.User.PESEL);
+            if (asd.Count() != 0)
+            {
+                return false;
+                // MessageBox.Show("Istnieje juz użytkownik o takim peselu");
+                // return;
+            }
             var a = new ApplicationDataFactory().CreateTransactionalApplicationData();
-            a.Patients.Add(toAdd);
+            Patient c=new Patient();
+            c.User = new User();
+            c.User.Name= new PersonName();
+            c.User.Kind=DocOrPat.Patient;
+            c.User.Name = toAdd.User.Name;
+            c.User.PESEL = toAdd.User.PESEL;
+            c.User.Password = toAdd.User.Password;
+            
+            a.Patients.Add(c);
             a.Commit();
             return true;
         }
 
         public bool AddDoctor(Doctor toAdd)
         {
+            IEnumerable<User> asd = db.Users.Select(d => d).Where(d => d.PESEL == toAdd.User.PESEL);
+            if (asd.Count() != 0)
+            {
+                return false;
+                // MessageBox.Show("Istnieje juz użytkownik o takim peselu");
+                // return;
+            }
             var a = new ApplicationDataFactory().CreateTransactionalApplicationData();
-            Doctor d=new Doctor();
-            d.User=new User();
-            d.User.Kind=DocOrPat.Doctor;
-            d.User.Name=new PersonName();
-            d.User.Name.Name = "a";
-            d.User.Name.Surname = "b";
-            d.User.PESEL = "12341234123";
-            d.User.Password="popaospaodpsa";
-            d.Specialization=new Specialization("pupa");
-            d.MondayWorkingTime=new WorkingTime();
-            d.MondayWorkingTime.Start = 1;
-            d.MondayWorkingTime.End = 2;
-            d.TuesdayWorkingTime=new WorkingTime();
-            d.TuesdayWorkingTime.Start = 1;
-            d.TuesdayWorkingTime.End = 2;
-            d.WednesdayWorkingTime = new WorkingTime();
-            d.WednesdayWorkingTime.Start = 1;
-            d.WednesdayWorkingTime.End=2; 
-            d.ThursdayWorkingTime = new WorkingTime();
-            d.ThursdayWorkingTime.Start = 1;
-            d.ThursdayWorkingTime.End = 2;
-            d.FridayWorkingTime = new WorkingTime();
-            d.FridayWorkingTime.Start = 1;
-            d.FridayWorkingTime.End = 2;
+            //Doctor d=new Doctor();
+            //d.User=new User();
+            //d.User.Kind=DocOrPat.Doctor;
+            //d.User.Name=new PersonName();
+            //d.User.Name.Name = "a";
+            //d.User.Name.Surname = "b";
+            //d.User.PESEL = "12341234123";
+            //d.User.Password="popaospaodpsa";
+            //d.Specialization=new Specialization("pupa");
+            //d.MondayWorkingTime=new WorkingTime();
+            //d.MondayWorkingTime.Start = 1;
+            //d.MondayWorkingTime.End = 2;
+            //d.TuesdayWorkingTime=new WorkingTime();
+            //d.TuesdayWorkingTime.Start = 1;
+            //d.TuesdayWorkingTime.End = 2;
+            //d.WednesdayWorkingTime = new WorkingTime();
+            //d.WednesdayWorkingTime.Start = 1;
+            //d.WednesdayWorkingTime.End=2; 
+            //d.ThursdayWorkingTime = new WorkingTime();
+            //d.ThursdayWorkingTime.Start = 1;
+            //d.ThursdayWorkingTime.End = 2;
+            //d.FridayWorkingTime = new WorkingTime();
+            //d.FridayWorkingTime.Start = 1;
+            //d.FridayWorkingTime.End = 2;
 
-            a.Doctors.Add(d);
+            a.Doctors.Add(toAdd);
             a.Commit();
             return true;
+        }
+
+        public bool RegisterVisit(DateTime selected, int patientId, int doctorId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

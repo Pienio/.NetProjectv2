@@ -27,7 +27,7 @@ namespace Visits.ViewModels
             set { _pesel = value; OnPropertyChanged(nameof(Pesel)); }
         }
 
-        public LoginViewModel(ILogUserService user, DataServiceReference.IDataService factory) : base(factory, user) { }
+        public LoginViewModel(ILogUserService user) : base(user) { }
 
         public ICommand Close => new Command(p =>
         {
@@ -37,17 +37,17 @@ namespace Visits.ViewModels
         public ICommand LoginUser => new Command(async p =>
         {
             //var db = _applicationDataFactory.CreateApplicationData();
-            //string pps = PasswordHasher.CreateHash(((PasswordBox)p).Password);
-            //var e = db.Users.Where(s => s.PESEL == Pesel && s.Password == pps&&s.Active).ToList();
-            //if (e.Count != 0)
-            //{
-            //    await _loggedUser.LogIn(e.First().PESEL, e.First().Password, db);       
-            //    OnCloseRequested(true);
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Nieprawidłowy login lub hasło", App.Name, MessageBoxButton.OK, MessageBoxImage.Error);
-            //}
+            string pps = PasswordHasher.CreateHash(((PasswordBox)p).Password);
+            var e = _service.GetUser(Pesel, pps);
+            if (e != null)
+            {
+                await _loggedUser.LogIn(e.PESEL, e.Password, _service);
+                OnCloseRequested(true);
+            }
+            else
+            {
+                MessageBox.Show("Nieprawidłowy login lub hasło", App.Name, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         });
 
         protected virtual void OnCloseRequested(bool dialogResult)

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Visits.DataServiceReference;
 
 namespace Visits.Services
 {
@@ -15,7 +16,7 @@ namespace Visits.Services
         event EventHandler LoggedChanged;
 
         void LogIn(Person user);
-        Task LogIn(string PESEL, string password, IApplicationData db);
+        Task LogIn(string PESEL, string password, IDataService db);
         void LogOut();
     }
 }

@@ -25,7 +25,7 @@ namespace Visits.ViewModels
         private string _pas = "";
         private bool _Who;
 
-        public EditViewModel(ILogUserService user, DataServiceReference.IDataService factory) : base(factory, user) { }
+        public EditViewModel(ILogUserService user) : base(user) { }
         
         public bool Who
         {

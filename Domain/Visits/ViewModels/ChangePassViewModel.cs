@@ -21,7 +21,7 @@ namespace Visits.ViewModels
         private string _pas = "";
         private string _pasp = "";
 
-        public ChangePassViewModel(ILogUserService user, DataServiceReference.IDataService factory) : base(factory, user) { }
+        public ChangePassViewModel(ILogUserService user) : base(user) { }
 
         public string Error
         {

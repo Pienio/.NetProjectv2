@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Visits.DataServiceReference;
 using Visits.EventArgsTypes;
 using Visits.Services;
 
@@ -12,14 +13,14 @@ namespace Visits.ViewModels
 {
     public abstract class ViewModel : INotifyPropertyChanged
     {
-        protected DataServiceReference.IDataService _service;
-        protected ILogUserService _loggedUser;
+        protected static DataServiceReference.IDataService _service = new DataServiceClient();
+        protected  ILogUserService _loggedUser;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected ViewModel(DataServiceReference.IDataService factory, ILogUserService userLog)
+        protected ViewModel( ILogUserService userLog)
         {
-            _service = factory;
+            //_service = factory;
             _loggedUser = userLog;
         }
 

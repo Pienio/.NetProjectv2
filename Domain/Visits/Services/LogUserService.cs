@@ -6,6 +6,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Visits.DataServiceReference;
 
 namespace Visits.Services
 {
@@ -28,20 +29,14 @@ namespace Visits.Services
             OnLoggedChanged();
         }
 
-        public async Task LogIn(string PESEL, string password, IApplicationData db)
+        public async Task LogIn(string PESEL, string password, IDataService db)
         {
-            var user = await Task.Run( () => (from u in db.Users
-                                             where u.PESEL == PESEL && u.Password == password&&u.Active
-                                             select u).First());
+            var user = await Task.Run( () => (db.GetUser(PESEL,password)));
             Person person;
             if (user.Kind == DocOrPat.Doctor)
-                person = await Task.Run(() => Logged =(from d in db.Doctors
-                                                        where d.User.Key == user.Key
-                                                        select d).First());
+                person = await Task.Run(() => Logged =(db.GetDoctorById((int)user.Key)));
             else //Kind == Person
-                person = await Task.Run(() => Logged = (from p in db.Patients
-                                                        where p.User.Key == user.Key
-                                                        select p).First());
+                person = await Task.Run(() => Logged = (db.GetPatientById((int)user.Key)));
             Logged = person;
             OnLoggedChanged();
         }

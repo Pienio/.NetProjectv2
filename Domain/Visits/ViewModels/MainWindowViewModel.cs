@@ -55,7 +55,7 @@ namespace Visits.ViewModels
 
         public bool AnyDoctors => _doctors == null ? false : _doctors.Count() > 0;
 
-        public MainWindowViewModel(ILogUserService user, DataServiceReference.IDataService factory) : base(factory, user)
+        public MainWindowViewModel(ILogUserService user) : base(user)
         {
             _loggedUser.LoggedChanged += (o, e) => OnPropertyChanged(nameof(LoggedUserName));
         }
@@ -63,54 +63,55 @@ namespace Visits.ViewModels
         public ICommand LoginCmd => new Command(p =>
         {
 
-            //if (_loggedUser.Logged == null)
-            //{
-            //    var db = _applicationDataFactory.CreateApplicationData();
-            //    var wnd = App.Container.Resolve<Login>();
-            //    wnd.ShowDialog();
+            if (_loggedUser.Logged == null)
+            {
+                
+                var wnd = App.Container.Resolve<Login>();
+                wnd.ShowDialog();
 
-            //}
-            //else
-            //{
-            //    _loggedUser.LogOut();
-            //}
-            //OnPropertyChanged(nameof(LoggedUserName));
+            }
+            else
+            {
+                _loggedUser.LogOut();
+            }
+            OnPropertyChanged(nameof(LoggedUserName));
         });
 
         public ICommand RegisterCmd => new Command(parameter =>
         {
 
-            //var lekpac = new LekPac();
-            //lekpac.ShowDialog();
-            //if (lekpac.GetResult() != 0)
-            //{
-            //    var db = _applicationDataFactory.CreateApplicationData();
-            //    var wnd = App.Container.Resolve<Register>();
-            //    if (lekpac.GetResult() == 2)
-            //        wnd.WH = false;
-            //    else
-            //        wnd.WH = true;
-            //    wnd.Show();
-            //}
+            var lekpac = new LekPac();
+            lekpac.ShowDialog();
+            if (lekpac.GetResult() != 0)
+            {
+               
+                var wnd = App.Container.Resolve<Register>();
+                if (lekpac.GetResult() == 2)
+                    wnd.WH = false;
+                else
+                    wnd.WH = true;
+                wnd.Show();
+            }
         });
 
         public ICommand RegisterVisitCmd => new Command(parameter =>
         {
         //    var db = _applicationDataFactory.CreateApplicationData();
         //    var wnd = App.Container.Resolve<RegVisit>();
-        //    wnd.SelectedDoctor = SelectedDoctor;
+        //   wnd.SelectedDoctor = SelectedDoctor;
         //    wnd.Show();
         //}, p =>
         //{
         //    return !(_loggedUser.Logged is Doctor) && SelectedDoctor != null;
         });
 
-
-        public ICommand SearchCmd => new Command(async p =>
+        //async 
+        public ICommand SearchCmd => new Command(p =>
         {
+            Doctors = _service.SearchDoctorsList(SelectedSpecialization, SearchByNameText);
             //var db = _applicationDataFactory.CreateApplicationData();
             //db.Doctors.Load();
-            
+
             //IList<Doctor> doctors;
             //string name = SearchByNameText?.ToLower();
             //if (SelectedSpecialization == null)
@@ -144,8 +145,8 @@ namespace Visits.ViewModels
             //DateTime now = DateTime.Now;
 
             //db.Visits.Load();
-            //var wnd = App.Container.Resolve<WizList>();
-            //wnd.ShowDialog();
+            var wnd = App.Container.Resolve<WizList>();
+            wnd.ShowDialog();
         });
 
         public ICommand ClearFilters => new Command(p =>
@@ -160,7 +161,7 @@ namespace Visits.ViewModels
         {
             
             Specializations = _service.GetSpecializationsList();
-
+            Doctors = _service.GetDoctorsList();
             //var db = _applicationDataFactory.CreateApplicationData();
 
             //db.Specializations.Load();

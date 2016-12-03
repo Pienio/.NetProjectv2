@@ -25,7 +25,7 @@ namespace Visits.ViewModels
             set { _specialization = value; OnPropertyChanged(nameof(Specialization)); }
         }
 
-        public AddSpecViewModel(ILogUserService user, DataServiceReference.IDataService factory) : base(factory, user) { }
+        public AddSpecViewModel(ILogUserService user) : base(user) { }
 
         public ICommand AcceptCmd => new Command(async p =>
         {

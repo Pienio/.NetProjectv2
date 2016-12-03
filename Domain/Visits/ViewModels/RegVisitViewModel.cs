@@ -79,7 +79,7 @@ namespace Visits.ViewModels
         //        MessageBox.Show("Wizyta została zarejestrowana", App.ResourceAssembly.GetName().Name, MessageBoxButton.OK, MessageBoxImage.Information);
         });
 
-        public RegVisitViewModel(ILogUserService user, DataServiceReference.IDataService factory) : base(factory, user)
+        public RegVisitViewModel(ILogUserService user) : base(user)
         {
             if (user.Logged != null && !(user.Logged is Patient))
                 throw new InvalidOperationException("Widok rejestracji wizyt jest dostępny tylko dla pacjentów i anonimowych użytkowników.");

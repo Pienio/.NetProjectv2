@@ -27,7 +27,7 @@ namespace Visits.ViewModels
         private bool _Who;
 
 
-        public RegisterViewModel(ILogUserService user, DataServiceReference.IDataService factory) : base(factory, user) { }
+        public RegisterViewModel(ILogUserService user) : base( user) { }
 
         public bool Who
         {
@@ -44,39 +44,40 @@ namespace Visits.ViewModels
         {
             //var db = _applicationDataFactory.CreateTransactionalApplicationData();
 
-            //Person a;
-           
-            //    if (!_Who)
-            //    {
-            //    IEnumerable<User> asd = db.Users.Select(d => d).Where(d => d.PESEL == _Patient.User.PESEL);
-            //             if (asd.Count() != 0)
-            //             {
-            //                 MessageBox.Show("Istnieje juz użytkownik o takim peselu");
-            //                 return;
-            //                }
-                   
+            Person a;
 
-            //        await AddPatient(_Patient, db);
-            //        a = _Patient;
-            //    }
-            //    else
-            //    {
-            //            IEnumerable<User> asd = db.Users.Select(d => d).Where(d => d.PESEL == us.User.PESEL);
-            //             if (asd.Count() != 0)
-            //                 {
-            //              MessageBox.Show("Istnieje juz użytkownik o takim peselu");
-            //             return;
-            //             }
-            //    await AddDoctor(us, db);
-            //        a = us;
-            //    }
-
-            //    db.Commit();
-            //    _loggedUser.LogIn(a);
+            if (!_Who)
+            {
+                //IEnumerable<User> asd = db.Users.Select(d => d).Where(d => d.PESEL == _Patient.User.PESEL);
+                //if (asd.Count() != 0)
+                //{
+                //    MessageBox.Show("Istnieje juz użytkownik o takim peselu");
+                //    return;
+                //}
 
 
-            //Window k = p as Window;
-            //k.Close();
+                await AddPatient(_Patient);
+               // await 
+                a = _Patient;
+            }
+            else
+            {
+                //IEnumerable<User> asd = db.Users.Select(d => d).Where(d => d.PESEL == us.User.PESEL);
+                //if (asd.Count() != 0)
+                //{
+                //    MessageBox.Show("Istnieje juz użytkownik o takim peselu");
+                //    return;
+                //}
+                await AddDoctor(us);
+                a = us;
+            }
+
+          //  db.Commit();
+            _loggedUser.LogIn(a);
+
+
+            Window k = p as Window;
+            k.Close();
 
 
         });
@@ -335,14 +336,19 @@ namespace Visits.ViewModels
                 OnPropertyChanged("PIE");
             }
         }
-        public async Task AddPatient(Patient item, ITransactionalApplicationData context)
+        public async Task AddPatient(Patient item)
         {
-            await Task.Run(() => context.Patients.Add(item));
+          var c =   await Task.Run(() => _service.AddPatient(item));
+            if(!c)
+                MessageBox.Show("Istnieje juz użytkownik o takim peselu");
         }
-        public async Task AddDoctor(Doctor item, ITransactionalApplicationData context)
+        public async Task AddDoctor(Doctor item)
         {
-            await App.Current.Dispatcher.BeginInvoke((Action)(() => { context.Doctors.Add(item); }));
-            
+            var c = await Task.Run(() => _service.AddDoctor(item));
+            if (!c)
+                MessageBox.Show("Istnieje juz użytkownik o takim peselu");
+            // await App.Current.Dispatcher.BeginInvoke((Action)(() => { _service.AddDoctor(item); }));
+
         }
     
         public ICommand ChangePass => new Command(p =>
@@ -369,50 +375,50 @@ namespace Visits.ViewModels
         });
         public void Initialize(bool Wh)
         {
-        //    _User = new User();
-        //    _User.Name = new PersonName();
-        //    _Who = Wh;
+            _User = new User();
+            _User.Name = new PersonName();
+            _Who = Wh;
 
-        //    if (!Wh)
-        //    {
-        //        _Patient = new Patient();
-        //        _Patient.User = _User;
-        //        _Patient.User.Kind = DocOrPat.Patient;
-               
-        //        OnPropertyChanged("FirstName");
-        //        OnPropertyChanged("LastName");
-        //    }
-        //    else
-        //    {
-        //        us = new Doctor();
-        //        us.User = _User;
-        //        us.MondayWorkingTime = new WorkingTime();
-        //        us.TuesdayWorkingTime = new WorkingTime();
-        //        us.ThursdayWorkingTime = new WorkingTime();
-        //        us.WednesdayWorkingTime = new WorkingTime();
-        //        us.FridayWorkingTime = new WorkingTime();
-        //        us.Specialization = new Specialization();
-        //        us.User.Kind = DocOrPat.Doctor;
+            if (!Wh)
+            {
+                _Patient = new Patient();
+                _Patient.User = _User;
+                _Patient.User.Kind = DocOrPat.Patient;
 
-        //        var db = _applicationDataFactory.CreateApplicationData();
-               
-        //        OnPropertyChanged("FirstName");
-        //        OnPropertyChanged("LastName");
-        //        OnPropertyChanged("PS");
-        //        OnPropertyChanged("PE");
-        //        OnPropertyChanged("WS");
-        //        OnPropertyChanged("WE");
-        //        OnPropertyChanged("SS");
-        //        OnPropertyChanged("SE");
-        //        OnPropertyChanged("CS");
-        //        OnPropertyChanged("CE");
-        //        OnPropertyChanged("PIS");
-        //        OnPropertyChanged("PIE");
-        //        Load();
+                OnPropertyChanged("FirstName");
+                OnPropertyChanged("LastName");
+            }
+            else
+            {
+                us = new Doctor();
+                us.User = _User;
+                us.MondayWorkingTime = new WorkingTime();
+                us.TuesdayWorkingTime = new WorkingTime();
+                us.ThursdayWorkingTime = new WorkingTime();
+                us.WednesdayWorkingTime = new WorkingTime();
+                us.FridayWorkingTime = new WorkingTime();
+                us.Specialization = new Specialization();
+                us.User.Kind = DocOrPat.Doctor;
 
-        //    }
-        //    Pesel = "";
-        //    OnPropertyChanged("Who");
+               // var db = _applicationDataFactory.CreateApplicationData();
+
+                OnPropertyChanged("FirstName");
+                OnPropertyChanged("LastName");
+                OnPropertyChanged("PS");
+                OnPropertyChanged("PE");
+                OnPropertyChanged("WS");
+                OnPropertyChanged("WE");
+                OnPropertyChanged("SS");
+                OnPropertyChanged("SE");
+                OnPropertyChanged("CS");
+                OnPropertyChanged("CE");
+                OnPropertyChanged("PIS");
+                OnPropertyChanged("PIE");
+                Load();
+
+            }
+            Pesel = "";
+            OnPropertyChanged("Who");
 
         }
         public void  Load()

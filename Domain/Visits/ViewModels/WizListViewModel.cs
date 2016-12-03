@@ -19,7 +19,7 @@ namespace Visits.ViewModels
         private IEnumerable<Visit> _visits;
         private VisitsType _selectedType;
 
-        public WizListViewModel(ILogUserService user, DataServiceReference.IDataService factory) : base(factory, user) { }
+        public WizListViewModel(ILogUserService user) : base(user) { }
 
         public Person LoggedUser => _loggedUser.Logged;
         public bool AnyVisits => _visits == null ? false : _visits.Count() > 0;
@@ -70,17 +70,19 @@ namespace Visits.ViewModels
         private async Task SetVisits()
         {
             //var db = _applicationDataFactory.CreateApplicationData();
-            //DateTime now = DateTime.Now;
-            //IEnumerable<Visit> visits = null;
-            //if (_loggedUser.Logged is Patient)
-            //    visits = await Task.Run(() => from v in db.Visits.Local
-            //                                where v.Patient.Key == _loggedUser.Logged.Key && (SelectedType == VisitsType.Archiwalne ? v.Date <= now : v.Date > now)
-            //                                select v);
-            //else if (_loggedUser.Logged is Doctor)
-            //    visits = await Task.Run(() => from v in db.Visits.Local
-            //                                where v.Doctor.Key == _loggedUser.Logged.Key && (SelectedType == VisitsType.Archiwalne ? v.Date <= now : v.Date > now)
-            //                                select v);
-            //Visits = visits;
+            DateTime now = DateTime.Now;
+            IEnumerable<Visit> visits = null;
+            if (_loggedUser.Logged is Patient)
+                //visits = await Task.Run(() => from v in db.Visits.Local
+                //                              where v.Patient.Key == _loggedUser.Logged.Key && (SelectedType == VisitsType.Archiwalne ? v.Date <= now : v.Date > now)
+                //                              select v);
+                visits = await Task.Run(() => _service.GetPatientVisits((int)_loggedUser.Logged.Key, (SelectedType == VisitsType.Archiwalne ?true:false)));
+            else if (_loggedUser.Logged is Doctor)
+                //visits = await Task.Run(() => from v in db.Visits.Local
+                //                              where v.Doctor.Key == _loggedUser.Logged.Key && (SelectedType == VisitsType.Archiwalne ? v.Date <= now : v.Date > now)
+                //                              select v);
+                visits = await Task.Run(() => _service.GetDoctorVisits((int)_loggedUser.Logged.Key, (SelectedType == VisitsType.Archiwalne ? true : false)));
+            Visits = visits;
         }
 
         public enum VisitsType { Planowane, Archiwalne }

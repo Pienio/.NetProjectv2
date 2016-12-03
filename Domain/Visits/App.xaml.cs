@@ -19,7 +19,7 @@ namespace Visits
     {
         public static string Name => ResourceAssembly.GetName().Name;
         public static IUnityContainer Container { get; private set; }
-        private DataServiceReference.IDataService _factory;
+      //  private DataServiceReference.IDataService _factory;
 
         private void Application_Exit(object sender, ExitEventArgs e)
         {
@@ -34,7 +34,7 @@ namespace Visits
             ContainerInitializer.Initialize(Container);
             Container.RegisterInstance<ILogUserService>(new LogUserService());
             //_factory = new DataServiceClient();
-            _factory = Container.Resolve<IDataService>();
+            //_factory = Container.Resolve<IDataService>();
           //  _factory.CreateApplicationData().Fill();
 
             MainWindow = Container.Resolve<MainWindow>();
