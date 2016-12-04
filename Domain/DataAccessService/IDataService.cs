@@ -4,6 +4,8 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using System.Threading.Tasks;
+using DatabaseAccess;
 using DatabaseAccess.Model;
 
 namespace DataAccessService
@@ -19,7 +21,11 @@ namespace DataAccessService
         [OperationContract]
         Doctor GetDoctorById(int value);
         [OperationContract]
+        Doctor GetDoctorByUserId(int value);
+        [OperationContract]
         Patient GetPatientById(int value);
+        [OperationContract]
+        Patient GetPatientByUserId(int value);
         [OperationContract]
         void Fill();
         [OperationContract]
@@ -60,6 +66,12 @@ namespace DataAccessService
         bool AddRequest(ProfileRequest toAdd);
         [OperationContract]
         bool RegisterVisit(DateTime selected,int patientId,int doctorId);
+        [OperationContract]
+        DateTime GetFirstFreeSlot(int doctorId);
+        [OperationContract]
+        IEnumerable<Patient> GetPatients();
+        //[OperationContract]
+        //Week GetNewWeek(Doctor doc, DateTime monday);
         [OperationContract]
         new void Dispose();
 

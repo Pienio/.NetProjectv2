@@ -220,6 +220,7 @@
     <None Include="Properties\DataSources\DatabaseAccess.Model.Specialization.datasource" />
     <None Include="Properties\DataSources\DatabaseAccess.Model.User.datasource" />
     <None Include="Properties\DataSources\DatabaseAccess.Model.Visit.datasource" />
+    <None Include="Properties\DataSources\DatabaseAccess.Model.Week.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

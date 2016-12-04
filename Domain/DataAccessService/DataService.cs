@@ -5,13 +5,14 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using System.Threading.Tasks;
 using DatabaseAccess;
 using DatabaseAccess.Model;
 
 namespace DataAccessService
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in both code and config file together.
-
+   
     public class DataService : IDataService
     {
         ITransactionalApplicationData db = new ApplicationDataFactory().CreateTransactionalApplicationData(false);
@@ -31,16 +32,40 @@ namespace DataAccessService
 
         public Doctor GetDoctorById(int value)
         {
-            var a = db.Doctors.Select(p => p).Where(p => p.User.Key == value);
-            var c = a.First();
+            var a = db.Doctors.Select(p=>p).Where(p=>p.Key==value).Include(p=>p.User).Include(p=>p.Specialization);
+            Doctor c = null;
+            if(a!=null)
+                c = a.First();
+            
+            return c;
+        }
+
+        public Doctor GetDoctorByUserId(int value)
+        {
+            var a = db.Doctors.Select(p => p).Where(p => p.User.Key == value).Include(p => p.User).Include(p=>p.Visits).Include(p=>p.Specialization);
+            Doctor c = null;
+            if (a != null)
+                c = a.First();
 
             return c;
         }
 
         public Patient GetPatientById(int value)
         {
-            var a = db.Patients.Select(p => p).Where(p => p.User.Key == value);
-            return a.First();
+            var a = db.Patients.Select(p => p).Where(p => p.Key == value).Include(p=>p.User);
+            Patient c = null;
+            if (a != null)
+                c = a.First();
+            return c;
+        }
+
+        public Patient GetPatientByUserId(int value)
+        {
+            var a = db.Patients.Select(p => p).Where(p => p.User.Key == value).Include(p => p.User);
+            Patient c = null;
+            if (a != null)
+                c = a.First();
+            return c;
         }
 
         public void Fill()
@@ -85,17 +110,27 @@ namespace DataAccessService
         {
             //IEnumerable<Visit> a = db.Visits.Select(p => p).Where(p=>p.Patient.Key==id).Include(p=>p.Doctor);
             DateTime now = DateTime.Now;
-            IEnumerable<Visit> a = from v in db.Visits.Local
-                                   where v.Patient.Key == id && (tr ? v.Date <= now : v.Date > now)
-                                   select v;
+            //IEnumerable<Visit> a = from v in db.Visits
+            //                       where v.Patient.Key == id && (tr ? v.Date <= now : v.Date > now)
+            //                       select v;
+            IEnumerable<Visit> a =
+                db.Visits.Select(p => p)
+                    .Where(p => p.Patient.Key == id && (tr ? p.Date <= now : p.Date > now))
+                    .Include(p => p.Doctor);
+            //var c = db.Patients.Select(p => p).Where(p => p.Key == id).Include(p => p.Visits).First();
+            //IEnumerable<Visit> a = c.Visits;
             return a;
         }
         public IEnumerable<Visit> GetDoctorVisits(int id, bool tr)
         {
-            DateTime now = DateTime.Now;
-            IEnumerable<Visit> a = from v in db.Visits
-                                   where v.Doctor.Key == id && (tr ? v.Date <= now : v.Date > now)
-                                   select v;//db.Visits.Select(p => p).Where(p => p.Doctor.Key == id).Include(p => p.Doctor);
+            DateTime now=DateTime.Now;
+            //IEnumerable<Visit> a = from v in db.Visits
+            //    where v.Doctor.Key == id && (tr ? v.Date <= now : v.Date > now)
+            //    select v;//db.Visits.Select(p => p).Where(p => p.Doctor.Key == id).Include(p => p.Doctor);
+            IEnumerable<Visit> a =
+              db.Visits.Select(p => p)
+                  .Where(p => p.Doctor.Key == id && (tr ? p.Date <= now : p.Date > now))
+                  .Include(p => p.Patient);
             return a;
         }
         public IEnumerable<ProfileRequest> GetRequests()
@@ -143,7 +178,7 @@ namespace DataAccessService
         {
             db.BeginTransaction();
             var o = db.Doctors.Find(toUpdate.Key);
-            // toUpdate.Specialization.Doctors.Add(toUpdate);
+           // toUpdate.Specialization.Doctors.Add(toUpdate);
             o.User.Name = toUpdate.User.Name;
             o.User.PESEL = toUpdate.User.PESEL;
             o.User.Password = toUpdate.User.Password;
@@ -154,7 +189,7 @@ namespace DataAccessService
             o.TuesdayWorkingTime = toUpdate.TuesdayWorkingTime;
             o.ThursdayWorkingTime = toUpdate.ThursdayWorkingTime;
             o.Visits = toUpdate.Visits;
-
+            
             try
             {
                 db.Commit();
@@ -175,7 +210,7 @@ namespace DataAccessService
             {
                 db.Commit();
                 return true;
-            }
+        }
             catch (Exception)
             {
                 return false;
@@ -220,12 +255,12 @@ namespace DataAccessService
             }
         }
 
-
+        
 
         public bool DeletePatient(Patient toDelete)
         {
             db.BeginTransaction();
-            // Patient asd = _loggedUser.Logged as Patient;
+           // Patient asd = _loggedUser.Logged as Patient;
             var b = db.Patients.Find(toDelete.Key);
             IEnumerable<Visit> obw = GetPatientVisits((int)b.Key, true);
             if (obw == null || obw.ToList().Count == 0)
@@ -309,13 +344,13 @@ namespace DataAccessService
             c.User = new User();
             c.User.Name = new PersonName();
             c.User.Kind = DocOrPat.Patient;
-            c.User.Name = toAdd.User.Name;
-            // c.User.Name.Name = "asd";
-            //  c.User.Name.Surname = "aas";
+             c.User.Name = toAdd.User.Name;
+           // c.User.Name.Name = "asd";
+          //  c.User.Name.Surname = "aas";
             c.User.PESEL = toAdd.User.PESEL;
             c.User.Password = toAdd.User.Password;
-            // c.Visits=new List<Visit>();
-
+           // c.Visits=new List<Visit>();
+            
 
             db.Patients.Add(toAdd);
             db.Commit();
@@ -357,7 +392,7 @@ namespace DataAccessService
             //d.FridayWorkingTime.Start = 1;
             //d.FridayWorkingTime.End = 2;
             toAdd.Specialization = this.db.Specializations.Find(toAdd.Specialization.Key);
-
+            
             db.Doctors.Add(toAdd);
             db.Commit();
             return true;
@@ -387,18 +422,58 @@ namespace DataAccessService
                 if (db.Requests.Any(r => r.NewProfile.Key == toAdd.NewProfile.Key || r.NewProfile.User.Key == toAdd.NewProfile.User.Key))
                     return false;   
             db.Requests.Add(toAdd);
-            db.Commit();
-            return true;
-        }
+                db.Commit();
+                return true;
+            }
 
         public bool RegisterVisit(DateTime selected, int patientId, int doctorId)
         {
-            throw new NotImplementedException();
+            var a = db.Patients.Select(p=>p).Where(p=>p.Key==patientId).Include(p=>p.User).Include(p=>p.Visits).First();
+            var b = db.Doctors.Select(p => p).Where(p => p.Key == doctorId).Include(p => p.User).Include(p=>p.Specialization).Include(p => p.Visits).First();
+            b.FirstFreeSlot = GetFirstFreeSlot((int)b.Key);
+            db.BeginTransaction();
+            var c = new Visit(a, b, selected);
+            a.Visits.Add(c);
+            b.Visits.Add(c);
+            db.Visits.Add(c);
+            
+            try
+            {
+                db.Commit();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
+
+        public DateTime GetFirstFreeSlot(int doctorId)
+        {
+            DoctorExtension doc =new DoctorExtension(db.Doctors.Find(doctorId));
+            return doc.GetFirstFreeSlot();
+        }
+
+        public IEnumerable<Patient> GetPatients()
+        {
+            IEnumerable<Patient> a = db.Patients.Select(p => p).Include(p => p.User).Include(p => p.Visits);
+            return a;
+        }
+
+        //public Week GetNewWeek(Doctor doc, DateTime monday)
+        //{
+
+        //    Week a = WeekExt.Create(doc, monday);
+        //    return a;
+        //}
+
 
         public void Dispose()
         {
             db.Dispose();
         }
+
+
+
     }
 }

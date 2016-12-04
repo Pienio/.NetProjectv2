@@ -159,6 +159,7 @@ namespace Visits.ViewModels
             SearchByNameText = "";
 
             SearchCmd.Execute(null);
+            
         });
 
         public void Initialize()
@@ -166,6 +167,10 @@ namespace Visits.ViewModels
             _service.Fill();
             Specializations = _service.GetSpecializationsList();
             Doctors = _service.GetDoctorsList();
+            foreach (var VARIABLE in Doctors)
+            {
+                VARIABLE.FirstFreeSlot = _service.GetFirstFreeSlot((int)VARIABLE.Key);
+            }
             //var db = _applicationDataFactory.CreateApplicationData();
 
             //db.Specializations.Load();
