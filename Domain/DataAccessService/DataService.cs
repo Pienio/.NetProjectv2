@@ -175,7 +175,7 @@ namespace DataAccessService
             {
                 db.Commit();
                 return true;
-            }
+        }
             catch (Exception)
             {
                 return false;
