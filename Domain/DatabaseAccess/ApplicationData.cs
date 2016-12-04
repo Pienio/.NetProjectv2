@@ -17,17 +17,18 @@ namespace DatabaseAccess.Model
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Specialization> Specializations { get; set; }
         public DbSet<Visit> Visits { get; set; }
+        public DbSet<ProfileRequest> Requests { get; set; }
 
         public bool IsTransactionRunning { get; private set; } = false;
         public bool CommitUnfinishedTransaction { get; set; } = true;
 
         public bool IsDisposed { get; set; } = false;
         public bool ToCommit { get; set; } = true;
-        
+
         public ApplicationData(bool runTransaction) : base()
         {
             Database.SetInitializer(new DropCreateDatabaseIfModelChanges<ApplicationData>());
-          
+
             Configuration.ProxyCreationEnabled = false;
             var objectContext = ((IObjectContextAdapter)this).ObjectContext;
             objectContext.ContextOptions.LazyLoadingEnabled = false;
@@ -43,10 +44,10 @@ namespace DatabaseAccess.Model
             base.OnModelCreating(modelBuilder);
             //modelBuilder.Entity<Visit>().HasRequired(t=>t.Patient).WithRequiredPrincipal().WillCascadeOnDelete(false);//.WithRequired().WillCascadeOnDelete(false);
             //modelBuilder.Entity<Visit>().HasRequired(p => p.Patient).WithOptional(p => p.Visits);
-            modelBuilder.Entity<Doctor>().HasMany(p=>p.Visits).WithRequired().WillCascadeOnDelete(false);
+            modelBuilder.Entity<Doctor>().HasMany(p => p.Visits).WithRequired().WillCascadeOnDelete(false);
             modelBuilder.Entity<Patient>().HasMany(p => p.Visits).WithRequired().WillCascadeOnDelete(false);
         }
-        
+
         public void Fill()
         {
             Specialization[] specs = {
@@ -99,15 +100,23 @@ namespace DatabaseAccess.Model
                 }
                 this.SaveChanges();
             }
+            if (!Users.Any(u => u.Name.Name == "" && u.Name.Surname == ""))
+            {
+
+                SaveChanges();
+            }
 
         }
-
-
-
+        
         public void BeginTransaction()
         {
             if (IsTransactionRunning)
-                throw new InvalidOperationException("Nie można rozpocząć transakcji, ponieważ poprzednia nie została zakończona.");
+            {
+                if (CommitUnfinishedTransaction)
+                    Commit();
+                else
+                    Rollback();
+            }
             Database.BeginTransaction();
             IsTransactionRunning = true;
         }
@@ -116,22 +125,21 @@ namespace DatabaseAccess.Model
         {
             if (IsTransactionRunning)
             {
-                if(ToCommit)
+                if (ToCommit)
                 {
                     try
                     {
                         SaveChanges();
-                        Database.CurrentTransaction.Commit();
                         IsTransactionRunning = false;
+                        Database.CurrentTransaction.Commit();
                     }
                     catch
                     {
                         Database.CurrentTransaction.Rollback();
-                        IsTransactionRunning = false;
                         throw;
                     }
                 }
-               
+
             }
             else
                 throw new InvalidOperationException("Brak aktywnej transakcji.");

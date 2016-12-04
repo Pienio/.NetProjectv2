@@ -16,9 +16,9 @@ namespace DatabaseAccess
             return CreateDbContext(false);
         }
 
-        public ITransactionalApplicationData CreateTransactionalApplicationData()
+        public ITransactionalApplicationData CreateTransactionalApplicationData(bool runTransaction)
         {
-            return CreateDbContext(true);
+            return CreateDbContext(runTransaction);
         }
 
         public void Dispose()

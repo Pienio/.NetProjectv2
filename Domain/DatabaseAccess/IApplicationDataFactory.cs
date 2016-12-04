@@ -9,6 +9,6 @@ namespace DatabaseAccess
     public interface IApplicationDataFactory : IDisposable
     {
         IApplicationData CreateApplicationData();
-        ITransactionalApplicationData CreateTransactionalApplicationData();
+        ITransactionalApplicationData CreateTransactionalApplicationData(bool runTransaction);
     }
 }

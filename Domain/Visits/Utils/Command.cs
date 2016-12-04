@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace Visits.Utils
 {
-    class Command : ICommand
+    public class Command : ICommand
     {
         private readonly Func<object, bool> _canExecute;
         private readonly Action<object> _execute;

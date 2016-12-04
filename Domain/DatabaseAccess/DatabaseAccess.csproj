@@ -79,6 +79,7 @@
     <Compile Include="Model\Person.cs" />
     <Compile Include="Model\Patient.cs" />
     <Compile Include="Model\PersonName.cs" />
+    <Compile Include="Model\ProfileRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\Specialization.cs" />
     <Compile Include="ApplicationData.cs" />

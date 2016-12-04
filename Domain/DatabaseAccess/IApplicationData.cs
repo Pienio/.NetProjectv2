@@ -15,6 +15,7 @@ namespace DatabaseAccess
         DbSet<Doctor> Doctors { get; set; }
         DbSet<Specialization> Specializations { get; set; }
         DbSet<Visit> Visits { get; set; }
+        DbSet<ProfileRequest> Requests { get; set; }
         
         void Fill();
 

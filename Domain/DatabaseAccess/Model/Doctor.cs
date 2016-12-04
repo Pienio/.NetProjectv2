@@ -15,6 +15,8 @@ namespace DatabaseAccess.Model
         [Required]
         [DataMember]
         public virtual Specialization Specialization { get; set; } = new Specialization();
+        [DataMember]
+        public bool ProfileAccepted { get; set; } = false;
 
         //poniższe właściwości muszą mieć w nazwie dzień tygodnia po angielsku, inaczej funkcja GetWorkingTime nie będzie działać
         [DataMember]
@@ -37,6 +39,20 @@ namespace DatabaseAccess.Model
                     MondayWorkingTime, TuesdayWorkingTime, WednesdayWorkingTime, ThursdayWorkingTime, FridayWorkingTime
                 };
             }
+        }
+
+        public void CopyFrom(Doctor doctor)
+        {
+            User.Active = doctor.User.Active;
+            User.Name = doctor.User.Name;
+            User.Password = doctor.User.Password;
+            User.PESEL = doctor.User.PESEL;
+            Specialization = doctor.Specialization;
+            MondayWorkingTime = doctor.MondayWorkingTime;
+            TuesdayWorkingTime = doctor.TuesdayWorkingTime;
+            WednesdayWorkingTime = doctor.WednesdayWorkingTime;
+            ThursdayWorkingTime = doctor.ThursdayWorkingTime;
+            FridayWorkingTime = doctor.FridayWorkingTime;
         }
 
         /// <summary>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="65f08a68-6d19-4e22-945d-f3ee06305580" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:8733/Design_Time_Addresses/DataAccessService/Service1/mex" Protocol="mex" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="7fb7580a-5453-4d1b-ab9e-4f4e8c9a4a43" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/DataAccessService/Service1/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="c72ca0e7-b9fe-46e8-8ae2-6f34dfb71d1c" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/DataAccessService/Service1/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="5f3d1cc0-bd24-474e-a24f-7e7e4fcf7aea" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/DataAccessService/Service1/mex" />
+    <MetadataFile FileName="DatabaseAccess.Model.xsd" MetadataType="Schema" ID="2b1742f8-aa80-4c9b-816d-b040f2ef1ca3" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/DataAccessService/Service1/mex" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

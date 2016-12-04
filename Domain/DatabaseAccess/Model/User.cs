@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DatabaseAccess.Model
 {
-    
+    [DataContract(IsReference = true)]
     public class User : Entity
     {
         [Required]
@@ -20,7 +20,6 @@ namespace DatabaseAccess.Model
         [Required]
         [DataMember]
         public virtual PersonName Name { get; set; } = new PersonName();
-
         [Required]
         [DataMember]
         public DocOrPat Kind { get; set; }

@@ -14,10 +14,9 @@ namespace DataAccessService
    
     public class DataService : IDataService
     {
-        IApplicationData db = new ApplicationDataFactory().CreateApplicationData();
+        ITransactionalApplicationData db = new ApplicationDataFactory().CreateTransactionalApplicationData(false);
         public User GetUserById(int id)
         {
-
             db.Fill();
             var a = db.Users.Find(id);
             return a;
@@ -78,7 +77,7 @@ namespace DataAccessService
 
         public IEnumerable<Specialization> GetSpecializationsList()
         {
-            IEnumerable<Specialization> a = db.Specializations.Select(p => p);//.Include(p => p.Doctors);
+            IEnumerable<Specialization> a = db.Specializations;//.Include(p => p.Doctors);
             return a;
         }
 
@@ -99,11 +98,15 @@ namespace DataAccessService
                 select v;//db.Visits.Select(p => p).Where(p => p.Doctor.Key == id).Include(p => p.Doctor);
             return a;
         }
+        public IEnumerable<ProfileRequest> GetRequests()
+        {
+            return db.Requests.Include(r => r.OldProfile).Include(r => r.NewProfile);
+        }
 
         public bool UpdatePatient(Patient toUpdate)
         {
-            var a = new ApplicationDataFactory().CreateTransactionalApplicationData();
-            var o = a.Patients.Find(toUpdate.Key);
+            db.BeginTransaction();
+            var o = db.Patients.Find(toUpdate.Key);
             o.User.Name = toUpdate.User.Name;
             o.User.PESEL = toUpdate.User.PESEL;
             o.User.Password = toUpdate.User.Password;
@@ -111,10 +114,10 @@ namespace DataAccessService
 
             try
             {
-                a.Commit();
+                db.Commit();
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -122,16 +125,15 @@ namespace DataAccessService
 
         public bool UpdateUserPassword(int id, string pass)
         {
-            var a = new ApplicationDataFactory().CreateTransactionalApplicationData();
-            var c = a.Users.Find(id);
+            db.BeginTransaction();
+            var c = db.Users.Find(id);
             c.Password = pass;
-            a.Commit();
             try
             {
-                a.Commit();
+                db.Commit();
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -139,13 +141,13 @@ namespace DataAccessService
 
         public bool UpdateDoctor(Doctor toUpdate)
         {
-            var a = new ApplicationDataFactory().CreateTransactionalApplicationData();
-            var o = a.Doctors.Find(toUpdate.Key);
+            db.BeginTransaction();
+            var o = db.Doctors.Find(toUpdate.Key);
            // toUpdate.Specialization.Doctors.Add(toUpdate);
             o.User.Name = toUpdate.User.Name;
             o.User.PESEL = toUpdate.User.PESEL;
             o.User.Password = toUpdate.User.Password;
-            o.Specialization = a.Specializations.Find(toUpdate.Specialization.Key);
+            o.Specialization = db.Specializations.Find(toUpdate.Specialization.Key);
             o.MondayWorkingTime = toUpdate.MondayWorkingTime;
             o.WednesdayWorkingTime = toUpdate.WednesdayWorkingTime;
             o.FridayWorkingTime = toUpdate.FridayWorkingTime;
@@ -155,30 +157,44 @@ namespace DataAccessService
             
             try
             {
-                a.Commit();
+                db.Commit();
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
+        }
 
-            
+        public bool UpdateSpecialization(Specialization toUpdate)
+        {
+            db.BeginTransaction();
+            var spec = db.Specializations.Find(toUpdate.Key);
+            spec.Name = toUpdate.Name;
+            try
+            {
+                db.Commit();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public bool DeleteDoctor(Doctor toDelete)
         {
-            var a = new ApplicationDataFactory().CreateTransactionalApplicationData();
+            db.BeginTransaction();
             // Patient asd = _loggedUser.Logged as Patient;
-            var b = a.Doctors.Find(toDelete.Key);
+            var b = db.Doctors.Find(toDelete.Key);
             IEnumerable<Visit> obw = GetDoctorVisits((int)b.Key, true);
             if (obw==null||obw.ToList().Count == 0)
             {
                 User adfg = b.User;
-                a.Doctors.Attach(b);
-                a.Doctors.Remove(b);
-                a.Users.Attach(adfg);
-                a.Users.Remove(adfg);
+                db.Doctors.Attach(b);
+                db.Doctors.Remove(b);
+                db.Users.Attach(adfg);
+                db.Users.Remove(adfg);
             }
             else
             {
@@ -186,8 +202,8 @@ namespace DataAccessService
                 {
                     if (b.Visits[i].Date > DateTime.Now)
                     {
-                        a.Visits.Attach(b.Visits[i]);
-                        a.Visits.Remove(b.Visits[i]);
+                        db.Visits.Attach(b.Visits[i]);
+                        db.Visits.Remove(b.Visits[i]);
 
                     }
                 }
@@ -195,10 +211,10 @@ namespace DataAccessService
             }
             try
             {
-                a.Commit();
+                db.Commit();
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -208,17 +224,17 @@ namespace DataAccessService
 
         public bool DeletePatient(Patient toDelete)
         {
-            var a = new ApplicationDataFactory().CreateTransactionalApplicationData();
+            db.BeginTransaction();
            // Patient asd = _loggedUser.Logged as Patient;
-            var b = a.Patients.Find(toDelete.Key);
+            var b = db.Patients.Find(toDelete.Key);
             IEnumerable<Visit> obw = GetPatientVisits((int)b.Key, true);
             if (obw==null||obw.ToList().Count == 0)
             {
                 User adfg = b.User;
-                a.Patients.Attach(b);
-                a.Patients.Remove(b);
-                a.Users.Attach(adfg);
-                a.Users.Remove(adfg);
+                db.Patients.Attach(b);
+                db.Patients.Remove(b);
+                db.Users.Attach(adfg);
+                db.Users.Remove(adfg);
             }
             else
             {
@@ -226,8 +242,8 @@ namespace DataAccessService
                 {
                     if (b.Visits[i].Date > DateTime.Now)
                     {
-                        a.Visits.Attach(b.Visits[i]);
-                        a.Visits.Remove(b.Visits[i]);
+                        db.Visits.Attach(b.Visits[i]);
+                        db.Visits.Remove(b.Visits[i]);
 
                     }
                 }
@@ -235,18 +251,53 @@ namespace DataAccessService
             }
             try
             {
-                a.Commit();
+                db.Commit();
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
             //return true;
         }
 
+        public bool DeleteSpecialization(Specialization toDelete)
+        {
+            db.BeginTransaction();
+            if (db.Doctors.Any(d => d.Specialization.Key == toDelete.Key))
+                return false;
+            db.Specializations.Attach(toDelete);
+            db.Specializations.Remove(toDelete);
+            try
+            {
+                db.Commit();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool DeleteRequest(ProfileRequest toDelete)
+        {
+            db.BeginTransaction();
+            db.Requests.Attach(toDelete);
+            db.Requests.Remove(toDelete);
+            try
+            {
+                db.Commit();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         public bool AddPatient(Patient toAdd)
         {
+            db.BeginTransaction();
             //IEnumerable<User> asd = db.Users.Select(d => d).Where(d => d.PESEL == toAdd.User.PESEL);
             //if (asd.Count() != 0)
             //{
@@ -254,7 +305,6 @@ namespace DataAccessService
             //    // MessageBox.Show("Istnieje juz użytkownik o takim peselu");
             //    // return;
             //}
-            var a = new ApplicationDataFactory().CreateTransactionalApplicationData();
             Patient c = new Patient();
             c.User = new User();
             c.User.Name = new PersonName();
@@ -267,13 +317,14 @@ namespace DataAccessService
            // c.Visits=new List<Visit>();
             
 
-            a.Patients.Add(toAdd);
-            a.Commit();
+            db.Patients.Add(toAdd);
+            db.Commit();
             return true;
         }
 
         public bool AddDoctor(Doctor toAdd)
         {
+            db.BeginTransaction();
             IEnumerable<User> asd = db.Users.Select(d => d).Where(d => d.PESEL == toAdd.User.PESEL);
             if (asd.Count() != 0)
             {
@@ -281,7 +332,6 @@ namespace DataAccessService
                 // MessageBox.Show("Istnieje juz użytkownik o takim peselu");
                 // return;
             }
-            var a = new ApplicationDataFactory().CreateTransactionalApplicationData();
             //Doctor d = new Doctor();
             //d.User = new User();
             //d.User.Kind = DocOrPat.Doctor;
@@ -306,23 +356,38 @@ namespace DataAccessService
             //d.FridayWorkingTime = new WorkingTime();
             //d.FridayWorkingTime.Start = 1;
             //d.FridayWorkingTime.End = 2;
-            toAdd.Specialization = db.Specializations.Find(toAdd.Specialization.Key);
+            toAdd.Specialization = this.db.Specializations.Find(toAdd.Specialization.Key);
             
-            a.Doctors.Add(toAdd);
-            a.Commit();
+            db.Doctors.Add(toAdd);
+            db.Commit();
             return true;
         }
 
         public bool AddSpecialization(Specialization toAdd)
         {
-            var a = new ApplicationDataFactory().CreateTransactionalApplicationData();
-            a.Specializations.Add(toAdd);
+            db.BeginTransaction();
+            db.Specializations.Add(toAdd);
             try
             {
-                a.Commit();
+                db.Commit();
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool AddRequest(ProfileRequest toAdd)
+        {
+            db.BeginTransaction();
+            db.Requests.Add(toAdd);
+            try
+            {
+                db.Commit();
+                return true;
+            }
+            catch (Exception)
             {
                 return false;
             }
@@ -331,6 +396,11 @@ namespace DataAccessService
         public bool RegisterVisit(DateTime selected, int patientId, int doctorId)
         {
             throw new NotImplementedException();
+        }
+
+        public void Dispose()
+        {
+            db.Dispose();
         }
     }
 }
