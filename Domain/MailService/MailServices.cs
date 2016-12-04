@@ -10,9 +10,10 @@ namespace MailService
 {
     public class MailServices
     {
-        public void SendSimpleMail()
+        SmtpClient client= new SmtpClient();
+
+        public MailServices()
         {
-            SmtpClient client = new SmtpClient();
             client.Port = 587;
             client.Host = "smtp.gmail.com";
             client.EnableSsl = true;
@@ -20,6 +21,12 @@ namespace MailService
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
             client.UseDefaultCredentials = false;
             client.Credentials = new System.Net.NetworkCredential("sysrejwiz@gmail.com", "qwerasdfzxcv");
+        }
+        public void SendSimpleMail()
+        {
+            //SmtpClient client = new SmtpClient();
+           
+
             var appDomain = System.AppDomain.CurrentDomain;
             var basePath = appDomain.RelativeSearchPath ?? appDomain.BaseDirectory;
            
