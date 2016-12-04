@@ -33,11 +33,23 @@ namespace Visits.DataServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetDoctorById", ReplyAction="http://tempuri.org/IDataService/GetDoctorByIdResponse")]
         System.Threading.Tasks.Task<DatabaseAccess.Model.Doctor> GetDoctorByIdAsync(int value);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetDoctorByUserId", ReplyAction="http://tempuri.org/IDataService/GetDoctorByUserIdResponse")]
+        DatabaseAccess.Model.Doctor GetDoctorByUserId(int value);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetDoctorByUserId", ReplyAction="http://tempuri.org/IDataService/GetDoctorByUserIdResponse")]
+        System.Threading.Tasks.Task<DatabaseAccess.Model.Doctor> GetDoctorByUserIdAsync(int value);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetPatientById", ReplyAction="http://tempuri.org/IDataService/GetPatientByIdResponse")]
         DatabaseAccess.Model.Patient GetPatientById(int value);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetPatientById", ReplyAction="http://tempuri.org/IDataService/GetPatientByIdResponse")]
         System.Threading.Tasks.Task<DatabaseAccess.Model.Patient> GetPatientByIdAsync(int value);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetPatientByUserId", ReplyAction="http://tempuri.org/IDataService/GetPatientByUserIdResponse")]
+        DatabaseAccess.Model.Patient GetPatientByUserId(int value);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetPatientByUserId", ReplyAction="http://tempuri.org/IDataService/GetPatientByUserIdResponse")]
+        System.Threading.Tasks.Task<DatabaseAccess.Model.Patient> GetPatientByUserIdAsync(int value);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/Fill", ReplyAction="http://tempuri.org/IDataService/FillResponse")]
         void Fill();
@@ -75,6 +87,12 @@ namespace Visits.DataServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetDoctorVisits", ReplyAction="http://tempuri.org/IDataService/GetDoctorVisitsResponse")]
         System.Threading.Tasks.Task<DatabaseAccess.Model.Visit[]> GetDoctorVisitsAsync(int id, bool arc);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetRequests", ReplyAction="http://tempuri.org/IDataService/GetRequestsResponse")]
+        DatabaseAccess.Model.ProfileRequest[] GetRequests();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetRequests", ReplyAction="http://tempuri.org/IDataService/GetRequestsResponse")]
+        System.Threading.Tasks.Task<DatabaseAccess.Model.ProfileRequest[]> GetRequestsAsync();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/UpdatePatient", ReplyAction="http://tempuri.org/IDataService/UpdatePatientResponse")]
         bool UpdatePatient(DatabaseAccess.Model.Patient toUpdate);
         
@@ -93,6 +111,12 @@ namespace Visits.DataServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/UpdateDoctor", ReplyAction="http://tempuri.org/IDataService/UpdateDoctorResponse")]
         System.Threading.Tasks.Task<bool> UpdateDoctorAsync(DatabaseAccess.Model.Doctor toUpdate);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/UpdateSpecialization", ReplyAction="http://tempuri.org/IDataService/UpdateSpecializationResponse")]
+        bool UpdateSpecialization(DatabaseAccess.Model.Specialization toUpdate);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/UpdateSpecialization", ReplyAction="http://tempuri.org/IDataService/UpdateSpecializationResponse")]
+        System.Threading.Tasks.Task<bool> UpdateSpecializationAsync(DatabaseAccess.Model.Specialization toUpdate);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/DeleteDoctor", ReplyAction="http://tempuri.org/IDataService/DeleteDoctorResponse")]
         bool DeleteDoctor(DatabaseAccess.Model.Doctor toDelete);
         
@@ -104,6 +128,18 @@ namespace Visits.DataServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/DeletePatient", ReplyAction="http://tempuri.org/IDataService/DeletePatientResponse")]
         System.Threading.Tasks.Task<bool> DeletePatientAsync(DatabaseAccess.Model.Patient toDelete);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/DeleteSpecialization", ReplyAction="http://tempuri.org/IDataService/DeleteSpecializationResponse")]
+        bool DeleteSpecialization(DatabaseAccess.Model.Specialization toDelete);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/DeleteSpecialization", ReplyAction="http://tempuri.org/IDataService/DeleteSpecializationResponse")]
+        System.Threading.Tasks.Task<bool> DeleteSpecializationAsync(DatabaseAccess.Model.Specialization toDelete);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/DeleteRequest", ReplyAction="http://tempuri.org/IDataService/DeleteRequestResponse")]
+        bool DeleteRequest(DatabaseAccess.Model.ProfileRequest toDelete);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/DeleteRequest", ReplyAction="http://tempuri.org/IDataService/DeleteRequestResponse")]
+        System.Threading.Tasks.Task<bool> DeleteRequestAsync(DatabaseAccess.Model.ProfileRequest toDelete);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/AddPatient", ReplyAction="http://tempuri.org/IDataService/AddPatientResponse")]
         bool AddPatient(DatabaseAccess.Model.Patient toAdd);
@@ -123,11 +159,35 @@ namespace Visits.DataServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/AddSpecialization", ReplyAction="http://tempuri.org/IDataService/AddSpecializationResponse")]
         System.Threading.Tasks.Task<bool> AddSpecializationAsync(DatabaseAccess.Model.Specialization toAdd);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/AddRequest", ReplyAction="http://tempuri.org/IDataService/AddRequestResponse")]
+        bool AddRequest(DatabaseAccess.Model.ProfileRequest toAdd);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/AddRequest", ReplyAction="http://tempuri.org/IDataService/AddRequestResponse")]
+        System.Threading.Tasks.Task<bool> AddRequestAsync(DatabaseAccess.Model.ProfileRequest toAdd);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/RegisterVisit", ReplyAction="http://tempuri.org/IDataService/RegisterVisitResponse")]
         bool RegisterVisit(System.DateTime selected, int patientId, int doctorId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/RegisterVisit", ReplyAction="http://tempuri.org/IDataService/RegisterVisitResponse")]
         System.Threading.Tasks.Task<bool> RegisterVisitAsync(System.DateTime selected, int patientId, int doctorId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetFirstFreeSlot", ReplyAction="http://tempuri.org/IDataService/GetFirstFreeSlotResponse")]
+        System.DateTime GetFirstFreeSlot(int doctorId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetFirstFreeSlot", ReplyAction="http://tempuri.org/IDataService/GetFirstFreeSlotResponse")]
+        System.Threading.Tasks.Task<System.DateTime> GetFirstFreeSlotAsync(int doctorId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetPatients", ReplyAction="http://tempuri.org/IDataService/GetPatientsResponse")]
+        DatabaseAccess.Model.Patient[] GetPatients();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetPatients", ReplyAction="http://tempuri.org/IDataService/GetPatientsResponse")]
+        System.Threading.Tasks.Task<DatabaseAccess.Model.Patient[]> GetPatientsAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/Dispose", ReplyAction="http://tempuri.org/IDataService/DisposeResponse")]
+        void Dispose();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/Dispose", ReplyAction="http://tempuri.org/IDataService/DisposeResponse")]
+        System.Threading.Tasks.Task DisposeAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -181,12 +241,28 @@ namespace Visits.DataServiceReference {
             return base.Channel.GetDoctorByIdAsync(value);
         }
         
+        public DatabaseAccess.Model.Doctor GetDoctorByUserId(int value) {
+            return base.Channel.GetDoctorByUserId(value);
+        }
+        
+        public System.Threading.Tasks.Task<DatabaseAccess.Model.Doctor> GetDoctorByUserIdAsync(int value) {
+            return base.Channel.GetDoctorByUserIdAsync(value);
+        }
+        
         public DatabaseAccess.Model.Patient GetPatientById(int value) {
             return base.Channel.GetPatientById(value);
         }
         
         public System.Threading.Tasks.Task<DatabaseAccess.Model.Patient> GetPatientByIdAsync(int value) {
             return base.Channel.GetPatientByIdAsync(value);
+        }
+        
+        public DatabaseAccess.Model.Patient GetPatientByUserId(int value) {
+            return base.Channel.GetPatientByUserId(value);
+        }
+        
+        public System.Threading.Tasks.Task<DatabaseAccess.Model.Patient> GetPatientByUserIdAsync(int value) {
+            return base.Channel.GetPatientByUserIdAsync(value);
         }
         
         public void Fill() {
@@ -237,6 +313,14 @@ namespace Visits.DataServiceReference {
             return base.Channel.GetDoctorVisitsAsync(id, arc);
         }
         
+        public DatabaseAccess.Model.ProfileRequest[] GetRequests() {
+            return base.Channel.GetRequests();
+        }
+        
+        public System.Threading.Tasks.Task<DatabaseAccess.Model.ProfileRequest[]> GetRequestsAsync() {
+            return base.Channel.GetRequestsAsync();
+        }
+        
         public bool UpdatePatient(DatabaseAccess.Model.Patient toUpdate) {
             return base.Channel.UpdatePatient(toUpdate);
         }
@@ -261,6 +345,14 @@ namespace Visits.DataServiceReference {
             return base.Channel.UpdateDoctorAsync(toUpdate);
         }
         
+        public bool UpdateSpecialization(DatabaseAccess.Model.Specialization toUpdate) {
+            return base.Channel.UpdateSpecialization(toUpdate);
+        }
+        
+        public System.Threading.Tasks.Task<bool> UpdateSpecializationAsync(DatabaseAccess.Model.Specialization toUpdate) {
+            return base.Channel.UpdateSpecializationAsync(toUpdate);
+        }
+        
         public bool DeleteDoctor(DatabaseAccess.Model.Doctor toDelete) {
             return base.Channel.DeleteDoctor(toDelete);
         }
@@ -275,6 +367,22 @@ namespace Visits.DataServiceReference {
         
         public System.Threading.Tasks.Task<bool> DeletePatientAsync(DatabaseAccess.Model.Patient toDelete) {
             return base.Channel.DeletePatientAsync(toDelete);
+        }
+        
+        public bool DeleteSpecialization(DatabaseAccess.Model.Specialization toDelete) {
+            return base.Channel.DeleteSpecialization(toDelete);
+        }
+        
+        public System.Threading.Tasks.Task<bool> DeleteSpecializationAsync(DatabaseAccess.Model.Specialization toDelete) {
+            return base.Channel.DeleteSpecializationAsync(toDelete);
+        }
+        
+        public bool DeleteRequest(DatabaseAccess.Model.ProfileRequest toDelete) {
+            return base.Channel.DeleteRequest(toDelete);
+        }
+        
+        public System.Threading.Tasks.Task<bool> DeleteRequestAsync(DatabaseAccess.Model.ProfileRequest toDelete) {
+            return base.Channel.DeleteRequestAsync(toDelete);
         }
         
         public bool AddPatient(DatabaseAccess.Model.Patient toAdd) {
@@ -301,12 +409,44 @@ namespace Visits.DataServiceReference {
             return base.Channel.AddSpecializationAsync(toAdd);
         }
         
+        public bool AddRequest(DatabaseAccess.Model.ProfileRequest toAdd) {
+            return base.Channel.AddRequest(toAdd);
+        }
+        
+        public System.Threading.Tasks.Task<bool> AddRequestAsync(DatabaseAccess.Model.ProfileRequest toAdd) {
+            return base.Channel.AddRequestAsync(toAdd);
+        }
+        
         public bool RegisterVisit(System.DateTime selected, int patientId, int doctorId) {
             return base.Channel.RegisterVisit(selected, patientId, doctorId);
         }
         
         public System.Threading.Tasks.Task<bool> RegisterVisitAsync(System.DateTime selected, int patientId, int doctorId) {
             return base.Channel.RegisterVisitAsync(selected, patientId, doctorId);
+        }
+        
+        public System.DateTime GetFirstFreeSlot(int doctorId) {
+            return base.Channel.GetFirstFreeSlot(doctorId);
+        }
+        
+        public System.Threading.Tasks.Task<System.DateTime> GetFirstFreeSlotAsync(int doctorId) {
+            return base.Channel.GetFirstFreeSlotAsync(doctorId);
+        }
+        
+        public DatabaseAccess.Model.Patient[] GetPatients() {
+            return base.Channel.GetPatients();
+        }
+        
+        public System.Threading.Tasks.Task<DatabaseAccess.Model.Patient[]> GetPatientsAsync() {
+            return base.Channel.GetPatientsAsync();
+        }
+        
+        public void Dispose() {
+            base.Channel.Dispose();
+        }
+        
+        public System.Threading.Tasks.Task DisposeAsync() {
+            return base.Channel.DisposeAsync();
         }
     }
 }

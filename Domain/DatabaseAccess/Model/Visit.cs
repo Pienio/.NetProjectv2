@@ -25,7 +25,7 @@ namespace DatabaseAccess.Model
 
         public Visit(Patient patient, Doctor doctor, DateTime date)
         {
-            //Patient = patient;
+            Patient = patient;
             Doctor = doctor;
             Date = date;
         }

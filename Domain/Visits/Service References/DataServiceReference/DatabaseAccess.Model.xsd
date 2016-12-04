@@ -44,6 +44,7 @@
         <xs:sequence>
           <xs:element minOccurs="0" name="FridayWorkingTime" nillable="true" type="tns:WorkingTime" />
           <xs:element minOccurs="0" name="MondayWorkingTime" nillable="true" type="tns:WorkingTime" />
+          <xs:element minOccurs="0" name="ProfileAccepted" type="xs:boolean" />
           <xs:element minOccurs="0" name="Specialization" nillable="true" type="tns:Specialization" />
           <xs:element minOccurs="0" name="ThursdayWorkingTime" nillable="true" type="tns:WorkingTime" />
           <xs:element minOccurs="0" name="TuesdayWorkingTime" nillable="true" type="tns:WorkingTime" />
@@ -101,7 +102,6 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Entity">
         <xs:sequence>
-          <xs:element minOccurs="0" name="Doctors" nillable="true" type="tns:ArrayOfDoctor" />
           <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
         </xs:sequence>
       </xs:extension>
@@ -120,4 +120,27 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfSpecialization" nillable="true" type="tns:ArrayOfSpecialization" />
+  <xs:complexType name="ArrayOfProfileRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ProfileRequest" nillable="true" type="tns:ProfileRequest" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfProfileRequest" nillable="true" type="tns:ArrayOfProfileRequest" />
+  <xs:complexType name="ProfileRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Entity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="NewProfile" nillable="true" type="tns:Doctor" />
+          <xs:element minOccurs="0" name="OldProfile" nillable="true" type="tns:Doctor" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ProfileRequest" nillable="true" type="tns:ProfileRequest" />
+  <xs:complexType name="ArrayOfPatient">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Patient" nillable="true" type="tns:Patient" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPatient" nillable="true" type="tns:ArrayOfPatient" />
 </xs:schema>

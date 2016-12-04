@@ -34,9 +34,9 @@ namespace Visits.Services
             var user = await Task.Run( () => (db.GetUser(PESEL,password)));
             Person person;
             if (user.Kind == DocOrPat.Doctor)
-                person = await Task.Run(() => Logged =(db.GetDoctorById((int)user.Key)));
+                person = await Task.Run(() => Logged =(db.GetDoctorByUserId((int)user.Key)));
             else //Kind == Person
-                person = await Task.Run(() => Logged = (db.GetPatientById((int)user.Key)));
+                person = await Task.Run(() => Logged = (db.GetPatientByUserId((int)user.Key)));
             Logged = person;
             OnLoggedChanged();
         }
