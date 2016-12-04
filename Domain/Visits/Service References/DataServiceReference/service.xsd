@@ -137,10 +137,22 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetRequests">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetRequestsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/DatabaseAccess.Model" minOccurs="0" name="GetRequestsResult" nillable="true" type="q11:ArrayOfProfileRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="UpdatePatient">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/DatabaseAccess.Model" minOccurs="0" name="toUpdate" nillable="true" type="q11:Patient" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/DatabaseAccess.Model" minOccurs="0" name="toUpdate" nillable="true" type="q12:Patient" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -169,7 +181,7 @@
   <xs:element name="UpdateDoctor">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/DatabaseAccess.Model" minOccurs="0" name="toUpdate" nillable="true" type="q12:Doctor" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/DatabaseAccess.Model" minOccurs="0" name="toUpdate" nillable="true" type="q13:Doctor" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -180,10 +192,24 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="UpdateSpecialization">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/DatabaseAccess.Model" minOccurs="0" name="toUpdate" nillable="true" type="q14:Specialization" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateSpecializationResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="UpdateSpecializationResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="DeleteDoctor">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/DatabaseAccess.Model" minOccurs="0" name="toDelete" nillable="true" type="q13:Doctor" />
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/DatabaseAccess.Model" minOccurs="0" name="toDelete" nillable="true" type="q15:Doctor" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -197,7 +223,7 @@
   <xs:element name="DeletePatient">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/DatabaseAccess.Model" minOccurs="0" name="toDelete" nillable="true" type="q14:Patient" />
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/DatabaseAccess.Model" minOccurs="0" name="toDelete" nillable="true" type="q16:Patient" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -208,10 +234,38 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="DeleteSpecialization">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/DatabaseAccess.Model" minOccurs="0" name="toDelete" nillable="true" type="q17:Specialization" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteSpecializationResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="DeleteSpecializationResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/DatabaseAccess.Model" minOccurs="0" name="toDelete" nillable="true" type="q18:ProfileRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteRequestResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="DeleteRequestResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="AddPatient">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/DatabaseAccess.Model" minOccurs="0" name="toAdd" nillable="true" type="q15:Patient" />
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/DatabaseAccess.Model" minOccurs="0" name="toAdd" nillable="true" type="q19:Patient" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -225,7 +279,7 @@
   <xs:element name="AddDoctor">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/DatabaseAccess.Model" minOccurs="0" name="toAdd" nillable="true" type="q16:Doctor" />
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/DatabaseAccess.Model" minOccurs="0" name="toAdd" nillable="true" type="q20:Doctor" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -239,7 +293,7 @@
   <xs:element name="AddSpecialization">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/DatabaseAccess.Model" minOccurs="0" name="toAdd" nillable="true" type="q17:Specialization" />
+        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/DatabaseAccess.Model" minOccurs="0" name="toAdd" nillable="true" type="q21:Specialization" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -247,6 +301,20 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="AddSpecializationResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/DatabaseAccess.Model" minOccurs="0" name="toAdd" nillable="true" type="q22:ProfileRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddRequestResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="AddRequestResult" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -264,6 +332,16 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="RegisterVisitResult" type="xs:boolean" />
       </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Dispose">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DisposeResponse">
+    <xs:complexType>
+      <xs:sequence />
     </xs:complexType>
   </xs:element>
 </xs:schema>

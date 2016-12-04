@@ -26,5 +26,8 @@ namespace DatabaseAccess.Model
         [Required]
         [DataMember]
         public bool Active { get; set; } = true;
+        [Required]
+        [DataMember]
+        public string Mail { get; set; }
     }
 }

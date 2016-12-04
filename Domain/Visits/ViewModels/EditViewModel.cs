@@ -13,6 +13,7 @@ using System.Windows.Input;
 using Visits.Services;
 using Microsoft.Practices.Unity;
 using Visits.Utils;
+using System.Net.Mail;
 
 namespace Visits.ViewModels
 {
@@ -47,6 +48,20 @@ namespace Visits.ViewModels
             get
             {
                 string result = null;
+
+                if (fieldName == "Mail")
+                {
+                    if (string.IsNullOrWhiteSpace(Mail))
+                        result = "E-mail nie może być pusty";
+                    try
+                    {
+                        MailAddress address = new MailAddress(Mail);
+                    }
+                    catch (FormatException)
+                    {
+                        result = "Niepoprawna forma adresu e=mail.";
+                    }
+                }
                 if (fieldName == "FirstName")
                 {
                     if (string.IsNullOrEmpty(FirstName))
@@ -140,6 +155,16 @@ namespace Visits.ViewModels
                 _User.PESEL = value;
                 OnPropertyChanged("Pesel");
 
+            }
+        }
+
+        public string Mail
+        {
+            get { return _User.Mail; }
+            set
+            {
+                _User.Mail = value;
+                OnPropertyChanged(nameof(Mail));
             }
         }
         public string Pas
@@ -406,25 +431,7 @@ namespace Visits.ViewModels
 
 
         });
-
-
-        public ICommand RegisterSpecialization => new Command(p =>
-        {
-            AddSpec a = App.Container.Resolve<AddSpec>();
-            a.ShowDialog();
-            SpecList = _service.GetSpecializationsList();
-            Spec = SpecList.Last();
-            //if (!a.DialogResult.GetValueOrDefault(false))
-            //    return;
-            //var db = _applicationDataFactory.CreateApplicationData();
-
-            //var epec = new List<Specialization>();
-            //epec.AddRange(db.Specializations);
-            //SpecList = epec;
-            //Spec = epec.Last();
-
-        });
-
+        
         private async Task AddSpec(Specialization item, ITransactionalApplicationData context)
         {
             await App.Current.Dispatcher.BeginInvoke((Action)(() => { context.Specializations.Add(item); }));

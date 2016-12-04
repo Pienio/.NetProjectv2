@@ -13,6 +13,8 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Visits.Services;
 using Visits.Utils;
+using System.Text.RegularExpressions;
+using System.Net.Mail;
 
 namespace Visits.ViewModels
 {
@@ -81,22 +83,6 @@ namespace Visits.ViewModels
 
 
         });
-        public ICommand RegisterSpecialization => new Command(p =>
-        {
-            AddSpec a = App.Container.Resolve<AddSpec>();
-            a.ShowDialog();
-            SpecList = _service.GetSpecializationsList();
-            Spec = SpecList.Last();
-            //if (!a.DialogResult.GetValueOrDefault(false))
-            //    return;
-            //var db = _applicationDataFactory.CreateApplicationData();
-
-            //var epec = new List<Specialization>();
-            //epec.AddRange(db.Specializations);
-            //SpecList = epec;
-            //Spec = epec.Last();
-
-        });
         
         public string Error
         {
@@ -108,14 +94,28 @@ namespace Visits.ViewModels
             get
             {
                 string result = null;
+
+                if (fieldName == "Mail")
+                {
+                    if (string.IsNullOrWhiteSpace(Mail))
+                        result = "E-mail nie może być pusty";
+                    try
+                    {
+                        MailAddress address = new MailAddress(Mail);
+                    }
+                    catch (FormatException)
+                    {
+                        result = "Niepoprawna forma adresu e=mail.";
+                    }
+                }
                 if (fieldName == "FirstName")
                 {
-                    if (string.IsNullOrEmpty(FirstName))
+                    if (string.IsNullOrWhiteSpace(FirstName))
                         result = "Imię nie może być puste!";
                 }
                 if (fieldName == "LastName")
                 {
-                    if (string.IsNullOrEmpty(LastName))
+                    if (string.IsNullOrWhiteSpace(LastName))
                         result = "Nazwisko nie może być puste!";
                 }
                 if (fieldName == "Pesel")
@@ -209,6 +209,17 @@ namespace Visits.ViewModels
                 
             }
         }
+
+        public string Mail
+        {
+            get { return _User.Mail; }
+            set
+            {
+                _User.Mail = value;
+                OnPropertyChanged(nameof(Mail));
+            }
+        }
+
         public string Pas
         {
             get { return _pas; }
@@ -346,7 +357,7 @@ namespace Visits.ViewModels
         }
         public async Task AddDoctor(Doctor item)
         {
-            var c = await Task.Run(() => _service.AddDoctor(item));
+            var c = await Task.Run(() => _service.AddRequest(new ProfileRequest(null, item)));
             if (!c)
                 MessageBox.Show("Istnieje juz użytkownik o takim peselu");
             // await App.Current.Dispatcher.BeginInvoke((Action)(() => { _service.AddDoctor(item); }));

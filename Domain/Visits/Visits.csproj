@@ -94,9 +94,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AddSpec.xaml.cs">
-      <DependentUpon>AddSpec.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ChangePass.xaml.cs">
       <DependentUpon>ChangePass.xaml</DependentUpon>
     </Compile>
@@ -135,7 +132,6 @@
     <Compile Include="Validations\NameValidation.cs" />
     <Compile Include="Validations\ValDoc.cs" />
     <Compile Include="Validations\ValPac.cs" />
-    <Compile Include="ViewModels\AddSpecViewModel.cs" />
     <Compile Include="ViewModels\ChangePassViewModel.cs" />
     <Compile Include="ViewModels\EditViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
@@ -147,10 +143,6 @@
     <Compile Include="WizList.xaml.cs">
       <DependentUpon>WizList.xaml</DependentUpon>
     </Compile>
-    <Page Include="AddSpec.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="ChangePass.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -224,6 +216,7 @@
     <None Include="packages.config" />
     <None Include="Properties\DataSources\DatabaseAccess.Model.Doctor.datasource" />
     <None Include="Properties\DataSources\DatabaseAccess.Model.Patient.datasource" />
+    <None Include="Properties\DataSources\DatabaseAccess.Model.ProfileRequest.datasource" />
     <None Include="Properties\DataSources\DatabaseAccess.Model.Specialization.datasource" />
     <None Include="Properties\DataSources\DatabaseAccess.Model.User.datasource" />
     <None Include="Properties\DataSources\DatabaseAccess.Model.Visit.datasource" />
