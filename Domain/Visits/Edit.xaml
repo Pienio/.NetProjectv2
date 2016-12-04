@@ -18,8 +18,8 @@
     <StackPanel Margin="10">
         <DockPanel Margin="0,0,10.4,0">
             <Label x:Name="label" Content="PESEL:" Width="94"/>
-            <TextBox x:Name="Pes" Height="26" Validation.ErrorTemplate="{StaticResource errorTemplate}"
-         Style="{StaticResource textBoxError}" Text="{Binding Pesel, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+            <TextBox x:Name="Pes" IsReadOnly="True" Height="26" Validation.ErrorTemplate="{StaticResource errorTemplate}"
+         Style="{StaticResource textBoxError}" Text="{Binding Pesel, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
         </DockPanel>
         <DockPanel Margin="0,5,10.4,0">
             <Label x:Name="label2" Content="Imię:" Width="94"/>
@@ -34,7 +34,7 @@
         <DockPanel Margin="0,5,10,0">
             <Label Content="E-mail:" Width="94"/>
             <TextBox Height="26" Validation.ErrorTemplate="{StaticResource errorTemplate}"
-                     Style="{StaticResource textBoxError}" Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                     Style="{StaticResource textBoxError}" Text="{Binding Mail, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
         </DockPanel>
         <DockPanel Margin="0,10,0,0">
             <Label x:Name="label4" Content="Specjalizacja:" Width="94" DockPanel.Dock="Left" Visibility="{Binding Who, Converter={StaticResource visibilityBool}, ConverterParameter=True, UpdateSourceTrigger=PropertyChanged}"/>
@@ -145,10 +145,10 @@
             </Grid>
         </GroupBox>
         <DockPanel Margin="0,5,0,0">
-            <Label x:Name="label1" Content="Aby zatwierdzić zmiany wpisz hasło:" DockPanel.Dock="Top" Margin="30,0,0,0"/>
+            <Label x:Name="label1" Content="Aby zatwierdzić zmiany wpisz hasło:" DockPanel.Dock="Top" Margin="25,0,0,0"/>
             <Button x:Name="button" Content="Zmiana hasła..." Width="94" Height="26" DockPanel.Dock="Right" Command="{Binding ChangePassword}"/>
             <PasswordBox x:Name="Haslo" Height="26" Margin="0,0,5,0" Validation.ErrorTemplate="{StaticResource errorTemplate}" Tag="{Binding Pas, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
-         Style="{StaticResource passwordBoxError}" Width="217" >
+         Style="{StaticResource passwordBoxError}" Width="240" >
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="PasswordChanged">
                         <i:InvokeCommandAction Command="{Binding ChangePass}"  CommandParameter="{Binding ElementName=Haslo}" />

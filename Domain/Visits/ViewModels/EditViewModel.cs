@@ -14,6 +14,7 @@ using Visits.Services;
 using Microsoft.Practices.Unity;
 using Visits.Utils;
 using System.Net.Mail;
+using System.Text.RegularExpressions;
 
 namespace Visits.ViewModels
 {
@@ -22,12 +23,13 @@ namespace Visits.ViewModels
         private User _User;
         private IEnumerable<Specialization> _SpecList;
         private Patient _Patient;
-        private Doctor us;
+        private Doctor _newDoctor;
+        private Doctor _oldDoctor;
         private string _pas = "";
         private bool _Who;
 
         public EditViewModel(ILogUserService user) : base(user) { }
-        
+
         public bool Who
         {
             get { return _Who; }
@@ -53,14 +55,12 @@ namespace Visits.ViewModels
                 {
                     if (string.IsNullOrWhiteSpace(Mail))
                         result = "E-mail nie może być pusty";
-                    try
-                    {
-                        MailAddress address = new MailAddress(Mail);
-                    }
-                    catch (FormatException)
-                    {
+                    string strRegex = @"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}" +
+                        @"\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\" +
+                        @".)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
+                    Regex re = new Regex(strRegex);
+                    if (!re.IsMatch(Mail))
                         result = "Niepoprawna forma adresu e=mail.";
-                    }
                 }
                 if (fieldName == "FirstName")
                 {
@@ -71,19 +71,6 @@ namespace Visits.ViewModels
                 {
                     if (string.IsNullOrEmpty(LastName))
                         result = "Nazwisko nie może być puste!";
-                }
-                if (fieldName == "Pesel")
-                {
-                    if (string.IsNullOrEmpty(Pesel))
-                        result = "Pesel nie może być pusty!";
-                    int a;
-
-                    if (Int32.TryParse(Pesel, out a))
-                        result = "Pesel musi być ciągiem cyfr!";
-                    if (Pesel.Length != 11)
-                        result = "Pesel musi mieć 11 cyfr!";
-
-
                 }
                 if (fieldName == "Pas")
                 {
@@ -150,12 +137,6 @@ namespace Visits.ViewModels
         public string Pesel
         {
             get { return _User.PESEL; }
-            set
-            {
-                _User.PESEL = value;
-                OnPropertyChanged("Pesel");
-
-            }
         }
 
         public string Mail
@@ -176,7 +157,7 @@ namespace Visits.ViewModels
                 OnPropertyChanged("Pas");
             }
         }
-      
+
         public IEnumerable<Specialization> SpecList
         {
             get { return _SpecList; }
@@ -188,113 +169,113 @@ namespace Visits.ViewModels
         }
         public Specialization Spec
         {
-            get { return us.Specialization; }
+            get { return _newDoctor.Specialization; }
             set
             {
-                us.Specialization = value;
+                _newDoctor.Specialization = value;
                 OnPropertyChanged("Spec");
             }
         }
 
         public int PS
         {
-            get { return us.MondayWorkingTime.Start; }
+            get { return _newDoctor.MondayWorkingTime.Start; }
             set
             {
 
-                us.MondayWorkingTime.Start = value;
+                _newDoctor.MondayWorkingTime.Start = value;
                 OnPropertyChanged("PS");
             }
         }
         public int PE
         {
-            get { return us.MondayWorkingTime.End; }
+            get { return _newDoctor.MondayWorkingTime.End; }
             set
             {
-                us.MondayWorkingTime.End = value;
+                _newDoctor.MondayWorkingTime.End = value;
                 OnPropertyChanged("PE");
             }
         }
         public int WS
         {
-            get { return us.TuesdayWorkingTime.Start; }
+            get { return _newDoctor.TuesdayWorkingTime.Start; }
             set
             {
-                us.TuesdayWorkingTime.Start = value;
+                _newDoctor.TuesdayWorkingTime.Start = value;
                 OnPropertyChanged("WS");
             }
         }
         public int WE
         {
-            get { return us.TuesdayWorkingTime.End; }
+            get { return _newDoctor.TuesdayWorkingTime.End; }
             set
             {
-                us.TuesdayWorkingTime.End = value;
+                _newDoctor.TuesdayWorkingTime.End = value;
                 OnPropertyChanged("WE");
             }
         }
         public int SS
         {
-            get { return us.WednesdayWorkingTime.Start; }
+            get { return _newDoctor.WednesdayWorkingTime.Start; }
             set
             {
-                us.WednesdayWorkingTime.Start = value;
+                _newDoctor.WednesdayWorkingTime.Start = value;
                 OnPropertyChanged("SS");
             }
         }
         public int SE
         {
-            get { return us.WednesdayWorkingTime.End; }
+            get { return _newDoctor.WednesdayWorkingTime.End; }
             set
             {
-                us.WednesdayWorkingTime.End = value;
+                _newDoctor.WednesdayWorkingTime.End = value;
                 OnPropertyChanged("SE");
             }
         }
         public int CS
         {
-            get { return us.ThursdayWorkingTime.Start; }
+            get { return _newDoctor.ThursdayWorkingTime.Start; }
             set
             {
-                us.ThursdayWorkingTime.Start = value;
+                _newDoctor.ThursdayWorkingTime.Start = value;
                 OnPropertyChanged("CS");
             }
         }
         public int CE
         {
-            get { return us.ThursdayWorkingTime.End; }
+            get { return _newDoctor.ThursdayWorkingTime.End; }
             set
             {
-                us.ThursdayWorkingTime.End = value;
+                _newDoctor.ThursdayWorkingTime.End = value;
                 OnPropertyChanged("CE");
             }
         }
         public int PIS
         {
-            get { return us.FridayWorkingTime.Start; }
+            get { return _newDoctor.FridayWorkingTime.Start; }
             set
             {
-                us.FridayWorkingTime.Start = value;
+                _newDoctor.FridayWorkingTime.Start = value;
                 OnPropertyChanged("PIS");
             }
         }
         public int PIE
         {
-            get { return us.FridayWorkingTime.End; }
+            get { return _newDoctor.FridayWorkingTime.End; }
             set
             {
-                us.FridayWorkingTime.End = value;
+                _newDoctor.FridayWorkingTime.End = value;
                 OnPropertyChanged("PIE");
             }
         }
 
-     
+
         public ICommand ChangePass => new Command(p =>
         {
 
             PasswordBox a = (PasswordBox)p;
-            Pas =PasswordHasher.CreateHash(a.Password);
-            
+            Pas = PasswordHasher.CreateHash(a.Password);
+
         });
         public ICommand Close => new Command(p =>
         {
@@ -305,53 +286,52 @@ namespace Visits.ViewModels
         });
         public ICommand ChangePassword => new Command(p =>
         {
-       
+
             //var db = _applicationDataFactory.CreateApplicationData();
             var wnd = App.Container.Resolve<ChangePass>();
             wnd.ShowDialog();
-        
-            
+
+
         });
-        public ICommand UpdateUser => new Command(p =>
+        public ICommand UpdateUser => new Command(async p =>
         {
-
-            //var db = _applicationDataFactory.CreateTransactionalApplicationData();
-
-            if (Pas == _User.Password)
-            {
-                //db.Commit();
-                if (_User.Kind == DocOrPat.Doctor)
-                {
-                    //MessageBox.Show(us.Specialization.ToString());
-                    _service.UpdateDoctor(us);
-
-                }   
-                else
-                {
-                    _service.UpdatePatient(_Patient);
-                }
-
-
-
-
-                Window k = p as Window;
-                k.Close();
-            }
-            else
+            if (Pas != _User.Password)
             {
                 MessageBox.Show("Hasło nieprawidłowe");
                 Pas = "";
+                return;
             }
 
+            Random r = new Random();
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < 6; i++)
+            {
+                bool numSign = r.Next(2) == 1;
+                sb.Append(numSign ? (char)r.Next(49, 58) : (char)r.Next(65, 91));
+            }
+            MailService.MailServices mail = new MailService.MailServices();
+            string token = sb.ToString();
+            mail.SendRegistrationConfirmation(Mail, token);
+            //okienko do wpisania tokena
 
-
-
+            if (_User.Kind == DocOrPat.Doctor)
+            {
+                bool res = await _service.AddRequestAsync(new ProfileRequest(_oldDoctor, _newDoctor));
+                if (!res)
+                {
+                    MessageBox.Show("Poprzednia prośba o edycję profilu nie została jeszcze rozpatrzona.");
+                    return;
+                }
+            }
+            else
+            {
+                _service.UpdatePatient(_Patient);
+            }
+            Window k = p as Window;
+            k.Close();
         });
         public ICommand DeleteUser => new Command(p =>
         {
-
-
-
             if (Pas == _User.Password)
             {
                 if (MessageBox.Show("Czy na pewno chcesz usunąć konto", App.Name, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
@@ -413,7 +393,7 @@ namespace Visits.ViewModels
                     //}
                 }
                 _loggedUser.LogOut();
-               // db.Commit();
+                // db.Commit();
 
 
 
@@ -431,7 +411,7 @@ namespace Visits.ViewModels
 
 
         });
-        
+
         private async Task AddSpec(Specialization item, ITransactionalApplicationData context)
         {
             await App.Current.Dispatcher.BeginInvoke((Action)(() => { context.Specializations.Add(item); }));
@@ -440,7 +420,7 @@ namespace Visits.ViewModels
         public void Initialize()
         {
 
-           // var db = _applicationDataFactory.CreateApplicationData();
+            // var db = _applicationDataFactory.CreateApplicationData();
             if (_loggedUser.Logged is Patient)
             {
                 _Patient = _loggedUser.Logged as Patient;
@@ -449,13 +429,15 @@ namespace Visits.ViewModels
             }
             else
             {
-                us = _loggedUser.Logged as Doctor;
-                _User = us.User;
+                _oldDoctor = _loggedUser.Logged as Doctor;
+                _newDoctor = new Doctor();
+                _newDoctor.CopyFrom(_oldDoctor);
+                _User = _newDoctor.User;
                 Who = true;
                 var spec = _service.GetSpecializationsList();
                 foreach (var VARIABLE in spec)
                 {
-                    if (VARIABLE.Key == us.Specialization.Key)
+                    if (VARIABLE.Key == _newDoctor.Specialization.Key)
                     {
                         Spec = VARIABLE;
                         break;

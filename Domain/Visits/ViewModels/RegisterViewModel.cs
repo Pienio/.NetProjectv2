@@ -29,23 +29,34 @@ namespace Visits.ViewModels
         private bool _Who;
 
 
-        public RegisterViewModel(ILogUserService user) : base( user) { _Patient.User=new User(); }
+        public RegisterViewModel(ILogUserService user) : base(user) { _Patient.User = new User(); }
 
         public bool Who
         {
             get { return _Who; }
-            set {
+            set
+            {
                 _Who = value;
                 OnPropertyChanged("Who");
 
             }
         }
-        
+
 
         public ICommand RegisterUser => new Command(async p =>
         {
             //var db = _applicationDataFactory.CreateTransactionalApplicationData();
-
+            Random r = new Random();
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < 6; i++)
+            {
+                bool numSign = r.Next(2) == 1;
+                sb.Append(numSign ? (char)r.Next(49, 58) : (char)r.Next(65, 91));
+            }
+            MailService.MailServices mail = new MailService.MailServices();
+            string token = sb.ToString();
+            mail.SendRegistrationConfirmation(Mail, token);
+            //okienko do wpisania tokena
             Person a;
 
             if (!_Who)
@@ -59,7 +70,7 @@ namespace Visits.ViewModels
 
 
                 await AddPatient(_Patient);
-               // await 
+                // await 
                 a = _Patient;
             }
             else
@@ -74,7 +85,7 @@ namespace Visits.ViewModels
                 a = us;
             }
 
-          //  db.Commit();
+            //  db.Commit();
             _loggedUser.LogIn(a);
 
 
@@ -83,7 +94,7 @@ namespace Visits.ViewModels
 
 
         });
-        
+
         public string Error
         {
             get { return String.Empty; }
@@ -99,14 +110,12 @@ namespace Visits.ViewModels
                 {
                     if (string.IsNullOrWhiteSpace(Mail))
                         result = "E-mail nie może być pusty";
-                    try
-                    {
-                        MailAddress address = new MailAddress(Mail);
-                    }
-                    catch (FormatException)
-                    {
+                    string strRegex = @"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}" +
+                        @"\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\" +
+                        @".)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
+                    Regex re = new Regex(strRegex);
+                    if (!re.IsMatch(Mail))
                         result = "Niepoprawna forma adresu e=mail.";
-                    }
                 }
                 if (fieldName == "FirstName")
                 {
@@ -129,14 +138,14 @@ namespace Visits.ViewModels
                     if (Pesel.Length != 11)
                         result = "Pesel musi mieć 11 cyfr!";
 
-                    
+
                 }
                 if (fieldName == "Pas")
                 {
 
                     if (Pas.Length < 6)
                         result = "Hasło musi mieć 6 znaków!";
-                  
+
                 }
 
                 if (fieldName == "Pasp")
@@ -148,7 +157,7 @@ namespace Visits.ViewModels
                 if (fieldName == "PE")
                 {
 
-                    if (PE<=PS)
+                    if (PE <= PS)
                         result = "Godzina końcowa musi być większa od początkowej";
                 }
                 if (fieldName == "WE")
@@ -185,7 +194,7 @@ namespace Visits.ViewModels
             {
                 _User.Name.Name = value;
                 OnPropertyChanged("FirstName");
-                
+
             }
         }
 
@@ -206,7 +215,7 @@ namespace Visits.ViewModels
             {
                 _User.PESEL = value;
                 OnPropertyChanged("Pesel");
-                
+
             }
         }
 
@@ -235,7 +244,7 @@ namespace Visits.ViewModels
             set
             {
                 _pasp = value;
-                _User.Password =PasswordHasher.CreateHash(value);
+                _User.Password = PasswordHasher.CreateHash(value);
                 OnPropertyChanged("Pasp");
             }
         }
@@ -351,8 +360,8 @@ namespace Visits.ViewModels
         }
         public async Task AddPatient(Patient item)
         {
-          var c =   await Task.Run(() => _service.AddPatient(item));
-            if(!c)
+            var c = await Task.Run(() => _service.AddPatient(item));
+            if (!c)
                 MessageBox.Show("Istnieje juz użytkownik o takim peselu");
         }
         public async Task AddDoctor(Doctor item)
@@ -363,10 +372,10 @@ namespace Visits.ViewModels
             // await App.Current.Dispatcher.BeginInvoke((Action)(() => { _service.AddDoctor(item); }));
 
         }
-    
+
         public ICommand ChangePass => new Command(p =>
         {
-          
+
             PasswordBox a = (PasswordBox)p;
             Pas = a.Password;
             OnPropertyChanged("Pasp");
@@ -383,8 +392,8 @@ namespace Visits.ViewModels
 
             PasswordBox a = (PasswordBox)p;
             Pasp = a.Password;
-            
-            
+
+
         });
         public void Initialize(bool Wh)
         {
@@ -413,7 +422,7 @@ namespace Visits.ViewModels
                 us.Specialization = new Specialization();
                 us.User.Kind = DocOrPat.Doctor;
 
-               // var db = _applicationDataFactory.CreateApplicationData();
+                // var db = _applicationDataFactory.CreateApplicationData();
 
                 OnPropertyChanged("FirstName");
                 OnPropertyChanged("LastName");
@@ -434,13 +443,13 @@ namespace Visits.ViewModels
             OnPropertyChanged("Who");
 
         }
-        public void  Load()
+        public void Load()
         {
-           // var db = _applicationDataFactory.CreateApplicationData();
+            // var db = _applicationDataFactory.CreateApplicationData();
 
-           // var spec = new List<Specialization>();
-         
-           //  spec.AddRange(db.Specializations);
+            // var spec = new List<Specialization>();
+
+            //  spec.AddRange(db.Specializations);
             SpecList = _service.GetSpecializationsList();
             Spec = SpecList.First();
             //// OnPropertyChanged(nameof(SpecList));

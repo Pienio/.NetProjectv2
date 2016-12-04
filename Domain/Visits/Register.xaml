@@ -34,7 +34,7 @@
         <DockPanel Margin="0,5,10,0">
             <Label Content="E-mail:" Width="94"/>
             <TextBox x:Name="Mail" Height="26" Validation.ErrorTemplate="{StaticResource errorTemplate}"
-                       Style="{StaticResource textBoxError}" Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                       Style="{StaticResource textBoxError}" Text="{Binding Mail, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
         </DockPanel>
         <DockPanel Margin="0,10,10.4,0">
             <Label x:Name="label1" Content="Hasło:" Width="94"/>

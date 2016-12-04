@@ -73,8 +73,10 @@ namespace DatabaseAccess.Model
                 for (int i = 0; i < 8; i++)
                 {
                     Doctor ne = new Doctor();
-
+                    
+                    ne.ProfileAccepted = true;
                     ne.User = new User() { Name = new PersonName() };
+                    ne.User.Mail = "sysrejwiz@gmail.com";
                     ne.User.Name.Name = names[i];
                     ne.User.Name.Surname = surnames[i];
                     ne.User.PESEL = pesels[i];
@@ -99,11 +101,6 @@ namespace DatabaseAccess.Model
                     Doctors.Add(ne);
                 }
                 this.SaveChanges();
-            }
-            if (!Users.Any(u => u.Name.Name == "" && u.Name.Surname == ""))
-            {
-
-                SaveChanges();
             }
 
         }
