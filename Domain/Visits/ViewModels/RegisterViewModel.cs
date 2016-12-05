@@ -45,18 +45,9 @@ namespace Visits.ViewModels
 
         public ICommand RegisterUser => new Command(async p =>
         {
-            //var db = _applicationDataFactory.CreateTransactionalApplicationData();
-            Random r = new Random();
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < 6; i++)
-            {
-                bool numSign = r.Next(2) == 1;
-                sb.Append(numSign ? (char)r.Next(49, 58) : (char)r.Next(65, 91));
-            }
-            MailService.MailServices mail = new MailService.MailServices();
-            string token = sb.ToString();
-            mail.SendRegistrationConfirmation(Mail, token);
-            //okienko do wpisania tokena
+            TokenWindow wnd = new TokenWindow(Mail);
+            if (!wnd.ShowDialog().GetValueOrDefault(false))
+                return;
             Person a;
 
             if (!_Who)
