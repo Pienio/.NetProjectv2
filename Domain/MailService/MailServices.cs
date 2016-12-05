@@ -33,6 +33,18 @@ namespace MailService
             SendMail(mailAddress, "Zmiana adresu e-mail", "System rezerwacji wizyt", "Potwierdzenie zmiany adresu e-mail", content);
         }
 
+        public void SendAcceptationMail(string mailAddress)
+        {
+            string content = "Zostałeś zaakceptowany w Systemie rezerwacji wizyt. Możesz już zalogować się na swoje konto.";
+            SendMail(mailAddress, "Akceptacja rezerwacji", "System rezerwacji wizyt", "Akceptacja rezerwacji", content);
+        }
+
+        public void SendRejectionMail(string mailAddress, string reason)
+        {
+            string content = "Niestety, twoja prośba o rejestrację została rozpatrzona negatywnie.\nPowód: " + reason;
+            SendMail(mailAddress, "Odrzucenie rejestracji", "System rezerwacji wizyt", "Odrzucenie rejestracji", content);
+        }
+
         private void SendMail(string address, string title, string header, string subheader, string description)
         {
             using (var client = CreateClient())

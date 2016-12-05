@@ -7,6 +7,7 @@
         <xs:sequence>
           <xs:element minOccurs="0" name="Active" type="xs:boolean" />
           <xs:element minOccurs="0" name="Kind" type="tns:DocOrPat" />
+          <xs:element minOccurs="0" name="Mail" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="Name" nillable="true" type="tns:PersonName" />
           <xs:element minOccurs="0" name="PESEL" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
@@ -137,4 +138,10 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="ProfileRequest" nillable="true" type="tns:ProfileRequest" />
+  <xs:complexType name="ArrayOfPatient">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Patient" nillable="true" type="tns:Patient" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPatient" nillable="true" type="tns:ArrayOfPatient" />
 </xs:schema>

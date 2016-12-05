@@ -223,15 +223,16 @@ namespace DataAccessService
         {
             db.BeginTransaction();
             // Patient asd = _loggedUser.Logged as Patient;
-            var b = db.Doctors.Find(toDelete.Key);
+            var b = db.Doctors.Select(p=>p).Where(p=>p.Key==toDelete.Key).Include(p=>p.User).Include(p=>p.Specialization).Include(p=>p.Visits).First();
             IEnumerable<Visit> obw = GetDoctorVisits((int)b.Key, true);
             if (obw == null || obw.ToList().Count == 0)
             {
                 User adfg = b.User;
-                db.Doctors.Attach(b);
-                db.Doctors.Remove(b);
                 db.Users.Attach(adfg);
                 db.Users.Remove(adfg);
+                db.Doctors.Attach(b);
+                db.Doctors.Remove(b);
+              
             }
             else
             {
