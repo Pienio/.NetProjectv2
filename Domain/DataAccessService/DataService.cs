@@ -76,7 +76,7 @@ namespace DataAccessService
         public IEnumerable<Doctor> GetDoctorsList()
         {
             //return null;
-            IEnumerable<Doctor> a = db.Doctors.Select(b => b).Include(p => p.User).Include(p => p.Specialization).Include(p => p.Visits);
+            IEnumerable<Doctor> a = db.Doctors.Select(b => b).Where(p=>p.ProfileAccepted).Include(p => p.User).Include(p => p.Specialization).Include(p => p.Visits);
             return a;
         }
 
@@ -85,17 +85,17 @@ namespace DataAccessService
             IEnumerable<Doctor> w;
             string namez = name?.ToLower();
             if (spec == null)
-                w = db.Doctors.Select(p => p); //.Include(p => p.User).Include(p => p.Visits).Where(p=>p.User.Active);
+                w = db.Doctors.Select(p => p).Where(p => p.ProfileAccepted); //.Include(p => p.User).Include(p => p.Visits).Where(p=>p.User.Active);
             else
-                w = db.Doctors.Select(p => p).Where(p => p.Specialization.Key == spec.Key && p.User.Active);//.Include(p=>p.User).Include(p=>p.Visits).Include(p=>p.Specialization);
+                w = db.Doctors.Select(p => p).Where(p => p.Specialization.Key == spec.Key && p.User.Active&& p.ProfileAccepted);//.Include(p=>p.User).Include(p=>p.Visits).Include(p=>p.Specialization);
             if (string.IsNullOrWhiteSpace(namez))
             {
-                w = w.Select(p => p).Where(p => p.User.Active);
+                w = w.Select(p => p).Where(p => p.User.Active&& p.ProfileAccepted);
 
             }
             else
             {
-                w = w.Select(p => p).Where(p => p.User.Name.ToString().ToLower().Contains(namez) && p.User.Active);
+                w = w.Select(p => p).Where(p => p.User.Name.ToString().ToLower().Contains(namez) && p.User.Active&& p.ProfileAccepted);
             }
             return w;
         }
@@ -135,7 +135,7 @@ namespace DataAccessService
         }
         public IEnumerable<ProfileRequest> GetRequests()
         {
-            return db.Requests.Include(r => r.OldProfile).Include(r => r.NewProfile);
+            return db.Requests.Include(r => r.OldProfile).Include(r => r.NewProfile).Include(p=>p.NewProfile.User).Include(p=>p.NewProfile.Specialization);
         }
 
         public bool UpdatePatient(Patient toUpdate)
@@ -177,9 +177,10 @@ namespace DataAccessService
         public bool UpdateDoctor(Doctor toUpdate)
         {
             db.BeginTransaction();
-            var o = db.Doctors.Find(toUpdate.Key);
+            var o = db.Doctors.Select(p=>p).Where(p=>p.Key==toUpdate.Key).Include(p=>p.User).Include(p=>p.Specialization).Include(p=>p.Visits).First();
            // toUpdate.Specialization.Doctors.Add(toUpdate);
             o.User.Name = toUpdate.User.Name;
+            o.ProfileAccepted = toUpdate.ProfileAccepted;
             o.User.PESEL = toUpdate.User.PESEL;
             o.User.Password = toUpdate.User.Password;
             o.Specialization = db.Specializations.Find(toUpdate.Specialization.Key);
@@ -188,6 +189,7 @@ namespace DataAccessService
             o.FridayWorkingTime = toUpdate.FridayWorkingTime;
             o.TuesdayWorkingTime = toUpdate.TuesdayWorkingTime;
             o.ThursdayWorkingTime = toUpdate.ThursdayWorkingTime;
+            o.FirstFreeSlot=DateTime.Now;
             o.Visits = toUpdate.Visits;
             
             try
@@ -361,38 +363,15 @@ namespace DataAccessService
         {
             db.BeginTransaction();
             IEnumerable<User> asd = db.Users.Select(d => d).Where(d => d.PESEL == toAdd.User.PESEL);
-            if (asd.Count() != 0)
+            if (asd==null||asd.Count() != 0)
             {
                 return false;
                 // MessageBox.Show("Istnieje juz użytkownik o takim peselu");
                 // return;
             }
-            //Doctor d = new Doctor();
-            //d.User = new User();
-            //d.User.Kind = DocOrPat.Doctor;
-            //d.User.Name = new PersonName();
-            //d.User.Name.Name = "a";
-            //d.User.Name.Surname = "b";
-            //d.User.PESEL = "12341234123";
-            //d.User.Password = "popaospaodpsa";
-            //d.Specialization = new Specialization("pupa");
-            //d.MondayWorkingTime = new WorkingTime();
-            //d.MondayWorkingTime.Start = 1;
-            //d.MondayWorkingTime.End = 2;
-            //d.TuesdayWorkingTime = new WorkingTime();
-            //d.TuesdayWorkingTime.Start = 1;
-            //d.TuesdayWorkingTime.End = 2;
-            //d.WednesdayWorkingTime = new WorkingTime();
-            //d.WednesdayWorkingTime.Start = 1;
-            //d.WednesdayWorkingTime.End = 2;
-            //d.ThursdayWorkingTime = new WorkingTime();
-            //d.ThursdayWorkingTime.Start = 1;
-            //d.ThursdayWorkingTime.End = 2;
-            //d.FridayWorkingTime = new WorkingTime();
-            //d.FridayWorkingTime.Start = 1;
-            //d.FridayWorkingTime.End = 2;
+           
             toAdd.Specialization = this.db.Specializations.Find(toAdd.Specialization.Key);
-            
+            toAdd.FirstFreeSlot=DateTime.Now;
             db.Doctors.Add(toAdd);
             db.Commit();
             return true;
@@ -421,6 +400,14 @@ namespace DataAccessService
             if (toAdd.OldProfile != null)
                 if (db.Requests.Any(r => r.NewProfile.Key == toAdd.NewProfile.Key || r.NewProfile.User.Key == toAdd.NewProfile.User.Key))
                     return false;   
+            db.Commit();
+            AddDoctor(toAdd.NewProfile);
+            db.BeginTransaction();
+            //ProfileRequest a = new ProfileRequest();
+
+            toAdd.NewProfile = db.Doctors.Find(toAdd.NewProfile.Key);
+            if (toAdd.OldProfile != null)
+                toAdd.OldProfile = db.Doctors.Find(toAdd.OldProfile.Key);
             db.Requests.Add(toAdd);
                 db.Commit();
                 return true;

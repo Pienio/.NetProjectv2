@@ -84,12 +84,12 @@ namespace DatabaseAccess.Model
                 //return NextSlot(visits[visits.Count - 1].AddMinutes(30));
            // }
             set; 
-        } =DateTime.Now;
+        } = DateTime.Now;
 
         /// <summary>
         /// Zwraca następny potencjalnie możliwy termin wizyty (z uwzględnieniem weekendów i godzin pracy)
         /// </summary>
-        /// <param name="date">Data wyjściowa</param>
+        // <param name="date">Data wyjściowa</param>
         /// <returns></returns>
         //private DateTime NextSlot(DateTime date)
         //{
@@ -115,9 +115,9 @@ namespace DatabaseAccess.Model
         //}
 
         /// <summary>
-        /// Zwraca odpowiedni <see cref="WorkingTime"/> dla danego dnia tygodnia lub null w przypadku weekendu
+        // Zwraca odpowiedni <see cref="WorkingTime"/> dla danego dnia tygodnia lub null w przypadku weekendu
         /// </summary>
-        /// <param name="date"></param>
+        // <param name="date"></param>
         /// <returns></returns>
         //private WorkingTime GetWorkingTime(DateTime date)
         //{

@@ -405,6 +405,7 @@ namespace Visits.ViewModels
             {
                 us = new Doctor();
                 us.User = _User;
+                us.FirstFreeSlot=DateTime.Now;
                 us.MondayWorkingTime = new WorkingTime();
                 us.TuesdayWorkingTime = new WorkingTime();
                 us.ThursdayWorkingTime = new WorkingTime();

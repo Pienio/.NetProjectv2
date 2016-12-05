@@ -62,6 +62,8 @@ namespace AdminPanel.ViewModels
                 MessageBox.Show("Nie udało się dokonać zmian z powodu błędu. Spróbuj ponownie.", App.Name, MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
+            var cd = await _service.GetRequestsAsync();
+            Requests = cd.ToList();
             //wyślij maila
         });
         public ICommand RejectCommand => new Command(async p =>
@@ -86,6 +88,7 @@ namespace AdminPanel.ViewModels
             }
 
             string reason = wnd.TextInserted;
+            OnPropertyChanged(nameof(Requests));
             // wyślij maila
         });
         public ICommand RefreshCommand => new Command(async p =>
