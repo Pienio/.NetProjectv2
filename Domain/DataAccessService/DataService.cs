@@ -85,9 +85,9 @@ namespace DataAccessService
             IEnumerable<Doctor> w;
             string namez = name?.ToLower();
             if (spec == null)
-                w = db.Doctors.Select(p => p).Where(p => p.ProfileAccepted); //.Include(p => p.User).Include(p => p.Visits).Where(p=>p.User.Active);
+                w = db.Doctors.Select(p => p).Where(p => p.ProfileAccepted).Include(p => p.User).Include(p => p.Visits).Where(p=>p.User.Active);
             else
-                w = db.Doctors.Select(p => p).Where(p => p.Specialization.Key == spec.Key && p.User.Active&& p.ProfileAccepted);//.Include(p=>p.User).Include(p=>p.Visits).Include(p=>p.Specialization);
+                w = db.Doctors.Select(p => p).Where(p => p.Specialization.Key == spec.Key && p.User.Active&& p.ProfileAccepted).Include(p=>p.User).Include(p=>p.Visits).Include(p=>p.Specialization);
             if (string.IsNullOrWhiteSpace(namez))
             {
                 w = w.Select(p => p).Where(p => p.User.Active&& p.ProfileAccepted);
