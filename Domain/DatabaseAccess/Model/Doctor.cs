@@ -14,13 +14,14 @@ namespace DatabaseAccess.Model
     {
         [Required]
         [DataMember]
-        public virtual Specialization Specialization { get; set; } = new Specialization();
+        public virtual IList<Specialization> Specialization { get; set; } = new List<Specialization>();
         [DataMember]
         public bool ProfileAccepted { get; set; } = false;
 
         //poniższe właściwości muszą mieć w nazwie dzień tygodnia po angielsku, inaczej funkcja GetWorkingTime nie będzie działać
         [DataMember]
         public WorkingTime MondayWorkingTime { get; set; }
+
         [DataMember]
         public WorkingTime TuesdayWorkingTime { get; set; }
         [DataMember]
@@ -43,11 +44,19 @@ namespace DatabaseAccess.Model
 
         public void CopyFrom(Doctor doctor)
         {
+           // Key = doctor.Key;
+           // User.Key = doctor.User.Key;
             User.Active = doctor.User.Active;
             User.Name = doctor.User.Name;
+            User.Mail = doctor.User.Mail;
             User.Password = doctor.User.Password;
             User.PESEL = doctor.User.PESEL;
-            Specialization = doctor.Specialization;
+            Specialization = new List<Specialization>();
+            foreach (var VARIABLE in doctor.Specialization)
+            {
+                Specialization.Add(VARIABLE);
+            }
+            
             MondayWorkingTime = doctor.MondayWorkingTime;
             TuesdayWorkingTime = doctor.TuesdayWorkingTime;
             WednesdayWorkingTime = doctor.WednesdayWorkingTime;

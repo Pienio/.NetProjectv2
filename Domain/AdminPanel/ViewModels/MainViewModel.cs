@@ -49,6 +49,8 @@ namespace AdminPanel.ViewModels
             }
             else
             {
+                request.OldProfile.User=new User();
+                request.OldProfile.User.Name=new PersonName();
                 request.OldProfile.CopyFrom(request.NewProfile);
                 res = await _service.UpdateDoctorAsync(request.OldProfile);
             }

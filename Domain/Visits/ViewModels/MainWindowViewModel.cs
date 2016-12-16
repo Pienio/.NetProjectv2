@@ -110,6 +110,10 @@ namespace Visits.ViewModels
         public ICommand SearchCmd => new Command(p =>
         {
             Doctors = _service.SearchDoctorsList(SelectedSpecialization, SearchByNameText);
+            foreach (var VARIABLE in Doctors)
+            {
+                VARIABLE.FirstFreeSlot = _service.GetFirstFreeSlot((int)VARIABLE.Key);
+            }
             //var db = _applicationDataFactory.CreateApplicationData();
             //db.Doctors.Load();
 

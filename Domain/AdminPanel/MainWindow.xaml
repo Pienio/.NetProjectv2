@@ -34,7 +34,14 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="PESEL" Binding="{Binding NewProfile.User.PESEL}"/>
                     <DataGridTextColumn Header="Imię i nazwisko" Binding="{Binding NewProfile.User.Name}" Width="*"/>
-                    <DataGridTextColumn Header="Specjalizacja" Binding="{Binding NewProfile.Specialization}" Width="*"/>
+                    <!--<DataGridTextColumn Header="Specjalizacja" Binding="{Binding NewProfile.Specialization}" Width="*"/>-->
+                   <DataGridTemplateColumn Header="Specjalizacja" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ListBox ItemsSource="{Binding NewProfile.Specialization}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                     <DataGridTextColumn Header="Typ zmiany" Binding="{Binding OldProfile, Converter={StaticResource requestTypeConv}}"/>
                     <DataGridTemplateColumn Width="100">
                         <DataGridTemplateColumn.CellTemplate>

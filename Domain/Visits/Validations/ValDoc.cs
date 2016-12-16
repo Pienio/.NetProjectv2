@@ -31,7 +31,7 @@ namespace Visits.Validations
             us.ThursdayWorkingTime = new WorkingTime();
             us.WednesdayWorkingTime = new WorkingTime();
             us.FridayWorkingTime = new WorkingTime();
-            us.Specialization = new Specialization();
+            us.Specialization = new List<Specialization>();
             us.User.Kind = DocOrPat.Doctor;
             us.User.PESEL = "";
             us.User.Password = "";
@@ -141,15 +141,15 @@ namespace Visits.Validations
                 OnPropertyChanged("Pasp");
             }
         }
-        public Specialization Spec
-        {
-            get { return us.Specialization; }
-            set
-            { 
-                us.Specialization = value;
-                OnPropertyChanged("Spec");
-            }
-        }
+        //public Specialization Spec
+        //{
+        //    get { return us.Specialization; }
+        //    set
+        //    { 
+        //        us.Specialization = value;
+        //        OnPropertyChanged("Spec");
+        //    }
+        //}
 
         public int PS
         {

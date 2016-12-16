@@ -27,7 +27,8 @@ namespace Visits.ViewModels
         private string _pas = "";
         private string _pasp = "";
         private bool _Who;
-
+        private Specialization _DocSpecListsel;
+        private Specialization _spec;
 
         public RegisterViewModel(ILogUserService user) : base(user) { _Patient.User = new User(); }
 
@@ -42,6 +43,15 @@ namespace Visits.ViewModels
             }
         }
 
+        public Specialization DocSpecListsel
+        {
+            get { return _DocSpecListsel; }
+            set
+            {
+                _DocSpecListsel = value;
+                OnPropertyChanged("DocSpecListsel");
+            }
+        }
 
         public ICommand RegisterUser => new Command(async p =>
         {
@@ -175,6 +185,14 @@ namespace Visits.ViewModels
                     if (PIE <= PIS)
                         result = "Godzina końcowa musi być większa od początkowej";
                 }
+                if (fieldName == "DocSpecList")
+                {
+
+                   if(DocSpecList.Count==0)
+                        result = "Musisz mieć przynajmniej jedną specjalizację";
+
+                    MessageBox.Show(result);
+                }
                 return result;
             }
         }
@@ -248,12 +266,22 @@ namespace Visits.ViewModels
                 OnPropertyChanged("SpecList");
             }
         }
-        public Specialization Spec
+        public IList<Specialization> DocSpecList
         {
             get { return us.Specialization; }
             set
             {
                 us.Specialization = value;
+                
+                OnPropertyChanged("DocSpecList");
+            }
+        }
+        public Specialization Spec
+        {
+            get { return _spec; }
+            set
+            {
+                _spec = value;
                 OnPropertyChanged("Spec");
             }
         }
@@ -386,6 +414,38 @@ namespace Visits.ViewModels
 
 
         });
+        public ICommand AdSpec => new Command(p =>
+        {
+
+            us.Specialization.Add(Spec);
+            var d = new List<Specialization>();
+            foreach (var VARIABLE in us.Specialization)
+            {
+                d.Add(VARIABLE);
+            }
+            DocSpecList = d;
+            OnPropertyChanged("DocSpecList");
+            
+
+        });
+        public ICommand RemSpec => new Command(p =>
+        {
+            if (us.Specialization.Count == 1)
+            {
+                MessageBox.Show("Musisz mieć przynajmniej jedną specjalizacje");
+                return;
+            }
+              
+            us.Specialization.Remove(_DocSpecListsel);
+            var d = new List<Specialization>();
+            foreach (var VARIABLE in us.Specialization)
+            {
+                d.Add(VARIABLE);
+            }
+            DocSpecList = d;
+            OnPropertyChanged("DocSpecList");
+
+        });
         public void Initialize(bool Wh)
         {
             _User = new User();
@@ -411,7 +471,7 @@ namespace Visits.ViewModels
                 us.ThursdayWorkingTime = new WorkingTime();
                 us.WednesdayWorkingTime = new WorkingTime();
                 us.FridayWorkingTime = new WorkingTime();
-                us.Specialization = new Specialization();
+                us.Specialization = new List<Specialization>();
                 us.User.Kind = DocOrPat.Doctor;
 
                 // var db = _applicationDataFactory.CreateApplicationData();

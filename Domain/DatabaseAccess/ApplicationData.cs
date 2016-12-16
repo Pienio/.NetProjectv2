@@ -97,7 +97,7 @@ namespace DatabaseAccess.Model
                     ne.FridayWorkingTime = new WorkingTime();
                     ne.FridayWorkingTime.Start = 8 + i / 2;
                     ne.FridayWorkingTime.End = 12 + i / 2;
-                    ne.Specialization = specs[i];
+                    ne.Specialization.Add(specs[i]);
                     Doctors.Add(ne);
                 }
                 this.SaveChanges();
