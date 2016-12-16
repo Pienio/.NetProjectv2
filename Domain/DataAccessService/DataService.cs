@@ -389,7 +389,7 @@ namespace DataAccessService
             //db.Requests.Attach(toDelete);
             if (toDelete.OldProfile != null)
             {
-                Doctor a = GetDoctorById((int)toDelete.Key);
+                Doctor a = GetDoctorById((int)toDelete.NewProfile.Key);
                 User b = db.Users.Find(a.User.Key);
                 db.Doctors.Remove(a);
                 db.Users.Remove(b);

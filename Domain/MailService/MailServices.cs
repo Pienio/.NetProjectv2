@@ -17,7 +17,7 @@ namespace MailService
 
         public void SendSimpleMail()
         {
-            SendMail("filip.maruszczak@o2.pl", "test", "Test", "subtest", "testest");
+            SendMail("pienbartl@gmail.com", "test", "Test", "subtest", "testest");
         }
 
         public void SendRegistrationConfirmation(string mailAddress, string token)

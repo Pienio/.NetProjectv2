@@ -157,8 +157,8 @@ namespace Visits.ViewModels
 
         public ICommand ClearFilters => new Command(p =>
         {
-            MailService.MailServices a = new MailService.MailServices();
-            a.SendSimpleMail();
+            //MailService.MailServices a = new MailService.MailServices();
+            //a.SendSimpleMail();
             SelectedSpecialization = null;
             SearchByNameText = "";
 
