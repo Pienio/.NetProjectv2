@@ -80,8 +80,6 @@ namespace DataAccessService
 
         public IEnumerable<Doctor> SearchDoctorsList(Specialization spec, string name)
         {
-           
-            
             IEnumerable<Doctor> w;
             string namez = name?.ToLower();
             //if (spec == null)
@@ -106,9 +104,10 @@ namespace DataAccessService
                 {
                     foreach (var VARIABLE in w)
                     {
-                        if (VARIABLE.User.Name.ToString().Contains(namez))
+                        if (VARIABLE.User.Name.ToString().ToLower().Contains(namez))
                             a.Add(VARIABLE);
                     }
+                    w = a;
                 }
             }
             else
@@ -126,7 +125,7 @@ namespace DataAccessService
                                 flag = true;
                         }
                       
-                        if (flag && VARIABLE.User.Name.ToString().Contains(namez))
+                        if (flag && VARIABLE.User.Name.ToString().ToLower().Contains(namez))
                             a.Add(VARIABLE);
                     }
                 }
