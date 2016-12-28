@@ -45,8 +45,15 @@
                   AutoGenerateColumns="False" IsReadOnly="True" IsEnabled="{Binding AnyDoctors}">
                 <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding User.Name}" Header="Nazwisko lekarza" Width="*"/>
-                <DataGridTextColumn Binding="{Binding Specialization}" Header="Specjalizacja" Width="*"/>
-                <DataGridTextColumn Binding="{Binding FirstFreeSlot, StringFormat=\{0:dd.MM.yyyy HH:mm\}}" Header="Następna możliwa wizyta" Width="*"/>
+                <!--<DataGridTextColumn Binding="{Binding Specialization}" Header="Specjalizacja" Width="*"/>-->
+                    <DataGridTemplateColumn Header="Specjalizacja" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ListBox ItemsSource="{Binding Specialization}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Binding="{Binding FirstFreeSlot, StringFormat=\{0:dd.MM.yyyy HH:mm\}}" Header="Następna możliwa wizyta" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
             <TextBlock Text="Brak lekarzy do wyświetlenia" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"

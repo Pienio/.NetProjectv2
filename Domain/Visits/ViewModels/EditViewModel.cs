@@ -27,6 +27,8 @@ namespace Visits.ViewModels
         private Doctor _oldDoctor;
         private string _pas = "";
         private bool _Who;
+        private Specialization _DocSpecListsel;
+        private Specialization _spec;
 
         public EditViewModel(ILogUserService user) : base(user) { }
 
@@ -38,6 +40,16 @@ namespace Visits.ViewModels
                 _Who = value;
                 OnPropertyChanged("Who");
 
+            }
+        }
+
+        public Specialization DocSpecListsel
+        {
+            get { return _DocSpecListsel; }
+            set
+            {
+                _DocSpecListsel = value;
+                OnPropertyChanged("DocSpecListsel");
             }
         }
         public string Error
@@ -169,10 +181,10 @@ namespace Visits.ViewModels
         }
         public Specialization Spec
         {
-            get { return _newDoctor.Specialization; }
+            get { return _spec; }
             set
             {
-                _newDoctor.Specialization = value;
+                _spec = value;
                 OnPropertyChanged("Spec");
             }
         }
@@ -403,7 +415,46 @@ namespace Visits.ViewModels
 
 
         });
+        public ICommand AdSpec => new Command(p =>
+        {
 
+            _newDoctor.Specialization.Add(Spec);
+            var d = new List<Specialization>();
+            foreach (var VARIABLE in _newDoctor.Specialization)
+            {
+                d.Add(VARIABLE);
+            }
+            DocSpecList = d;
+            OnPropertyChanged("DocSpecList");
+
+        });
+        public ICommand RemSpec => new Command(p =>
+        {
+            if (_newDoctor.Specialization.Count == 1)
+            {
+                MessageBox.Show("Musisz mieć przynajmniej jedną specjalizacje");
+                return;
+            }
+               
+            _newDoctor.Specialization.Remove(_DocSpecListsel);
+            var d = new List<Specialization>();
+            foreach (var VARIABLE in _newDoctor.Specialization)
+            {
+                d.Add(VARIABLE);
+            }
+            DocSpecList = d;
+            OnPropertyChanged("DocSpecList");
+
+        });
+        public IList<Specialization> DocSpecList
+        {
+            get { return _newDoctor.Specialization; }
+            set
+            {
+                _newDoctor.Specialization = value;
+                OnPropertyChanged("DocSpecList");
+            }
+        }
         private async Task AddSpec(Specialization item, ITransactionalApplicationData context)
         {
             await App.Current.Dispatcher.BeginInvoke((Action)(() => { context.Specializations.Add(item); }));
@@ -423,18 +474,27 @@ namespace Visits.ViewModels
             {
                 _oldDoctor = _loggedUser.Logged as Doctor;
                 _newDoctor = new Doctor();
+                _newDoctor.User = new User();
+                _newDoctor.User.Name = new PersonName();
+                _newDoctor.MondayWorkingTime = new WorkingTime();
+                _newDoctor.TuesdayWorkingTime = new WorkingTime();
+                _newDoctor.WednesdayWorkingTime = new WorkingTime();
+                _newDoctor.ThursdayWorkingTime = new WorkingTime();
+                _newDoctor.FridayWorkingTime = new WorkingTime();
                 _newDoctor.CopyFrom(_oldDoctor);
+                //_newDoctor = _oldDoctor;
                 _User = _newDoctor.User;
                 Who = true;
                 var spec = _service.GetSpecializationsList();
-                foreach (var VARIABLE in spec)
-                {
-                    if (VARIABLE.Key == _newDoctor.Specialization.Key)
-                    {
-                        Spec = VARIABLE;
-                        break;
-                    }
-                }
+
+                //foreach (var VARIABLE in spec)
+                //{
+                //    if (VARIABLE.Key == _newDoctor.Specialization.Key)
+                //    {
+                //        Spec = VARIABLE;
+                //        break;
+                //    }
+                //}
                 //Spec = us.Specialization;
                 SpecList = spec;
                 OnPropertyChanged("PS");
@@ -448,6 +508,7 @@ namespace Visits.ViewModels
                 OnPropertyChanged("PIS");
                 OnPropertyChanged("PIE");
                 OnPropertyChanged("Spec");
+                OnPropertyChanged("DocSpecList");
             }
             OnPropertyChanged("Pesel");
             OnPropertyChanged("Who");

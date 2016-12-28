@@ -11,7 +11,7 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         x:Name="RegisterWindow" Style="{StaticResource windowStyle}"
-        Title="Rejestracja" SizeToContent="Height" Width="413" Loaded="Window_Loaded">
+        Title="Rejestracja" SizeToContent="Height" Width="405" Loaded="Window_Loaded" Height="742.2">
     <metro:MetroWindow.Resources>
         <conv:BoolVisibilityConverter x:Key="visibilityBool"/>
     </metro:MetroWindow.Resources>
@@ -62,6 +62,17 @@
             <Label x:Name="label4" Content="Specjalizacja:" Width="94" DockPanel.Dock="Left" Visibility="{Binding Who, Converter={StaticResource visibilityBool}, ConverterParameter=True, UpdateSourceTrigger=PropertyChanged}"/>
             <ComboBox x:Name="Spec" Height="26" Margin="0,0,10,0" ItemsSource="{Binding SpecList}" SelectedItem="{Binding Spec}" SelectedIndex="0" Visibility="{Binding Who, Converter={StaticResource visibilityBool}, ConverterParameter=True, UpdateSourceTrigger=PropertyChanged}"/>
         </DockPanel>
+        <Button x:Name="DodDoList" Content="Dodaj Specjalizacje" Command="{Binding AdSpec}"/>
+        <GroupBox x:Name="Twoje_Specjalizacje" Header="Twoje Specjalizacje" Margin="0">
+            <ListView x:Name="SpecListL" Height="100" ItemsSource="{Binding DocSpecList}" SelectedItem="{Binding DocSpecListsel, Mode=OneWayToSource}" SelectionMode="Single">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Name" Width="400" DisplayMemberBinding="{Binding Name}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </GroupBox>
+        <Button x:Name="UsSpecZList" Content="Usuń Specjalizacje" Command="{Binding RemSpec}" IsEnabled="{Binding SelectedItems.Count, ElementName=SpecListL}"/>
         <GroupBox x:Name="GP" Header="Godziny przyjęć" Margin="0,5,0,0" Visibility="{Binding Who, Converter={StaticResource visibilityBool}, ConverterParameter=True, UpdateSourceTrigger=PropertyChanged}">
             <Grid Margin="0,0,0,20">
                 <Grid.RowDefinitions>
@@ -167,7 +178,7 @@
             </Grid>
         </GroupBox>
         <Grid Margin="0,15,0,10">
-            <Button x:Name="Reg" Content="Zarejestruj się" HorizontalAlignment="Right"  Width="110" Height="25" Command="{Binding RegisterUser}" CommandParameter="{Binding ElementName=RegisterWindow}">
+            <Button x:Name="Reg" Content="Zarejestruj się" HorizontalAlignment="Right"  Width="110" Height="25" Command="{Binding RegisterUser}" CommandParameter="{Binding ElementName=RegisterWindow}" Margin="0,0,0,-0.4">
                 <Button.Style>
                     <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                         <Setter Property="IsEnabled" Value="false" />
@@ -175,6 +186,7 @@
                             <MultiDataTrigger>
                                 <Setter Property="IsEnabled" Value="true" />
                                 <MultiDataTrigger.Conditions>
+
                                     <Condition Binding="{Binding ElementName=Imi,
                             Path=(Validation.HasError)}" Value="false" />
                                     <Condition Binding="{Binding ElementName=Nazw,
@@ -184,7 +196,7 @@
                                     <Condition Binding="{Binding ElementName=passwordBox,
                             Path=(Validation.HasError)}" Value="false" />
                                     <Condition Binding="{Binding ElementName=passwordBox1,
-                            Path=(Validation.HasError)}" Value="false" />                         
+                            Path=(Validation.HasError)}" Value="false" />
                                     <Condition Binding="{Binding ElementName=PS,
                             Path=(Validation.HasError),TargetNullValue=false }" Value="false" />
                                     <Condition Binding="{Binding ElementName=PE,

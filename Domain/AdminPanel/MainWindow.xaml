@@ -8,7 +8,9 @@
                    xmlns:conv="clr-namespace:AdminPanel.Converters"
                    xmlns:vm="clr-namespace:AdminPanel.ViewModels"
                    mc:Ignorable="d" Loaded="Window_Loaded"
-                   Title="Panel administracyjny" SizeToContent="Height" Width="941.8" MinHeight="350">
+                   Title="Panel administracyjny" SizeToContent="Height" Width="941.8" MinHeight="350"
+                   x:Name="wnd"
+                   >
     <metro:MetroWindow.DataContext>
         <vm:MainViewModel/>
     </metro:MetroWindow.DataContext>
@@ -30,21 +32,28 @@
             <TextBlock Margin="10,10,5,5" Text="Wnioski o rejestrację/edycję konta" DockPanel.Dock="Top" FontSize="16"/>
             <DataGrid IsReadOnly="True" AutoGenerateColumns="False" Margin="10,0,5,10" BorderThickness="1" ItemsSource="{Binding Requests}">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="PESEL" Binding="{Binding NewProfile.PESEL}"/>
+                    <DataGridTextColumn Header="PESEL" Binding="{Binding NewProfile.User.PESEL}"/>
                     <DataGridTextColumn Header="Imię i nazwisko" Binding="{Binding NewProfile.User.Name}" Width="*"/>
-                    <DataGridTextColumn Header="Specjalizacja" Binding="{Binding NewProfile.Specialization}" Width="*"/>
+                    <!--<DataGridTextColumn Header="Specjalizacja" Binding="{Binding NewProfile.Specialization}" Width="*"/>-->
+                   <DataGridTemplateColumn Header="Specjalizacja" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ListBox ItemsSource="{Binding NewProfile.Specialization}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                     <DataGridTextColumn Header="Typ zmiany" Binding="{Binding OldProfile, Converter={StaticResource requestTypeConv}}"/>
                     <DataGridTemplateColumn Width="100">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Content="Odrzuć" Command="{Binding RejectCommand}" CommandParameter="{Binding}"/>
+                                <Button Content="Odrzuć" Command="{Binding ElementName=wnd, Path=DataContext.RejectCommand}" CommandParameter="{Binding}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Width="100">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Content="Akceptuj" Command="{Binding AcceptCommand}" CommandParameter="{Binding}"/>
+                                <Button Content="Akceptuj" Command="{Binding ElementName=wnd, Path=DataContext.AcceptCommand}" CommandParameter="{Binding}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

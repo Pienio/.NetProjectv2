@@ -110,6 +110,10 @@ namespace Visits.ViewModels
         public ICommand SearchCmd => new Command(p =>
         {
             Doctors = _service.SearchDoctorsList(SelectedSpecialization, SearchByNameText);
+            foreach (var VARIABLE in Doctors)
+            {
+                VARIABLE.FirstFreeSlot = _service.GetFirstFreeSlot((int)VARIABLE.Key);
+            }
             //var db = _applicationDataFactory.CreateApplicationData();
             //db.Doctors.Load();
 
@@ -153,8 +157,8 @@ namespace Visits.ViewModels
 
         public ICommand ClearFilters => new Command(p =>
         {
-            MailService.MailServices a = new MailService.MailServices();
-            a.SendSimpleMail();
+            //MailService.MailServices a = new MailService.MailServices();
+            //a.SendSimpleMail();
             SelectedSpecialization = null;
             SearchByNameText = "";
 

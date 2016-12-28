@@ -74,26 +74,78 @@ namespace DataAccessService
         public IEnumerable<Doctor> GetDoctorsList()
         {
             //return null;
-            IEnumerable<Doctor> a = db.Doctors.Select(b => b).Include(p => p.User).Include(p => p.Specialization).Include(p => p.Visits);
+            IEnumerable<Doctor> a = db.Doctors.Select(b => b).Where(p=>p.ProfileAccepted).Include(p => p.User).Include(p => p.Specialization).Include(p => p.Visits);
             return a;
         }
 
         public IEnumerable<Doctor> SearchDoctorsList(Specialization spec, string name)
         {
+           
+            
             IEnumerable<Doctor> w;
             string namez = name?.ToLower();
-            if (spec == null)
-                w = db.Doctors.Select(p => p); //.Include(p => p.User).Include(p => p.Visits).Where(p=>p.User.Active);
-            else
-                w = db.Doctors.Select(p => p).Where(p => p.Specialization.Key == spec.Key && p.User.Active);//.Include(p=>p.User).Include(p=>p.Visits).Include(p=>p.Specialization);
-            if (string.IsNullOrWhiteSpace(namez))
-            {
-                w = w.Select(p => p).Where(p => p.User.Active);
+            //if (spec == null)
+            //    w = db.Doctors.Select(p => p).Where(p => p.ProfileAccepted).Include(p => p.User).Include(p => p.Visits).Where(p=>p.User.Active);
+            //else
+            //    w = db.Doctors.Select(p => p).Where(p => p.Specialization.Contains(spec) && p.User.Active&& p.ProfileAccepted).Include(p=>p.User).Include(p=>p.Visits).Include(p=>p.Specialization);
+            //if (string.IsNullOrWhiteSpace(namez))
+            //{
+            //    w = w.Select(p => p).Where(p => p.User.Active&& p.ProfileAccepted);
 
+            //}
+            //else
+            //{
+            //    w = w.Select(p => p).Where(p => p.User.Name.ToString().ToLower().Contains(namez) && p.User.Active&& p.ProfileAccepted);
+            //}
+
+            if (spec == null)
+            {
+                List<Doctor> a = new List<Doctor>();
+                w = db.Doctors.Select(b => b).Where(p => p.ProfileAccepted && p.User.Active).Include(p => p.User).Include(p => p.Specialization).Include(p => p.Visits);
+                if (!string.IsNullOrWhiteSpace(namez))
+                {
+                    foreach (var VARIABLE in w)
+                    {
+                        if (VARIABLE.User.Name.ToString().Contains(namez))
+                            a.Add(VARIABLE);
+                    }
+                }
             }
             else
             {
-                w = w.Select(p => p).Where(p => p.User.Name.ToString().ToLower().Contains(namez) && p.User.Active);
+                w = db.Doctors.Select(b => b).Where(p => p.ProfileAccepted && p.User.Active).Include(p => p.User).Include(p => p.Specialization).Include(p => p.Visits);
+                List<Doctor> a=new List<Doctor>();
+                if (!string.IsNullOrWhiteSpace(namez))
+                {
+                    foreach (var VARIABLE in w)
+                    {
+                        bool flag = false;
+                        foreach (var s in VARIABLE.Specialization)
+                        {
+                            if (s.Name == spec.Name)
+                                flag = true;
+                        }
+                      
+                        if (flag && VARIABLE.User.Name.ToString().Contains(namez))
+                            a.Add(VARIABLE);
+                    }
+                }
+                else
+                {
+                    foreach (var VARIABLE in w)
+                    {
+                        bool flag = false;
+                        foreach (var s in VARIABLE.Specialization)
+                        {
+                            if (s.Name == spec.Name)
+                                flag = true;
+                        }
+                        if (flag)
+                            a.Add(VARIABLE);
+                    }
+                }
+               
+                w = a;
             }
             return w;
         }
@@ -124,7 +176,7 @@ namespace DataAccessService
         }
         public IEnumerable<ProfileRequest> GetRequests()
         {
-            return db.Requests.Include(r => r.OldProfile).Include(r => r.NewProfile);
+            return db.Requests.Include(r => r.OldProfile).Include(r => r.NewProfile).Include(p=>p.NewProfile.User).Include(p=>p.NewProfile.Specialization);
         }
 
         public bool UpdatePatient(Patient toUpdate)
@@ -132,6 +184,7 @@ namespace DataAccessService
             db.BeginTransaction();
             var o = db.Patients.Find(toUpdate.Key);
             o.User.Name = toUpdate.User.Name;
+            o.User.Mail = toUpdate.User.Mail;
             o.User.PESEL = toUpdate.User.PESEL;
             o.User.Password = toUpdate.User.Password;
             o.Visits = toUpdate.Visits;
@@ -166,18 +219,33 @@ namespace DataAccessService
         public bool UpdateDoctor(Doctor toUpdate)
         {
             db.BeginTransaction();
-            var o = db.Doctors.Find(toUpdate.Key);
+            var o = db.Doctors.Select(p=>p).Where(p=>p.Key==toUpdate.Key).Include(p=>p.User).Include(p=>p.Specialization).Include(p=>p.Visits).First();
            // toUpdate.Specialization.Doctors.Add(toUpdate);
             o.User.Name = toUpdate.User.Name;
+            o.User.Mail = toUpdate.User.Mail;
+            o.ProfileAccepted = toUpdate.ProfileAccepted;
             o.User.PESEL = toUpdate.User.PESEL;
             o.User.Password = toUpdate.User.Password;
-            o.Specialization = db.Specializations.Find(toUpdate.Specialization.Key);
+            o.Specialization = new List<Specialization>();
+            List<Specialization> nn = new List<Specialization>();
+            o.FirstFreeSlot = DateTime.Now;
             o.MondayWorkingTime = toUpdate.MondayWorkingTime;
             o.WednesdayWorkingTime = toUpdate.WednesdayWorkingTime;
             o.FridayWorkingTime = toUpdate.FridayWorkingTime;
             o.TuesdayWorkingTime = toUpdate.TuesdayWorkingTime;
             o.ThursdayWorkingTime = toUpdate.ThursdayWorkingTime;
+
             o.Visits = toUpdate.Visits;
+            foreach (var VARIABLE in toUpdate.Specialization)
+            {
+                Specialization asdf = db.Specializations.Select(p => p).Where(p => p.Name == VARIABLE.Name).Include(p=>p.Doctors).First();
+                if(!asdf.Doctors.Any(p=>p.Key==toUpdate.Key))
+                    asdf.Doctors.Add(o);
+                nn.Add(asdf);
+            }
+            o.Specialization = nn;
+            //o.Specialization = toUpdate.Specialization;
+         
             
             try
             {
@@ -209,15 +277,17 @@ namespace DataAccessService
         public bool DeleteDoctor(Doctor toDelete)
         {
             db.BeginTransaction();
-            var b = db.Doctors.Find(toDelete.Key);
+            // Patient asd = _loggedUser.Logged as Patient;
+            var b = db.Doctors.Select(p=>p).Where(p=>p.Key==toDelete.Key).Include(p=>p.User).Include(p=>p.Specialization).Include(p=>p.Visits).First();
             IEnumerable<Visit> obw = GetDoctorVisits((int)b.Key, true);
             if (obw == null || obw.ToList().Count == 0)
             {
                 User adfg = b.User;
-                db.Doctors.Attach(b);
-                db.Doctors.Remove(b);
                 db.Users.Attach(adfg);
                 db.Users.Remove(adfg);
+                db.Doctors.Attach(b);
+                db.Doctors.Remove(b);
+              
             }
             else
             {
@@ -286,7 +356,7 @@ namespace DataAccessService
         public bool DeleteSpecialization(Specialization toDelete)
         {
             db.BeginTransaction();
-            if (db.Doctors.Any(d => d.Specialization.Key == toDelete.Key))
+            if (db.Doctors.Any(d => d.Specialization.Contains(toDelete)))
                 return false;
             db.Specializations.Attach(toDelete);
             db.Specializations.Remove(toDelete);
@@ -304,8 +374,22 @@ namespace DataAccessService
         public bool DeleteRequest(ProfileRequest toDelete)
         {
             db.BeginTransaction();
-            db.Requests.Attach(toDelete);
-            db.Requests.Remove(toDelete);
+            //db.Requests.Attach(toDelete);
+            if (toDelete.OldProfile != null)
+            {
+                Doctor a = GetDoctorById((int)toDelete.NewProfile.Key);
+                User b = db.Users.Find(a.User.Key);
+                db.Doctors.Remove(a);
+                db.Users.Remove(b);
+            }
+               
+            ProfileRequest td =
+                db.Requests.Select(p => p)
+                    .Where(p => p.Key == toDelete.Key)
+                    .Include(p => p.OldProfile)
+                    .Include(p => p.NewProfile)
+                    .First();
+            db.Requests.Remove(td);
             try
             {
                 db.Commit();
@@ -348,12 +432,20 @@ namespace DataAccessService
         {
             db.BeginTransaction();
             IEnumerable<User> asd = db.Users.Select(d => d).Where(d => d.PESEL == toAdd.User.PESEL);
-            if (asd.Count() != 0)
+            if (asd==null||asd.Count() != 0)
             {
                 return false;
             }
-            toAdd.Specialization = this.db.Specializations.Find(toAdd.Specialization.Key);
-            
+           
+           List<Specialization> nn=new List<Specialization>();
+            foreach (var VARIABLE in toAdd.Specialization)
+            {
+                Specialization asdf = db.Specializations.Select(p => p).Where(p => p.Name == VARIABLE.Name).Include(p => p.Doctors).First();
+                asdf.Doctors.Add(toAdd);
+                nn.Add(asdf);
+            }
+            toAdd.Specialization = nn;
+            toAdd.FirstFreeSlot=DateTime.Now;
             db.Doctors.Add(toAdd);
             db.Commit();
             return true;
@@ -382,6 +474,23 @@ namespace DataAccessService
             if (toAdd.OldProfile != null)
                 if (db.Requests.Any(r => r.NewProfile.Key == toAdd.NewProfile.Key || r.NewProfile.User.Key == toAdd.NewProfile.User.Key))
                     return false;   
+          //  db.Commit();
+          //  AddDoctor(toAdd.NewProfile);
+           // db.BeginTransaction();
+            //ProfileRequest a = new ProfileRequest();
+            toAdd.NewProfile.FirstFreeSlot=DateTime.Now;
+            List<Specialization> nn = new List<Specialization>();
+            foreach (var VARIABLE in toAdd.NewProfile.Specialization)
+            {
+                Specialization asdf = db.Specializations.Select(p => p).Where(p => p.Name == VARIABLE.Name).Include(p => p.Doctors).First();
+                asdf.Doctors.Add(toAdd.NewProfile);
+                nn.Add(asdf);
+            }
+            toAdd.NewProfile.Specialization = nn;
+            db.Doctors.Add(toAdd.NewProfile);
+            toAdd.NewProfile = db.Doctors.Find(toAdd.NewProfile.Key);
+            if (toAdd.OldProfile != null)
+                toAdd.OldProfile = db.Doctors.Find(toAdd.OldProfile.Key);
             db.Requests.Add(toAdd);
                 db.Commit();
                 return true;

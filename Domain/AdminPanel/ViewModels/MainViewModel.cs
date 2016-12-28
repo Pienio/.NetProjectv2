@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using DatabaseAccess.Model;
+using MailService;
 using Visits.Utils;
 
 namespace AdminPanel.ViewModels
@@ -48,6 +49,8 @@ namespace AdminPanel.ViewModels
             }
             else
             {
+                request.OldProfile.User=new User();
+                request.OldProfile.User.Name=new PersonName();
                 request.OldProfile.CopyFrom(request.NewProfile);
                 res = await _service.UpdateDoctorAsync(request.OldProfile);
             }
@@ -62,7 +65,10 @@ namespace AdminPanel.ViewModels
                 MessageBox.Show("Nie udało się dokonać zmian z powodu błędu. Spróbuj ponownie.", App.Name, MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            //wyślij maila
+            var cd = await _service.GetRequestsAsync();
+            Requests = cd.ToList();
+            MailServices ans = new MailServices();
+            ans.SendAcceptationMail(request.NewProfile.User.Mail);
         });
         public ICommand RejectCommand => new Command(async p =>
         {
@@ -72,12 +78,12 @@ namespace AdminPanel.ViewModels
             TextWindow wnd = new TextWindow();
             if (!wnd.ShowDialog().GetValueOrDefault(false))
                 return;
-            res = await _service.DeleteDoctorAsync(request.NewProfile);
+            res = await _service.DeleteRequestAsync(request);
             if (res)
             {
-                res = await _service.DeleteRequestAsync(request);
-                if (res)
-                    Requests.Remove(request);
+                res =  await _service.DeleteDoctorAsync(request.NewProfile);
+                //if (res)
+                //    Requests.Remove(request);
             }
             if (!res)
             {
@@ -86,6 +92,10 @@ namespace AdminPanel.ViewModels
             }
 
             string reason = wnd.TextInserted;
+            var cd = await _service.GetRequestsAsync();
+            Requests = cd.ToList();
+            MailServices ans=new MailServices();
+            ans.SendRejectionMail(request.NewProfile.User.Mail,reason);
             // wyślij maila
         });
         public ICommand RefreshCommand => new Command(async p =>

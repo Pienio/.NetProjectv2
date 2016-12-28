@@ -17,7 +17,7 @@ namespace MailService
 
         public void SendSimpleMail()
         {
-            SendMail("filip.maruszczak@o2.pl", "test", "Test", "subtest", "testest");
+            SendMail("pienbartl@gmail.com", "test", "Test", "subtest", "testest");
         }
 
         public void SendRegistrationConfirmation(string mailAddress, string token)
@@ -31,6 +31,18 @@ namespace MailService
         {
             string content = "Aby potwierdzić zmianę adresu e-mail, wpisz w wymaganym polu dany token: " + token;
             SendMail(mailAddress, "Zmiana adresu e-mail", "System rezerwacji wizyt", "Potwierdzenie zmiany adresu e-mail", content);
+        }
+
+        public void SendAcceptationMail(string mailAddress)
+        {
+            string content = "Zostałeś zaakceptowany w Systemie rezerwacji wizyt. Możesz już zalogować się na swoje konto.";
+            SendMail(mailAddress, "Akceptacja rezerwacji", "System rezerwacji wizyt", "Akceptacja rezerwacji", content);
+        }
+
+        public void SendRejectionMail(string mailAddress, string reason)
+        {
+            string content = "Niestety, twoja prośba o rejestrację została rozpatrzona negatywnie.\nPowód: " + reason;
+            SendMail(mailAddress, "Odrzucenie rejestracji", "System rezerwacji wizyt", "Odrzucenie rejestracji", content);
         }
 
         private void SendMail(string address, string title, string header, string subheader, string description)
