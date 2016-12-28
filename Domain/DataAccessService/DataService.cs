@@ -11,8 +11,6 @@ using DatabaseAccess.Model;
 
 namespace DataAccessService
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in both code and config file together.
-   
     public class DataService : IDataService
     {
         ITransactionalApplicationData db = new ApplicationDataFactory().CreateTransactionalApplicationData(false);
@@ -108,25 +106,16 @@ namespace DataAccessService
 
         public IEnumerable<Visit> GetPatientVisits(int id, bool tr)
         {
-            //IEnumerable<Visit> a = db.Visits.Select(p => p).Where(p=>p.Patient.Key==id).Include(p=>p.Doctor);
             DateTime now = DateTime.Now;
-            //IEnumerable<Visit> a = from v in db.Visits
-            //                       where v.Patient.Key == id && (tr ? v.Date <= now : v.Date > now)
-            //                       select v;
             IEnumerable<Visit> a =
                 db.Visits.Select(p => p)
                     .Where(p => p.Patient.Key == id && (tr ? p.Date <= now : p.Date > now))
                     .Include(p => p.Doctor);
-            //var c = db.Patients.Select(p => p).Where(p => p.Key == id).Include(p => p.Visits).First();
-            //IEnumerable<Visit> a = c.Visits;
             return a;
         }
         public IEnumerable<Visit> GetDoctorVisits(int id, bool tr)
         {
             DateTime now=DateTime.Now;
-            //IEnumerable<Visit> a = from v in db.Visits
-            //    where v.Doctor.Key == id && (tr ? v.Date <= now : v.Date > now)
-            //    select v;//db.Visits.Select(p => p).Where(p => p.Doctor.Key == id).Include(p => p.Doctor);
             IEnumerable<Visit> a =
               db.Visits.Select(p => p)
                   .Where(p => p.Doctor.Key == id && (tr ? p.Date <= now : p.Date > now))
@@ -220,7 +209,6 @@ namespace DataAccessService
         public bool DeleteDoctor(Doctor toDelete)
         {
             db.BeginTransaction();
-            // Patient asd = _loggedUser.Logged as Patient;
             var b = db.Doctors.Find(toDelete.Key);
             IEnumerable<Visit> obw = GetDoctorVisits((int)b.Key, true);
             if (obw == null || obw.ToList().Count == 0)
@@ -260,7 +248,6 @@ namespace DataAccessService
         public bool DeletePatient(Patient toDelete)
         {
             db.BeginTransaction();
-           // Patient asd = _loggedUser.Logged as Patient;
             var b = db.Patients.Find(toDelete.Key);
             IEnumerable<Visit> obw = GetPatientVisits((int)b.Key, true);
             if (obw == null || obw.ToList().Count == 0)
@@ -364,33 +351,7 @@ namespace DataAccessService
             if (asd.Count() != 0)
             {
                 return false;
-                // MessageBox.Show("Istnieje juz użytkownik o takim peselu");
-                // return;
             }
-            //Doctor d = new Doctor();
-            //d.User = new User();
-            //d.User.Kind = DocOrPat.Doctor;
-            //d.User.Name = new PersonName();
-            //d.User.Name.Name = "a";
-            //d.User.Name.Surname = "b";
-            //d.User.PESEL = "12341234123";
-            //d.User.Password = "popaospaodpsa";
-            //d.Specialization = new Specialization("pupa");
-            //d.MondayWorkingTime = new WorkingTime();
-            //d.MondayWorkingTime.Start = 1;
-            //d.MondayWorkingTime.End = 2;
-            //d.TuesdayWorkingTime = new WorkingTime();
-            //d.TuesdayWorkingTime.Start = 1;
-            //d.TuesdayWorkingTime.End = 2;
-            //d.WednesdayWorkingTime = new WorkingTime();
-            //d.WednesdayWorkingTime.Start = 1;
-            //d.WednesdayWorkingTime.End = 2;
-            //d.ThursdayWorkingTime = new WorkingTime();
-            //d.ThursdayWorkingTime.Start = 1;
-            //d.ThursdayWorkingTime.End = 2;
-            //d.FridayWorkingTime = new WorkingTime();
-            //d.FridayWorkingTime.Start = 1;
-            //d.FridayWorkingTime.End = 2;
             toAdd.Specialization = this.db.Specializations.Find(toAdd.Specialization.Key);
             
             db.Doctors.Add(toAdd);
@@ -450,7 +411,7 @@ namespace DataAccessService
 
         public DateTime GetFirstFreeSlot(int doctorId)
         {
-            DoctorExtension doc =new DoctorExtension(db.Doctors.Find(doctorId));
+            Doctor doc = db.Doctors.Find(doctorId);
             return doc.GetFirstFreeSlot();
         }
 
@@ -460,20 +421,9 @@ namespace DataAccessService
             return a;
         }
 
-        //public Week GetNewWeek(Doctor doc, DateTime monday)
-        //{
-
-        //    Week a = WeekExt.Create(doc, monday);
-        //    return a;
-        //}
-
-
         public void Dispose()
         {
             db.Dispose();
         }
-
-
-
     }
 }

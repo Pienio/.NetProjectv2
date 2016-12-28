@@ -60,44 +60,59 @@ namespace DatabaseAccess.Model
             new Specialization("Ginekolog"),
             new Specialization("Pediatra")};
 
-            if (Specializations.Count() == 0)
+            if (!Specializations.Any())
             {
                 Specializations.AddRange(specs);
                 this.SaveChanges();
             }
-            if (Users.Count() == 0)
+            if (!Users.Any())
             {
                 string[] names = { "Kuba", "Jan", "Łukasz", "Adrian", "Bartosz", "Marek", "Filip", "Bartłomiej" };
                 string[] surnames = { "Soczkowski", "Berwid", "Okular", "Michałowski", "Skała", "Mikowski", "Wasiłkowski", "Normowski" };
                 string[] pesels = { "09586749381", "19683750923", "94860285691", "58672349682", "38596827364", "58476923857", "88975643287", "29384795618" };
                 for (int i = 0; i < 8; i++)
                 {
-                    Doctor ne = new Doctor();
-                    
-                    ne.ProfileAccepted = true;
-                    ne.User = new User() { Name = new PersonName() };
-                    ne.User.Mail = "sysrejwiz@gmail.com";
+                    Doctor ne = new Doctor
+                    {
+                        ProfileAccepted = true,
+                        Specialization = specs[i],
+                        User = new User
+                        {
+                            Name = new PersonName(),
+                            Mail = "sysrejwiz@gmail.com",
+                            Password = "96e79218965eb72c92a549dd5a330112",
+                            PESEL = pesels[i],
+                            Kind = DocOrPat.Doctor
+                        },
+                        MondayWorkingTime = new WorkingTime
+                        {
+                            Start = 8 + i/2,
+                            End = 12 + i/2
+                        },
+                        TuesdayWorkingTime = new WorkingTime
+                        {
+                            Start = 8 + i/2,
+                            End = 12 + i/2
+                        },
+                        WednesdayWorkingTime = new WorkingTime
+                        {
+                            Start = 8 + i/2,
+                            End = 12 + i/2
+                        },
+                        ThursdayWorkingTime = new WorkingTime
+                        {
+                            Start = 8 + i/2,
+                            End = 12 + i/2
+                        },
+                        FridayWorkingTime = new WorkingTime
+                        {
+                            Start = 8 + i/2,
+                            End = 12 + i/2
+                        }
+                    };
+
                     ne.User.Name.Name = names[i];
                     ne.User.Name.Surname = surnames[i];
-                    ne.User.PESEL = pesels[i];
-                    ne.User.Password = "96e79218965eb72c92a549dd5a330112";
-                    ne.User.Kind = DocOrPat.Doctor;
-                    ne.MondayWorkingTime = new WorkingTime();
-                    ne.MondayWorkingTime.Start = 8 + i / 2;
-                    ne.MondayWorkingTime.End = 12 + i / 2;
-                    ne.TuesdayWorkingTime = new WorkingTime();
-                    ne.TuesdayWorkingTime.Start = 8 + i / 2;
-                    ne.TuesdayWorkingTime.End = 12 + i / 2;
-                    ne.WednesdayWorkingTime = new WorkingTime();
-                    ne.WednesdayWorkingTime.Start = 8 + i / 2;
-                    ne.WednesdayWorkingTime.End = 12 + i / 2;
-                    ne.ThursdayWorkingTime = new WorkingTime();
-                    ne.ThursdayWorkingTime.Start = 8 + i / 2;
-                    ne.ThursdayWorkingTime.End = 12 + i / 2;
-                    ne.FridayWorkingTime = new WorkingTime();
-                    ne.FridayWorkingTime.Start = 8 + i / 2;
-                    ne.FridayWorkingTime.End = 12 + i / 2;
-                    ne.Specialization = specs[i];
                     Doctors.Add(ne);
                 }
                 this.SaveChanges();
@@ -122,21 +137,18 @@ namespace DatabaseAccess.Model
         {
             if (IsTransactionRunning)
             {
-                if (ToCommit)
+                if (!ToCommit) return;
+                try
                 {
-                    try
-                    {
-                        SaveChanges();
-                        IsTransactionRunning = false;
-                        Database.CurrentTransaction.Commit();
-                    }
-                    catch
-                    {
-                        Database.CurrentTransaction.Rollback();
-                        throw;
-                    }
+                    SaveChanges();
+                    IsTransactionRunning = false;
+                    Database.CurrentTransaction.Commit();
                 }
-
+                catch
+                {
+                    Database.CurrentTransaction.Rollback();
+                    throw;
+                }
             }
             else
                 throw new InvalidOperationException("Brak aktywnej transakcji.");

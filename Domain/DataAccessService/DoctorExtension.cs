@@ -8,31 +8,16 @@ using DatabaseAccess.Model;
 
 namespace DataAccessService
 {
-    public class DoctorExtension: Doctor
+    internal static class DoctorExtension
     {
-
-        public DoctorExtension(Doctor a):base()
+        public static DateTime GetFirstFreeSlot(this Doctor doc)
         {
-            this.User = a.User;
-            this.FridayWorkingTime = a.FridayWorkingTime;
-            MondayWorkingTime = a.MondayWorkingTime;
-            TuesdayWorkingTime = a.TuesdayWorkingTime;
-            WednesdayWorkingTime = a.WednesdayWorkingTime;
-            ThursdayWorkingTime = a.ThursdayWorkingTime;
-            this.Key = a.Key;
-            this.Visits = a.Visits;
-            this.Specialization = a.Specialization;
-            this.Version = a.Version;
-
-        }
-        public DateTime GetFirstFreeSlot()
-        {
-            DateTime current = NextSlot(DateTime.Now.AddMinutes(60));
+            DateTime current = doc.NextSlot(DateTime.Now.AddMinutes(60));
             //zmiana
-            var visits = (from v in Visits
+            var visits = (from v in doc.Visits
                           where v.Date >= current
                           select v.Date).ToList();
-            visits.Sort((v1, v2) => DateTime.Compare(v1, v2));
+            visits.Sort(DateTime.Compare);
 
             if (visits.Count == 0 || current < visits[0])
             {
@@ -40,21 +25,21 @@ namespace DataAccessService
             }
             for (int i = 0; i < visits.Count - 1; i++)
             {
-                current = NextSlot(visits[i].AddMinutes(30));
+                current = doc.NextSlot(visits[i].AddMinutes(30));
                 if (current < visits[i + 1])
                     return current;
             }
-            return NextSlot(visits[visits.Count - 1].AddMinutes(30));
+            return doc.NextSlot(visits[visits.Count - 1].AddMinutes(30));
         }
 
-        private  DateTime NextSlot(DateTime date)
+        private static DateTime NextSlot(this Doctor doc, DateTime date)
         {
             date = date.AddMinutes(30);
             date = new DateTime(date.Year, date.Month, date.Day, date.Hour, date.Minute > 30 || date.Minute == 0 ? 30 : 0, 0);
             WorkingTime time;
             do
             {
-                time = GetWorkingTime(date);
+                time = doc.GetWorkingTime(date);
                 if (time == null || date.Hour >= time.End)
                 {
                     date = date.AddDays(1);
@@ -75,12 +60,12 @@ namespace DataAccessService
         /// </summary>
         /// <param name="date"></param>
         /// <returns></returns>
-        private WorkingTime GetWorkingTime(DateTime date)
+        private static WorkingTime GetWorkingTime(this Doctor doc, DateTime date)
         {
             DayOfWeek day = date.DayOfWeek;
             return (from p in typeof(Doctor).GetProperties()
                     where p.Name.Contains(day.ToString()) && p.PropertyType == typeof(WorkingTime)
-                    select p.GetValue(this) as WorkingTime).FirstOrDefault();
+                    select p.GetValue(doc) as WorkingTime).FirstOrDefault();
         }
     }
 }
