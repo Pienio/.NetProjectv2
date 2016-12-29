@@ -163,6 +163,12 @@
   <wsdl:message name="IDataService_RegisterVisit_OutputMessage">
     <wsdl:part name="parameters" element="tns:RegisterVisitResponse" />
   </wsdl:message>
+  <wsdl:message name="IDataService_DeleteVisit_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteVisit" />
+  </wsdl:message>
+  <wsdl:message name="IDataService_DeleteVisit_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteVisitResponse" />
+  </wsdl:message>
   <wsdl:message name="IDataService_GetFirstFreeSlot_InputMessage">
     <wsdl:part name="parameters" element="tns:GetFirstFreeSlot" />
   </wsdl:message>
@@ -285,6 +291,10 @@
     <wsdl:operation name="RegisterVisit">
       <wsdl:input wsaw:Action="http://tempuri.org/IDataService/RegisterVisit" message="tns:IDataService_RegisterVisit_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IDataService/RegisterVisitResponse" message="tns:IDataService_RegisterVisit_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteVisit">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDataService/DeleteVisit" message="tns:IDataService_DeleteVisit_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDataService/DeleteVisitResponse" message="tns:IDataService_DeleteVisit_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetFirstFreeSlot">
       <wsdl:input wsaw:Action="http://tempuri.org/IDataService/GetFirstFreeSlot" message="tns:IDataService_GetFirstFreeSlot_InputMessage" />
@@ -528,6 +538,15 @@
     </wsdl:operation>
     <wsdl:operation name="RegisterVisit">
       <soap:operation soapAction="http://tempuri.org/IDataService/RegisterVisit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteVisit">
+      <soap:operation soapAction="http://tempuri.org/IDataService/DeleteVisit" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

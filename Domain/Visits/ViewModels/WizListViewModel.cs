@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using MailService;
 using Visits.Services;
 using Visits.Utils;
 
@@ -52,15 +53,26 @@ namespace Visits.ViewModels
 
         public ICommand DeleteVisitCmd => new Command(async p =>
         {
-        //    Visit v = p as Visit;
-        ////    if (MessageBox.Show("Czy na pewno chcesz odwołać zaznaczoną wizytę?", App.Name, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
-        //  //      return;
-        //    var db = _applicationDataFactory.CreateTransactionalApplicationData();
-        //    await Task.Run(() => db.Visits.Remove(v));
-        //    db.Commit();
-        //    await SetVisits();
+            Visit v = p as Visit;
+            if (MessageBox.Show("Czy na pewno chcesz odwołać zaznaczoną wizytę?", App.Name, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
+                return;
+            bool a= await _service.DeleteVisitAsync(v);
+            //var db = _applicationDataFactory.CreateTransactionalApplicationData();
+            //await Task.Run(() => db.Visits.Remove(v));
+            //db.Commit();
 
-        //    MessageBox.Show("Odwołano wizytę z powodzeniem", App.Name, MessageBoxButton.OK, MessageBoxImage.Information);
+            await SetVisits();
+            if (a)
+            {
+                MessageBox.Show("Odwołano wizytę z powodzeniem", App.Name, MessageBoxButton.OK, MessageBoxImage.Information);
+                MailServices ans = new MailServices();
+                ans.SendVisitDeleteNotification(LoggedUser.User.Mail,v.Date,v.Doctor.User.Name.ToString());
+            }
+           
+            else
+            {
+                MessageBox.Show("Wystąpił błąd podczas odwoływania wizyty", App.Name, MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         });
 
         public void Invoke()

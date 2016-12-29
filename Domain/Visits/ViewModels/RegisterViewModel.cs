@@ -87,7 +87,12 @@ namespace Visits.ViewModels
             }
 
             //  db.Commit();
-            _loggedUser.LogIn(a);
+            if (a is Patient)
+            {
+                await _loggedUser.LogIn(a.User.PESEL, a.User.Password, _service);
+               // _loggedUser.LogIn(a);
+            }
+           
 
 
             Window k = p as Window;

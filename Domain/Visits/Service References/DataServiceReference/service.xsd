@@ -177,22 +177,10 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetRequests">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetRequestsResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/DatabaseAccess.Model" minOccurs="0" name="GetRequestsResult" nillable="true" type="q11:ArrayOfProfileRequest" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
   <xs:element name="UpdatePatient">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/DatabaseAccess.Model" minOccurs="0" name="toUpdate" nillable="true" type="q11:Patient" />
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/DatabaseAccess.Model" minOccurs="0" name="toUpdate" nillable="true" type="q14:Patient" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -374,6 +362,20 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="DeleteVisit">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/DatabaseAccess.Model" minOccurs="0" name="ToDelete" nillable="true" type="q25:Visit" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteVisitResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="DeleteVisitResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="GetFirstFreeSlot">
     <xs:complexType>
       <xs:sequence>
@@ -396,7 +398,7 @@
   <xs:element name="GetPatientsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/DatabaseAccess.Model" minOccurs="0" name="GetPatientsResult" nillable="true" type="q25:ArrayOfPatient" />
+        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/DatabaseAccess.Model" minOccurs="0" name="GetPatientsResult" nillable="true" type="q26:ArrayOfPatient" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

@@ -161,7 +161,7 @@ namespace DataAccessService
             IEnumerable<Visit> a =
                 db.Visits.Select(p => p)
                     .Where(p => p.Patient.Key == id && (tr ? p.Date <= now : p.Date > now))
-                    .Include(p => p.Doctor);
+                    .Include(p => p.Doctor).Include(p=>p.Patient);
             return a;
         }
         public IEnumerable<Visit> GetDoctorVisits(int id, bool tr)
@@ -170,7 +170,7 @@ namespace DataAccessService
             IEnumerable<Visit> a =
               db.Visits.Select(p => p)
                   .Where(p => p.Doctor.Key == id && (tr ? p.Date <= now : p.Date > now))
-                  .Include(p => p.Patient);
+                  .Include(p => p.Patient).Include(p=>p.Doctor);
             return a;
         }
         public IEnumerable<ProfileRequest> GetRequests()
@@ -317,7 +317,7 @@ namespace DataAccessService
         public bool DeletePatient(Patient toDelete)
         {
             db.BeginTransaction();
-            var b = db.Patients.Find(toDelete.Key);
+            var b = db.Patients.Select(p=>p).Where(p=>p.Key==toDelete.Key).Include(p=>p.User).Include(p=>p.Visits).First();
             IEnumerable<Visit> obw = GetPatientVisits((int)b.Key, true);
             if (obw == null || obw.ToList().Count == 0)
             {
@@ -515,6 +515,26 @@ namespace DataAccessService
             {
                 return false;
             }
+        }
+
+        public bool DeleteVisit(Visit ToDelete)
+        {
+            var a =
+                db.Visits.Select( p =>p).Where(p => p.Date == ToDelete.Date && p.Doctor.Key == ToDelete.Doctor.Key &&
+                            p.Patient.Key == ToDelete.Patient.Key).First();
+            db.BeginTransaction();
+            db.Visits.Remove(a);
+
+            try
+            {
+                db.Commit();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
         }
 
         public DateTime GetFirstFreeSlot(int doctorId)

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using MailService;
 using Visits.Services;
 using Microsoft.Practices.Unity;
 using Visits.Utils;
@@ -39,7 +40,7 @@ namespace Visits.ViewModels
         }
         public bool AnyVisits => _currentWeek == null ? false : _currentWeek.Days.Length > 0;
 
-        //public ICommand ChangeWeekCmd => new Command(async p => CurrentWeek = await Week.Create(CurrentDoctor, CurrentWeek.From.AddDays(int.Parse(p.ToString())), _applicationDataFactory.CreateApplicationData()));
+        public ICommand ChangeWeekCmd => new Command(async p => CurrentWeek = await Week.Create(CurrentDoctor, CurrentWeek.From.AddDays(int.Parse(p.ToString()))));
         public ICommand RegisterVisitCmd => new Command(async p =>
         {
             var selectedDate = (DateTime)p;
@@ -79,10 +80,14 @@ namespace Visits.ViewModels
             // db1.Commit();
             // CurrentWeek = await _service.GetNewWeek(CurrentDoctor,CurrentWeek.Days[0].Date);Week.Create(CurrentDoctor, CurrentWeek.Days[0].Date, db1);
 
-
-            CurrentWeek = Week.Create(CurrentDoctor,CurrentWeek.Days[0].Date);//_service.GetNewWeek(CurrentDoctor, CurrentWeek.Days[0].Date);
+            CurrentDoctor =await _service.GetDoctorByIdAsync((int)CurrentDoctor.Key);
+            CurrentWeek =await Week.Create(CurrentDoctor,CurrentWeek.Days[0].Date);//_service.GetNewWeek(CurrentDoctor, CurrentWeek.Days[0].Date);
             if (!contains)
+            {
                 MessageBox.Show("Wizyta została zarejestrowana", App.ResourceAssembly.GetName().Name, MessageBoxButton.OK, MessageBoxImage.Information);
+                MailServices ans = new MailServices();
+                ans.SendVisitRegistrationNotification(LoggedPatient.User.Mail,selectedDate,CurrentDoctor.User.Name.ToString());
+            }
         });
 
         public RegVisitViewModel(ILogUserService user) : base(user)
@@ -91,7 +96,7 @@ namespace Visits.ViewModels
                 throw new InvalidOperationException("Widok rejestracji wizyt jest dostępny tylko dla pacjentów i anonimowych użytkowników.");
         }
 
-        public  void Load()//async Task Load()
+        public  async Task Load()//void Load()//
         {
             // var first = CurrentDoctor.FirstFreeSlot;
             var first = _service.GetFirstFreeSlot((int)CurrentDoctor.Key);
@@ -99,13 +104,13 @@ namespace Visits.ViewModels
             //CurrentWeek = await Week.Create(CurrentDoctor, first.Date, _applicationDataFactory.CreateApplicationData());
             //CurrentWeek = _service.GetNewWeek(CurrentDoctor, first.Date);
             var a = _service.GetDoctorById((int)CurrentDoctor.Key);
-            CurrentWeek = Week.Create(a, first);
+            CurrentWeek =await Week.Create(a, first);
         }
 
-        private async Task AddVisit(Visit item, ITransactionalApplicationData context)
-        {
-            await Task.Run(() => context.Visits.Add(item));
-        }
+        //private async Task AddVisit(Visit item, ITransactionalApplicationData context)
+        //{
+        //    await Task.Run(() => context.Visits.Add(item));
+        //}
 
         public void Initialize(Doctor doctor) //async 
         {

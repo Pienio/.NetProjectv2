@@ -42,10 +42,12 @@ namespace AdminPanel.ViewModels
         {
             ProfileRequest request = p as ProfileRequest;
             bool res;
+            bool flag = false;
             if (request.OldProfile == null)
             {
                 request.NewProfile.ProfileAccepted = true;
                 res = await _service.UpdateDoctorAsync(request.NewProfile);
+                flag = false;
             }
             else
             {
@@ -53,6 +55,7 @@ namespace AdminPanel.ViewModels
                 request.OldProfile.User.Name=new PersonName();
                 request.OldProfile.CopyFrom(request.NewProfile);
                 res = await _service.UpdateDoctorAsync(request.OldProfile);
+                flag = true;
             }
             if (res)
             {
@@ -68,7 +71,10 @@ namespace AdminPanel.ViewModels
             var cd = await _service.GetRequestsAsync();
             Requests = cd.ToList();
             MailServices ans = new MailServices();
-            ans.SendAcceptationMail(request.NewProfile.User.Mail);
+            if(!flag)
+                ans.SendAcceptationMail(request.NewProfile.User.Mail);
+            else
+                ans.SendAcceptationEditMail(request.NewProfile.User.Mail);
         });
         public ICommand RejectCommand => new Command(async p =>
         {

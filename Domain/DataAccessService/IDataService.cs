@@ -67,6 +67,8 @@ namespace DataAccessService
         [OperationContract]
         bool RegisterVisit(DateTime selected,int patientId,int doctorId);
         [OperationContract]
+        bool DeleteVisit(Visit ToDelete);
+        [OperationContract]
         DateTime GetFirstFreeSlot(int doctorId);
         [OperationContract]
         IEnumerable<Patient> GetPatients();

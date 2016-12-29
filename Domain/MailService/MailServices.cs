@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
@@ -37,6 +38,22 @@ namespace MailService
         {
             string content = "Zostałeś zaakceptowany w Systemie rezerwacji wizyt. Możesz już zalogować się na swoje konto.";
             SendMail(mailAddress, "Akceptacja rezerwacji", "System rezerwacji wizyt", "Akceptacja rezerwacji", content);
+        }
+
+        public void SendAcceptationEditMail(string mailAddress)
+        {
+            string content = "Twoja prośba o edycję konta w Systemie rezerwacji wizyt została zaakceptowana.";
+            SendMail(mailAddress, "Akceptacja edycji konta", "System rezerwacji wizyt", "Akceptacja rezerwacji", content);
+        }
+        public void SendVisitRegistrationNotification(string mailAddress,DateTime time, string name)
+        {
+            string content = "Zostałeś zarejestrowany na wizytę u lekarza "+name+" w terminie "+time.ToString(CultureInfo.CurrentCulture)+".";
+            SendMail(mailAddress, "Rezerwacja wizyty", "System rezerwacji wizyt", "Akceptacja rezerwacji", content);
+        }
+        public void SendVisitDeleteNotification(string mailAddress, DateTime time, string name)
+        {
+            string content = "Odwołałeś wizytę u lekarza " + name + " w terminie " + time.ToString(CultureInfo.CurrentCulture) + ".";
+            SendMail(mailAddress, "Odwołanie wizyty", "System rezerwacji wizyt", "Akceptacja rezerwacji", content);
         }
 
         public void SendRejectionMail(string mailAddress, string reason)

@@ -7,6 +7,7 @@
         <xs:sequence>
           <xs:element minOccurs="0" name="Active" type="xs:boolean" />
           <xs:element minOccurs="0" name="Kind" type="tns:DocOrPat" />
+          <xs:element minOccurs="0" name="Mail" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="Name" nillable="true" type="tns:PersonName" />
           <xs:element minOccurs="0" name="PESEL" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
@@ -45,7 +46,7 @@
           <xs:element minOccurs="0" name="FridayWorkingTime" nillable="true" type="tns:WorkingTime" />
           <xs:element minOccurs="0" name="MondayWorkingTime" nillable="true" type="tns:WorkingTime" />
           <xs:element minOccurs="0" name="ProfileAccepted" type="xs:boolean" />
-          <xs:element minOccurs="0" name="Specialization" nillable="true" type="tns:Specialization" />
+          <xs:element minOccurs="0" name="Specialization" nillable="true" type="tns:ArrayOfSpecialization" />
           <xs:element minOccurs="0" name="ThursdayWorkingTime" nillable="true" type="tns:WorkingTime" />
           <xs:element minOccurs="0" name="TuesdayWorkingTime" nillable="true" type="tns:WorkingTime" />
           <xs:element minOccurs="0" name="WednesdayWorkingTime" nillable="true" type="tns:WorkingTime" />
@@ -98,10 +99,17 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="WorkingTime" nillable="true" type="tns:WorkingTime" />
+  <xs:complexType name="ArrayOfSpecialization">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Specialization" nillable="true" type="tns:Specialization" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSpecialization" nillable="true" type="tns:ArrayOfSpecialization" />
   <xs:complexType name="Specialization">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Entity">
         <xs:sequence>
+          <xs:element minOccurs="0" name="Doctors" nillable="true" type="tns:ArrayOfDoctor" />
           <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
         </xs:sequence>
       </xs:extension>
@@ -114,12 +122,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfDoctor" nillable="true" type="tns:ArrayOfDoctor" />
-  <xs:complexType name="ArrayOfSpecialization">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="Specialization" nillable="true" type="tns:Specialization" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfSpecialization" nillable="true" type="tns:ArrayOfSpecialization" />
   <xs:complexType name="ArrayOfProfileRequest">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="ProfileRequest" nillable="true" type="tns:ProfileRequest" />

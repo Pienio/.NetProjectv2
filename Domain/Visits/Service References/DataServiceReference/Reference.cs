@@ -171,6 +171,12 @@ namespace Visits.DataServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/RegisterVisit", ReplyAction="http://tempuri.org/IDataService/RegisterVisitResponse")]
         System.Threading.Tasks.Task<bool> RegisterVisitAsync(System.DateTime selected, int patientId, int doctorId);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/DeleteVisit", ReplyAction="http://tempuri.org/IDataService/DeleteVisitResponse")]
+        bool DeleteVisit(DatabaseAccess.Model.Visit ToDelete);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/DeleteVisit", ReplyAction="http://tempuri.org/IDataService/DeleteVisitResponse")]
+        System.Threading.Tasks.Task<bool> DeleteVisitAsync(DatabaseAccess.Model.Visit ToDelete);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetFirstFreeSlot", ReplyAction="http://tempuri.org/IDataService/GetFirstFreeSlotResponse")]
         System.DateTime GetFirstFreeSlot(int doctorId);
         
@@ -423,6 +429,14 @@ namespace Visits.DataServiceReference {
         
         public System.Threading.Tasks.Task<bool> RegisterVisitAsync(System.DateTime selected, int patientId, int doctorId) {
             return base.Channel.RegisterVisitAsync(selected, patientId, doctorId);
+        }
+        
+        public bool DeleteVisit(DatabaseAccess.Model.Visit ToDelete) {
+            return base.Channel.DeleteVisit(ToDelete);
+        }
+        
+        public System.Threading.Tasks.Task<bool> DeleteVisitAsync(DatabaseAccess.Model.Visit ToDelete) {
+            return base.Channel.DeleteVisitAsync(ToDelete);
         }
         
         public System.DateTime GetFirstFreeSlot(int doctorId) {
