@@ -30,7 +30,7 @@ namespace DataAccessService
 
         public Doctor GetDoctorById(int value)
         {
-            var a = db.Doctors.Select(p=>p).Where(p=>p.Key==value).Include(p=>p.User).Include(p=>p.Specialization);
+            var a = db.Doctors.Select(p=>p).Where(p=>p.Key==value).Include(p=>p.User).Include(p=>p.Specialization).Include(p=>p.Visits);
             Doctor c = null;
             if(a!=null)
                 c = a.First();
@@ -40,7 +40,7 @@ namespace DataAccessService
 
         public Doctor GetDoctorByUserId(int value)
         {
-            var a = db.Doctors.Select(p => p).Where(p => p.User.Key == value).Include(p => p.User).Include(p=>p.Visits).Include(p=>p.Specialization);
+            var a = db.Doctors.Select(p => p).Where(p => p.User.Key == value).Include(p => p.User).Include(p=>p.Visits).Include(p=>p.Specialization).Include(p => p.Visits);
             Doctor c = null;
             if (a != null)
                 c = a.First();
