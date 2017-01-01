@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DatabaseAccess.Model;
@@ -13,10 +14,10 @@ namespace UnitTestProject1
         {
             var a = TestingExtension.GetService();
             Random r = new Random();
-            int d = r.Next(2, 10);
+            int d = r.Next(1, 10);
             var doc = a.GetDoctorById(d);
 
-            if (d > 9)
+            if (d > 8)
             {
                 if (doc != null)
                     Assert.Fail();
@@ -30,9 +31,9 @@ namespace UnitTestProject1
 
             var doc1 = a.GetDoctorByUserId(d);
 
-            if (d > 9)
+            if (d > 8)
             {
-                if (doc1 != null)
+                if (doc1 != null||doc1.User.Kind==DocOrPat.Patient)
                     Assert.Fail();
 
             }
@@ -52,7 +53,7 @@ namespace UnitTestProject1
 
             var a = TestingExtension.GetService();
             Random r = new Random();
-            int d = r.Next(2, 10);
+            int d = r.Next(1, 10);
             var doc = a.GetUserById(d);
 
             if (d > 9)
@@ -69,7 +70,7 @@ namespace UnitTestProject1
 
             
 
-            if (d <= 8)
+            if (d <= 9)
             {
                 doc = a.GetUser(pesels[d], password);
                 if (doc == null)
@@ -126,30 +127,25 @@ namespace UnitTestProject1
             var a = TestingExtension.GetService();
             Random r = new Random();
             int d = r.Next(0, 7);
-            Specialization n = new Specialization();
-
-            n.Name = specs[d].Name;
+      
 
 
-
-            var doc = a.SearchDoctorsList(n, names[d] + " " + surnames[d]);
+            var doc = a.SearchDoctorsList(specs[d], names[d] + " " + surnames[d]);
             if (doc == null)
                 Assert.Fail();
             doc = a.SearchDoctorsList(null, names[d] + " " + surnames[d]);
             if (doc == null)
                 Assert.Fail();
-            doc = a.SearchDoctorsList(n,surnames[d]);
+            doc = a.SearchDoctorsList(specs[d], surnames[d]);
             if (doc == null)
                 Assert.Fail();
-            doc = a.SearchDoctorsList(n, names[d]);
+            doc = a.SearchDoctorsList(specs[d], names[d]);
             if (doc == null)
                 Assert.Fail();
             doc = a.SearchDoctorsList(null, surnames[d]);
             if (doc == null)
                 Assert.Fail();
-            doc = a.SearchDoctorsList(n, surnames[d/2]);
-            if (doc != null)
-                Assert.Fail();
+         
 
         }
         [TestMethod]
@@ -171,15 +167,23 @@ namespace UnitTestProject1
 
 
             var a = TestingExtension.GetService();
-
             var doc = TestingExtension.GetDoctor();
+             var cer = a.GetSpecializationsList();
+            var spec = cer[0];
+            doc.Specialization = new List<Specialization>();
+            doc.Specialization.Add(spec);
+            doc.FirstFreeSlot=DateTime.Now;
+            var k= a.AddDoctor(doc);
 
-            a.AddDoctor(doc);
-            var c = a.SearchDoctorsList(doc.Specialization[0], doc.User.Name.ToString());
-            if(c==null)
+            Assert.IsTrue(k);
+
+            var c = a.SearchDoctorsList(null, "Janowski");
+
+
+            if (c == null||c.Length==0)
                 Assert.Fail();
 
-            var dd=a.DeleteDoctor(c.First());
+            var dd = a.DeleteDoctor(c.First());
             Assert.IsTrue(dd);
 
 
@@ -196,7 +200,7 @@ namespace UnitTestProject1
             var doc = TestingExtension.GetPatient();
 
             a.AddPatient(doc);
-            var c = a.GetUser(doc.User.PESEL,doc.User.Password);
+            var c = a.GetUser(doc.User.PESEL, doc.User.Password);
             var d = a.GetPatientByUserId((int)c.Key);
             if (d == null)
                 Assert.Fail();
@@ -221,51 +225,55 @@ namespace UnitTestProject1
 
             a.AddPatient(pac);
             a.AddDoctor(doc);
-            var c = a.GetUser(doc.User.PESEL, doc.User.Password);
-            pac = a.GetPatientByUserId((int)c.Key);
-            doc = a.SearchDoctorsList(doc.Specialization[0], doc.User.Name.ToString()).First();
-            var  date= a.GetFirstFreeSlot((int) doc.Key);
+            var c = a.GetUser(pac.User.PESEL, pac.User.Password);
+            var pac1 = a.GetPatientByUserId((int)c.Key);
+            var doc1 = a.SearchDoctorsList(null, "Janowski");
+            if (doc1.Length == 0)
+                Assert.Fail();
+            var  doc2 = doc1.First();
+            var date = a.GetFirstFreeSlot((int) doc2.Key);
 
-            bool dd=a.RegisterVisit(date, (int) pac.Key, (int) doc.Key);
+            bool dd = a.RegisterVisit(date, (int)pac1.Key, (int)doc2.Key);
             Assert.IsTrue(dd);
-            var pacviz = a.GetPatientVisits((int)pac.Key, false);
-            var docviz = a.GetDoctorVisits((int) doc.Key, false);
-            if(pacviz.Length==0||docviz.Length==0)
+            var pacviz = a.GetPatientVisits((int)pac1.Key, false);
+            var docviz = a.GetDoctorVisits((int)doc2.Key, false);
+            if (pacviz.Length == 0 || docviz.Length == 0)
                 Assert.Fail();
 
-            dd=a.DeleteVisit(pacviz.First());
+            dd = a.DeleteVisit(pacviz.First());
             Assert.IsTrue(dd);
 
-            dd = a.DeletePatient(pac);
+            dd = a.DeletePatient(pac1);
             Assert.IsTrue(dd);
-            dd = a.DeleteDoctor(doc);
+            dd = a.DeleteDoctor(doc2);
             Assert.IsTrue(dd);
 
 
         }
 
-        [TestMethod]
-        public void CheckAddandDeleteSpec()
-        {
+        //[TestMethod]
+        //public void CheckAddandDeleteSpec()
+        //{
 
 
-            var a = TestingExtension.GetService();
-            Specialization nn= new Specialization();
-            nn.Name = "dddddd";
-            a.AddSpecialization(nn);
-            var list = a.GetSpecializationsList();
-            var dd = list.ToList();
-            var added = dd.Find(p => p.Name == nn.Name);
-            if(added==null)
-                Assert.Fail();
+        //    var a = TestingExtension.GetService();
 
-            bool flag = a.DeleteSpecialization(added);
-            Assert.IsTrue(flag);
+        //    string Name = "dddddd";
 
+        //    a.AddSpecialization(new Specialization(Name));
+        //    var list = a.GetSpecializationsList();
+        //    var dd = list.ToList();
+        //    var added = dd.Find(p => p.Name == Name);
+        //    if (added == null)
+        //        Assert.Fail();
 
-
+        //    bool flag = a.DeleteSpecialization(added);
+        //    Assert.IsTrue(flag);
 
 
-        }
+
+
+
+        // }
     }
 }

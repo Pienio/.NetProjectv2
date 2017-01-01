@@ -23,13 +23,18 @@ namespace UnitTestProject1
         {
 
             Patient p = new Patient();
+            
             p.User = new User()
             {
                 Kind = DocOrPat.Patient,
                 Name = new PersonName() { Name = "F", Surname = "M" },
                 Password = "96e79218965eb72c92a549dd5a330112",
-                PESEL = "11111111111"
+                PESEL = "11111111111",
+                Active = true,
+                Mail = "lold@gmail.com"
+                
             };
+           
             return p;
 
         }
@@ -43,6 +48,8 @@ namespace UnitTestProject1
                 g.Specialization =new Specialization[] { spec };
                 g.User.Name.Name = "Jan";
                 g.User.Name.Surname = "Janowski";
+                g.ProfileAccepted = true;
+                 g.User.Mail = "lololo@gmail.com";
                 g.User.PESEL = "77777777777";
                 g.User.Kind = DocOrPat.Doctor;
                 g.User.Password = "96e79218965eb72c92a549dd5a330112";
