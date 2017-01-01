@@ -19,13 +19,13 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:8733/Design_Time_Addresses/DataAccessService/Service1/mex" Protocol="mex" SourceId="1" />
+    <MetadataSource Address="http://systemrejestracjiwizyt.azurewebsites.net/ProductServiceHost.svc/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="453f59e7-5466-421b-8829-52b8c87ebf5a" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/DataAccessService/Service1/mex" />
-    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="a9b0b27c-a8bc-46ea-895f-4b33222e7d25" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/DataAccessService/Service1/mex" />
-    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="fa9f71ea-8138-4fed-8a54-2ad267a212ef" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/DataAccessService/Service1/mex" />
-    <MetadataFile FileName="DatabaseAccess.Model.xsd" MetadataType="Schema" ID="b6dba830-a7aa-4b92-a6ca-fd7f5c80bb19" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/DataAccessService/Service1/mex" />
+    <MetadataFile FileName="service1.wsdl" MetadataType="Wsdl" ID="190cab90-3d10-41eb-9a2d-9ff7dd876562" SourceId="1" SourceUrl="http://systemrejestracjiwizyt.azurewebsites.net/ProductServiceHost.svc/mex" />
+    <MetadataFile FileName="service2.xsd" MetadataType="Schema" ID="273643bd-4ba9-4681-9d1c-abf73641398e" SourceId="1" SourceUrl="http://systemrejestracjiwizyt.azurewebsites.net/ProductServiceHost.svc/mex" />
+    <MetadataFile FileName="service21.xsd" MetadataType="Schema" ID="938d6b8b-8d7f-4a41-948e-88bed4f04db6" SourceId="1" SourceUrl="http://systemrejestracjiwizyt.azurewebsites.net/ProductServiceHost.svc/mex" />
+    <MetadataFile FileName="DatabaseAccess.Model1.xsd" MetadataType="Schema" ID="f11d387a-6619-4172-b945-61ef8dbc4cef" SourceId="1" SourceUrl="http://systemrejestracjiwizyt.azurewebsites.net/ProductServiceHost.svc/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

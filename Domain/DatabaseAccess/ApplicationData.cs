@@ -25,7 +25,7 @@ namespace DatabaseAccess.Model
         public bool IsDisposed { get; set; } = false;
         public bool ToCommit { get; set; } = true;
 
-        public ApplicationData(bool runTransaction) : base()
+        public ApplicationData(bool runTransaction) : base("SysRejWiz")
         {
             Database.SetInitializer(new DropCreateDatabaseIfModelChanges<ApplicationData>());
 

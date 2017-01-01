@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/DatabaseAccess.Model" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/DatabaseAccess.Model" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import schemaLocation="" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
   <xs:complexType name="User">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Entity">
@@ -46,7 +46,7 @@
           <xs:element minOccurs="0" name="FridayWorkingTime" nillable="true" type="tns:WorkingTime" />
           <xs:element minOccurs="0" name="MondayWorkingTime" nillable="true" type="tns:WorkingTime" />
           <xs:element minOccurs="0" name="ProfileAccepted" type="xs:boolean" />
-          <xs:element minOccurs="0" name="Specialization" nillable="true" type="tns:Specialization" />
+          <xs:element minOccurs="0" name="Specialization" nillable="true" type="tns:ArrayOfSpecialization" />
           <xs:element minOccurs="0" name="ThursdayWorkingTime" nillable="true" type="tns:WorkingTime" />
           <xs:element minOccurs="0" name="TuesdayWorkingTime" nillable="true" type="tns:WorkingTime" />
           <xs:element minOccurs="0" name="WednesdayWorkingTime" nillable="true" type="tns:WorkingTime" />
@@ -99,10 +99,17 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="WorkingTime" nillable="true" type="tns:WorkingTime" />
+  <xs:complexType name="ArrayOfSpecialization">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Specialization" nillable="true" type="tns:Specialization" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSpecialization" nillable="true" type="tns:ArrayOfSpecialization" />
   <xs:complexType name="Specialization">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Entity">
         <xs:sequence>
+          <xs:element minOccurs="0" name="Doctors" nillable="true" type="tns:ArrayOfDoctor" />
           <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
         </xs:sequence>
       </xs:extension>
@@ -115,12 +122,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfDoctor" nillable="true" type="tns:ArrayOfDoctor" />
-  <xs:complexType name="ArrayOfSpecialization">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="Specialization" nillable="true" type="tns:Specialization" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfSpecialization" nillable="true" type="tns:ArrayOfSpecialization" />
   <xs:complexType name="ArrayOfProfileRequest">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="ProfileRequest" nillable="true" type="tns:ProfileRequest" />

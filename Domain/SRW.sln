@@ -1,14 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Visits", "Visits\Visits.csproj", "{57574697-10C2-45E8-8EBF-012A0C780F83}"
 	ProjectSection(ProjectDependencies) = postProject
 		{BEE7569D-4B06-4732-B2BF-B8D6CBC7D9EF} = {BEE7569D-4B06-4732-B2BF-B8D6CBC7D9EF}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessService", "DataAccessService\DataAccessService.csproj", "{BEE7569D-4B06-4732-B2BF-B8D6CBC7D9EF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OldButGold(StaryDatabaseAccess)", "DataAccessService\OldButGold(StaryDatabaseAccess).csproj", "{BEE7569D-4B06-4732-B2BF-B8D6CBC7D9EF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseAccess", "DatabaseAccess\DatabaseAccess.csproj", "{A4928E46-1FBA-4D87-B427-42F69E6BF52A}"
 EndProject
@@ -18,6 +18,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminPanel", "AdminPanel\Ad
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MailService", "MailService\MailService.csproj", "{239BD250-2253-4238-81AE-2B253A6AFCFC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessTests", "DataAccessTests\DataAccessTests.csproj", "{5413914D-3B04-4AA8-A6D7-21491E1001E8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BEE7569D-4B06-4732-B2BF-B8D6CBC7D9EF} = {BEE7569D-4B06-4732-B2BF-B8D6CBC7D9EF}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessService", "WCFServiceWebRole1\DataAccessService.csproj", "{ABB42460-795C-4E55-BB43-B43DFDFD6280}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +52,14 @@ Global
 		{239BD250-2253-4238-81AE-2B253A6AFCFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{239BD250-2253-4238-81AE-2B253A6AFCFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{239BD250-2253-4238-81AE-2B253A6AFCFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5413914D-3B04-4AA8-A6D7-21491E1001E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5413914D-3B04-4AA8-A6D7-21491E1001E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5413914D-3B04-4AA8-A6D7-21491E1001E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5413914D-3B04-4AA8-A6D7-21491E1001E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABB42460-795C-4E55-BB43-B43DFDFD6280}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABB42460-795C-4E55-BB43-B43DFDFD6280}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABB42460-795C-4E55-BB43-B43DFDFD6280}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABB42460-795C-4E55-BB43-B43DFDFD6280}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
