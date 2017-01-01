@@ -23,10 +23,7 @@ namespace Visits.ViewModels
         private Doctor _currentDoctor;
         private Week _currentWeek;
 
-        private Patient LoggedPatient
-        {
-            get { return _loggedUser.Logged as Patient; }
-        }
+        private Patient LoggedPatient => _loggedUser.Logged as Patient;
 
         public Doctor CurrentDoctor
         {
@@ -38,7 +35,7 @@ namespace Visits.ViewModels
             get { return _currentWeek; }
             set { _currentWeek = value; OnPropertyChanged(nameof(CurrentWeek)); OnPropertyChanged(nameof(AnyVisits)); }
         }
-        public bool AnyVisits => _currentWeek == null ? false : _currentWeek.Days.Length > 0;
+        public bool AnyVisits => _currentWeek != null && _currentWeek.Days.Length > 0;
 
         public ICommand ChangeWeekCmd => new Command(async p => CurrentWeek = await Week.Create(CurrentDoctor, CurrentWeek.From.AddDays(int.Parse(p.ToString()))));
         public ICommand RegisterVisitCmd => new Command(async p =>
