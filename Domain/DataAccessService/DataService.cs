@@ -24,7 +24,7 @@ namespace DataAccessService
         public User GetUser(string pes, string password)
         {
             var a = db.Users.Select(p => p).Where(p => p.PESEL == pes && p.Password == password && p.Active);
-            var b = a.First();
+            var b = a.FirstOrDefault();
             return b;
         }
 

@@ -46,7 +46,7 @@ namespace Visits.ViewModels
             }
             else
             {
-                MessageBox.Show("Nieprawidłowy login lub hasło", App.Name, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Nieprawidłowy login lub hasło.", App.Name, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         });
 
