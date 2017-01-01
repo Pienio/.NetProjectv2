@@ -49,7 +49,7 @@
                     <DataGridTemplateColumn Header="Specjalizacja" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <ListBox ItemsSource="{Binding Specialization}"/>
+                                <ListBox ItemsSource="{Binding Specialization}" IsHitTestVisible="False"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
