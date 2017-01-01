@@ -66,7 +66,7 @@ namespace Visits.ViewModels
             {
                 MessageBox.Show("Odwołano wizytę z powodzeniem", App.Name, MessageBoxButton.OK, MessageBoxImage.Information);
                 MailServices ans = new MailServices();
-                ans.SendVisitDeleteNotification(LoggedUser.User.Mail,v.Date,v.Doctor.User.Name.ToString());
+                ans.SendVisitDeleteNotification(v, LoggedUser.User.Kind);
             }
            
             else

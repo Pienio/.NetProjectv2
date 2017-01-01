@@ -7,6 +7,7 @@ using System.Net.Mail;
 using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
+using DatabaseAccess.Model;
 
 namespace MailService
 {
@@ -51,15 +52,33 @@ namespace MailService
             string content = "Twoja prośba o edycję konta w Systemie rezerwacji wizyt została zaakceptowana.";
             SendMail(mailAddress, "Akceptacja edycji konta", "System rezerwacji wizyt", "Akceptacja rezerwacji", content);
         }
-        public void SendVisitRegistrationNotification(string mailAddress,DateTime time, string name)
+
+        public void SendVisitRegistrationNotifications(Doctor doc, Patient pac, DateTime date)
         {
-            string content = "Zostałeś zarejestrowany na wizytę u lekarza "+name+" w terminie "+time.ToString(CultureInfo.CurrentCulture)+".";
-            SendMail(mailAddress, "Rezerwacja wizyty", "System rezerwacji wizyt", "Akceptacja rezerwacji", content);
+            string content = "Potwierdzono rejestrację na wizytę u lekarza " + doc.User.Name + " w terminie " + date.ToString(CultureInfo.CurrentCulture) + ".";
+            SendMail(pac.User.Mail, "Rezerwacja wizyty", "System rezerwacji wizyt", "Potwierdzenie rezerwacji", content);
+
+            content = "Pacjent "+ pac.User.Name+" zarejestrował się na wizytę u Ciebie w terminie " + date.ToString(CultureInfo.CurrentCulture) + ".";
+            SendMail(doc.User.Mail, "Rezerwacja wizyty", "System rezerwacji wizyt", "Powiadomienie o rezerwacji", content);
         }
-        public void SendVisitDeleteNotification(string mailAddress, DateTime time, string name)
+        public void SendVisitDeleteNotification(Visit visit, DocOrPat currentUserType)
         {
-            string content = "Odwołałeś wizytę u lekarza " + name + " w terminie " + time.ToString(CultureInfo.CurrentCulture) + ".";
-            SendMail(mailAddress, "Odwołanie wizyty", "System rezerwacji wizyt", "Akceptacja rezerwacji", content);
+            string contentPac, contentDoc;
+            switch (currentUserType)
+            {
+                case DocOrPat.Doctor:
+                    contentDoc = "Odwołano wizytę z pacjentem " + visit.Patient.User.Name + " w terminie " + visit.Date.ToString(CultureInfo.CurrentCulture) + ".";
+                    contentPac = "Lekarz " + visit.Doctor.User.Name + " odwołał wizytę w terminie " + visit.Date.ToString(CultureInfo.CurrentCulture) + ".";
+                    break;
+                case DocOrPat.Patient:
+                    contentDoc = "Pacjent " + visit.Patient.User.Name + "odwołał wizytę w terminie " + visit.Date.ToString(CultureInfo.CurrentCulture) + ".";
+                    contentPac = "Odwołano wizytę u lekarza " + visit.Doctor.User.Name + " w terminie " + visit.Date.ToString(CultureInfo.CurrentCulture) + ".";
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(currentUserType), currentUserType, null);
+            }
+            SendMail(visit.Doctor.User.Mail, "Odwołanie wizyty", "System rezerwacji wizyt", "Powiadomienie o odwołaniu wizyty", contentDoc);
+            SendMail(visit.Patient.User.Mail, "Odwołanie wizyty", "System rezerwacji wizyt", "Powiadomienie o odwołaniu wizyty", contentPac);
         }
 
         public void SendRejectionMail(string mailAddress, string reason)

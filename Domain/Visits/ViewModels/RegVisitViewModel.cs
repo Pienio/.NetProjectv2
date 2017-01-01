@@ -83,7 +83,7 @@ namespace Visits.ViewModels
             {
                 MessageBox.Show("Wizyta została zarejestrowana", App.ResourceAssembly.GetName().Name, MessageBoxButton.OK, MessageBoxImage.Information);
                 MailServices ans = new MailServices();
-                ans.SendVisitRegistrationNotification(LoggedPatient.User.Mail,selectedDate,CurrentDoctor.User.Name.ToString());
+                ans.SendVisitRegistrationNotifications(CurrentDoctor, LoggedPatient, selectedDate);
             }
         });
 
