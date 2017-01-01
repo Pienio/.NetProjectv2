@@ -22,12 +22,14 @@ namespace Visits
     {
         private string mailAddress;
         private string token;
+        private bool RorE;
 
-        public TokenWindow(string mailAddress)
+        public TokenWindow(string mailAddress,bool tr)
         {
             InitializeComponent();
 
             this.mailAddress = mailAddress;
+            RorE = tr;
         }
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
@@ -64,7 +66,12 @@ namespace Visits
         private void activationMail_Click(object sender, RoutedEventArgs e)
         {
             MailService.MailServices mail = new MailService.MailServices();
-            mail.SendRegistrationConfirmation(mailAddress, token);
+            if(RorE)
+                mail.SendRegistrationConfirmation(mailAddress, token);
+            else
+            {
+                mail.SendEditConfirmation(mailAddress, token);
+            }
         }
 
     }

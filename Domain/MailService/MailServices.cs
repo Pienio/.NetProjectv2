@@ -27,6 +27,12 @@ namespace MailService
                 "Aby potwierdzić rejestrację, wpisz w wymaganym polu dany token: " + token;
             SendMail(mailAddress, "Witamy w Systemie rezerwacji wizyt", "System rezerwacji wizyt", "Potwierdzenie rejestracji", content);
         }
+        public void SendEditConfirmation(string mailAddress, string token)
+        {
+            string content =
+                "Aby potwierdzić edycję, wpisz w wymaganym polu dany token: " + token;
+            SendMail(mailAddress, "Edycja konta", "System rezerwacji wizyt", "Potwierdzenie rejestracji", content);
+        }
 
         public void SendMailChangeConfirmation(string mailAddress, string token)
         {
@@ -59,6 +65,12 @@ namespace MailService
         public void SendRejectionMail(string mailAddress, string reason)
         {
             string content = "Niestety, twoja prośba o rejestrację została rozpatrzona negatywnie.\nPowód: " + reason;
+            SendMail(mailAddress, "Odrzucenie rejestracji", "System rezerwacji wizyt", "Odrzucenie rejestracji", content);
+        }
+
+        public void SendEditRejectionMail(string mailAddress, string reason)
+        {
+            string content = "Niestety, twoja prośba o edycję została rozpatrzona negatywnie.\nPowód: " + reason;
             SendMail(mailAddress, "Odrzucenie rejestracji", "System rezerwacji wizyt", "Odrzucenie rejestracji", content);
         }
 

@@ -55,7 +55,7 @@ namespace Visits.ViewModels
 
         public ICommand RegisterUser => new Command(async p =>
         {
-            TokenWindow wnd = new TokenWindow(Mail);
+            TokenWindow wnd = new TokenWindow(Mail,true);
             if (!wnd.ShowDialog().GetValueOrDefault(false))
                 return;
             Person a;
@@ -137,10 +137,12 @@ namespace Visits.ViewModels
                 {
                     if (string.IsNullOrEmpty(Pesel))
                         result = "Pesel nie może być pusty!";
-                    int a;
-
-                    if (Int32.TryParse(Pesel, out a))
-                        result = "Pesel musi być ciągiem cyfr!";
+                    foreach (var chr in Pesel)
+                    {
+                        if (chr < '0' || chr > '9')
+                            result = "Pesel musi być ciągiem cyfr!";
+                    }
+                        
                     if (Pesel.Length != 11)
                         result = "Pesel musi mieć 11 cyfr!";
 

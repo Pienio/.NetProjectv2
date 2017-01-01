@@ -22,10 +22,10 @@
     <MetadataSource Address="http://systemrejestracjiwizyt.azurewebsites.net/ProductServiceHost.svc/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service1.wsdl" MetadataType="Wsdl" ID="f6af4fe5-5ec2-469d-9b2a-51c5a3413a47" SourceId="1" SourceUrl="http://systemrejestracjiwizyt.azurewebsites.net/ProductServiceHost.svc/mex" />
-    <MetadataFile FileName="service2.xsd" MetadataType="Schema" ID="06e200a4-ec2f-4fd5-87cd-4e238d4af592" SourceId="1" SourceUrl="http://systemrejestracjiwizyt.azurewebsites.net/ProductServiceHost.svc/mex" />
-    <MetadataFile FileName="service21.xsd" MetadataType="Schema" ID="ffeb32de-a50d-49ae-bd3f-7d67f723e4b2" SourceId="1" SourceUrl="http://systemrejestracjiwizyt.azurewebsites.net/ProductServiceHost.svc/mex" />
-    <MetadataFile FileName="DatabaseAccess.Model1.xsd" MetadataType="Schema" ID="9062859b-2d10-4333-9219-53cb1b290b2a" SourceId="1" SourceUrl="http://systemrejestracjiwizyt.azurewebsites.net/ProductServiceHost.svc/mex" />
+    <MetadataFile FileName="service1.wsdl" MetadataType="Wsdl" ID="33ecad60-8c41-479a-b056-51e93313901e" SourceId="1" SourceUrl="http://systemrejestracjiwizyt.azurewebsites.net/ProductServiceHost.svc/mex" />
+    <MetadataFile FileName="service2.xsd" MetadataType="Schema" ID="f8cc7442-37b3-4521-8d63-0b766ed02066" SourceId="1" SourceUrl="http://systemrejestracjiwizyt.azurewebsites.net/ProductServiceHost.svc/mex" />
+    <MetadataFile FileName="service21.xsd" MetadataType="Schema" ID="136ebddd-6b6d-4d0e-9f53-f6e0bf582f62" SourceId="1" SourceUrl="http://systemrejestracjiwizyt.azurewebsites.net/ProductServiceHost.svc/mex" />
+    <MetadataFile FileName="DatabaseAccess.Model1.xsd" MetadataType="Schema" ID="cdbb5bee-9109-4071-8bfe-5ff164c9b7b0" SourceId="1" SourceUrl="http://systemrejestracjiwizyt.azurewebsites.net/ProductServiceHost.svc/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

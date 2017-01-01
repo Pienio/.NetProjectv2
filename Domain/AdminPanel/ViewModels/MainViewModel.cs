@@ -85,12 +85,13 @@ namespace AdminPanel.ViewModels
             if (!wnd.ShowDialog().GetValueOrDefault(false))
                 return;
             res = await _service.DeleteRequestAsync(request);
-            if (res)
+            if (res&&request.OldProfile==null)
             {
                 res =  await _service.DeleteDoctorAsync(request.NewProfile);
                 //if (res)
                 //    Requests.Remove(request);
             }
+
             if (!res)
             {
                 MessageBox.Show("Nie udało się dokonać zmian z powodu błędu. Spróbuj ponownie.", App.Name, MessageBoxButton.OK, MessageBoxImage.Error);
@@ -101,7 +102,12 @@ namespace AdminPanel.ViewModels
             var cd = await _service.GetRequestsAsync();
             Requests = cd.ToList();
             MailServices ans=new MailServices();
-            ans.SendRejectionMail(request.NewProfile.User.Mail,reason);
+            if(request.OldProfile==null)
+                ans.SendRejectionMail(request.NewProfile.User.Mail,reason);
+            else
+            {
+                ans.SendEditRejectionMail(request.NewProfile.User.Mail, reason);
+            }
             // wyślij maila
         });
         public ICommand RefreshCommand => new Command(async p =>

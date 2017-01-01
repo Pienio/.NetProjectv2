@@ -42,7 +42,7 @@
         </DockPanel>
         <Button x:Name="DodDoList" Content="Dodaj Specjalizacje" Command="{Binding AdSpec}" Visibility="{Binding Who, Converter={StaticResource visibilityBool}, ConverterParameter=True, UpdateSourceTrigger=PropertyChanged}"/>
         <GroupBox x:Name="Twoje_Specjalizacje" Header="Twoje Specjalizacje" Margin="0" Visibility="{Binding Who, Converter={StaticResource visibilityBool}, ConverterParameter=True, UpdateSourceTrigger=PropertyChanged}">
-            <ListView x:Name="SpecListL" Height="100" ItemsSource="{Binding DocSpecList}" SelectedItem="{Binding _DocSpecListsel, Mode=OneWayToSource}" SelectionMode="Single">
+            <ListView x:Name="SpecListL" Height="100" ItemsSource="{Binding DocSpecList}" SelectedItem="{Binding DocSpecListsel, Mode=OneWayToSource}" SelectionMode="Single">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Name" Width="400" DisplayMemberBinding="{Binding Name}" />

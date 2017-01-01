@@ -34,9 +34,17 @@
                             </MultiBinding>
                         </DataGridTextColumn.Binding>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Specjalizacja" Binding="{Binding Doctor.Specialization}" Width="*" SortMemberPath="Name"
+                    <!--<DataGridTextColumn Header="Specjalizacja" Binding="{Binding Doctor.Specialization}" Width="*" SortMemberPath="Name"
                                     Visibility="{Binding Source={x:Reference element}, Path=DataContext.LoggedUser, Converter={StaticResource visibility}}">
-                    </DataGridTextColumn>
+                    </DataGridTextColumn>-->
+                    <DataGridTemplateColumn Header="Specjalizacja" Width="*" SortMemberPath="Name"
+                                    Visibility="{Binding Source={x:Reference element}, Path=DataContext.LoggedUser, Converter={StaticResource visibility}}">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ListBox ItemsSource="{Binding Doctor.Specialization}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                     <DataGridTextColumn Binding="{Binding Date, StringFormat=\{0:dd.MM.yyyy HH:mm\}}" Header="Data wizyty" Width="*" />
                     <DataGridTemplateColumn Width="80" Visibility="{Binding CanUserDeleteVisits, Converter={StaticResource visibilityBool}}">
                         <DataGridTemplateColumn.CellTemplate>

@@ -314,7 +314,7 @@ namespace Visits.ViewModels
                 return;
             }
             
-            TokenWindow wnd = new TokenWindow(Mail);
+            TokenWindow wnd = new TokenWindow(Mail,false);
             if (!wnd.ShowDialog().GetValueOrDefault(false))
                 return;
 
@@ -444,7 +444,7 @@ namespace Visits.ViewModels
             }
             DocSpecList = d;
             OnPropertyChanged("DocSpecList");
-
+           
         });
         public IList<Specialization> DocSpecList
         {
