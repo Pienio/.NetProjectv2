@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/DatabaseAccess.Model" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/DatabaseAccess.Model" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:complexType name="User">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Entity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Active" type="xs:boolean" />
+          <xs:element minOccurs="0" name="Kind" type="tns:DocOrPat" />
+          <xs:element minOccurs="0" name="Mail" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Name" nillable="true" type="tns:PersonName" />
+          <xs:element minOccurs="0" name="PESEL" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="User" nillable="true" type="tns:User" />
+  <xs:complexType name="Entity">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Key" type="xs:long" />
+      <xs:element minOccurs="0" name="Version" nillable="true" type="xs:base64Binary" />
+    </xs:sequence>
+    <xs:attribute ref="ser:Id" />
+    <xs:attribute ref="ser:Ref" />
+  </xs:complexType>
+  <xs:element name="Entity" nillable="true" type="tns:Entity" />
+  <xs:simpleType name="DocOrPat">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Doctor" />
+      <xs:enumeration value="Patient" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="DocOrPat" nillable="true" type="tns:DocOrPat" />
+  <xs:complexType name="PersonName">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Surname" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PersonName" nillable="true" type="tns:PersonName" />
+  <xs:complexType name="Doctor">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Person">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="FridayWorkingTime" nillable="true" type="tns:WorkingTime" />
+          <xs:element minOccurs="0" name="MondayWorkingTime" nillable="true" type="tns:WorkingTime" />
+          <xs:element minOccurs="0" name="ProfileAccepted" type="xs:boolean" />
+          <xs:element minOccurs="0" name="Specialization" nillable="true" type="tns:ArrayOfSpecialization" />
+          <xs:element minOccurs="0" name="ThursdayWorkingTime" nillable="true" type="tns:WorkingTime" />
+          <xs:element minOccurs="0" name="TuesdayWorkingTime" nillable="true" type="tns:WorkingTime" />
+          <xs:element minOccurs="0" name="WednesdayWorkingTime" nillable="true" type="tns:WorkingTime" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Doctor" nillable="true" type="tns:Doctor" />
+  <xs:complexType name="Person">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Entity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="User" nillable="true" type="tns:User" />
+          <xs:element minOccurs="0" name="Visits" nillable="true" type="tns:ArrayOfVisit" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Person" nillable="true" type="tns:Person" />
+  <xs:complexType name="ArrayOfVisit">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Visit" nillable="true" type="tns:Visit" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfVisit" nillable="true" type="tns:ArrayOfVisit" />
+  <xs:complexType name="Visit">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Entity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Date" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="Doctor" nillable="true" type="tns:Doctor" />
+          <xs:element minOccurs="0" name="Patient" nillable="true" type="tns:Patient" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Visit" nillable="true" type="tns:Visit" />
+  <xs:complexType name="Patient">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Person">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Patient" nillable="true" type="tns:Patient" />
+  <xs:complexType name="WorkingTime">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="End" type="xs:int" />
+      <xs:element minOccurs="0" name="Start" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WorkingTime" nillable="true" type="tns:WorkingTime" />
+  <xs:complexType name="ArrayOfSpecialization">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Specialization" nillable="true" type="tns:Specialization" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSpecialization" nillable="true" type="tns:ArrayOfSpecialization" />
+  <xs:complexType name="Specialization">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Entity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Doctors" nillable="true" type="tns:ArrayOfDoctor" />
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Specialization" nillable="true" type="tns:Specialization" />
+  <xs:complexType name="ArrayOfDoctor">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Doctor" nillable="true" type="tns:Doctor" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDoctor" nillable="true" type="tns:ArrayOfDoctor" />
+  <xs:complexType name="ArrayOfProfileRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ProfileRequest" nillable="true" type="tns:ProfileRequest" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfProfileRequest" nillable="true" type="tns:ArrayOfProfileRequest" />
+  <xs:complexType name="ProfileRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Entity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="NewProfile" nillable="true" type="tns:Doctor" />
+          <xs:element minOccurs="0" name="OldProfile" nillable="true" type="tns:Doctor" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ProfileRequest" nillable="true" type="tns:ProfileRequest" />
+  <xs:complexType name="ArrayOfPatient">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Patient" nillable="true" type="tns:Patient" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPatient" nillable="true" type="tns:ArrayOfPatient" />
+</xs:schema>

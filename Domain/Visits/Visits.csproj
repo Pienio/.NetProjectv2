@@ -233,14 +233,14 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="Service References\DataServiceReference\DatabaseAccess.Model.xsd">
+    <None Include="Service References\DataServiceReference\DatabaseAccess.Model1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\DataServiceReference\service.wsdl" />
-    <None Include="Service References\DataServiceReference\service.xsd">
+    <None Include="Service References\DataServiceReference\service1.wsdl" />
+    <None Include="Service References\DataServiceReference\service2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\DataServiceReference\service1.xsd">
+    <None Include="Service References\DataServiceReference\service21.xsd">
       <SubType>Designer</SubType>
     </None>
     <Resource Include="Resources\Entypo.ttf" />
