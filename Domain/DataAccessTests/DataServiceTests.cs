@@ -231,12 +231,12 @@ namespace UnitTestProject1
             if (doc1.Length == 0)
                 Assert.Fail();
             var  doc2 = doc1.First();
-            var date = a.GetFirstFreeSlot((int) doc.Key);
+            var date = a.GetFirstFreeSlot((int) doc2.Key);
 
-            bool dd = a.RegisterVisit(date, (int)pac.Key, (int)doc.Key);
+            bool dd = a.RegisterVisit(date, (int)pac1.Key, (int)doc2.Key);
             Assert.IsTrue(dd);
-            var pacviz = a.GetPatientVisits((int)pac.Key, false);
-            var docviz = a.GetDoctorVisits((int)doc.Key, false);
+            var pacviz = a.GetPatientVisits((int)pac1.Key, false);
+            var docviz = a.GetDoctorVisits((int)doc2.Key, false);
             if (pacviz.Length == 0 || docviz.Length == 0)
                 Assert.Fail();
 
