@@ -4,7 +4,8 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using DataAccessTests.DataAccessService;
+using DataAccessTests.service1.xsd;
+using DatabaseAccess.Model;
 
 
 namespace UnitTestProject1

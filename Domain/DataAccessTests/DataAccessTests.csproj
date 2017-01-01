@@ -55,7 +55,7 @@
   <ItemGroup>
     <Compile Include="DataServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service References\DataAccessService\Reference.cs">
+    <Compile Include="service1.xsd\service1.xsd\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -63,50 +63,38 @@
     <Compile Include="TestingExtension.cs" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Service References\" />
+    <WCFMetadata Include="service1.xsd\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Service References\DataAccessService\DataAccessTests.DataAccessService.Doctor.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\DataAccessService\DataAccessTests.DataAccessService.Patient.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\DataAccessService\DataAccessTests.DataAccessService.ProfileRequest.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\DataAccessService\DataAccessTests.DataAccessService.Specialization.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\DataAccessService\DataAccessTests.DataAccessService.User.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\DataAccessService\DataAccessTests.DataAccessService.Visit.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\DataAccessService\DatabaseAccess.Model.xsd">
+    <None Include="service1.xsd\service1.xsd\DataAccessTests.DataAccessService.Doctor.datasource" />
+    <None Include="service1.xsd\service1.xsd\DataAccessTests.DataAccessService.Patient.datasource" />
+    <None Include="service1.xsd\service1.xsd\DataAccessTests.DataAccessService.ProfileRequest.datasource" />
+    <None Include="service1.xsd\service1.xsd\DataAccessTests.DataAccessService.Specialization.datasource" />
+    <None Include="service1.xsd\service1.xsd\DataAccessTests.DataAccessService.User.datasource" />
+    <None Include="service1.xsd\service1.xsd\DataAccessTests.DataAccessService.Visit.datasource" />
+    <None Include="service1.xsd\service1.xsd\DatabaseAccess.Model1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\DataAccessService\service.wsdl" />
-    <None Include="Service References\DataAccessService\service.xsd">
+    <None Include="service1.xsd\service1.xsd\service1.wsdl" />
+    <None Include="service1.xsd\service1.xsd\service2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\DataAccessService\service1.xsd">
+    <None Include="service1.xsd\service1.xsd\service1.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Service References\DataAccessService\" />
+    <WCFMetadataStorage Include="service1.xsd\service1.xsd\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\DataAccessService\configuration91.svcinfo" />
+    <None Include="service1.xsd\service1.xsd\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\DataAccessService\configuration.svcinfo" />
+    <None Include="service1.xsd\service1.xsd\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\DataAccessService\Reference.svcmap">
+    <None Include="service1.xsd\service1.xsd\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
@@ -116,6 +104,9 @@
       <Project>{a4928e46-1fba-4d87-b427-42f69e6bf52a}</Project>
       <Name>DatabaseAccess</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\DataSources\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

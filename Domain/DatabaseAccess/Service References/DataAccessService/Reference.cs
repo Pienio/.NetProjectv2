@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DataAccessTests.DataAccessService {
+namespace DatabaseAccess.DataAccessService {
     using System.Runtime.Serialization;
     using System;
     
@@ -17,13 +17,13 @@ namespace DataAccessTests.DataAccessService {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Entity", Namespace="http://schemas.datacontract.org/2004/07/DatabaseAccess.Model", IsReference=true)]
     [System.SerializableAttribute()]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(DataAccessTests.DataAccessService.Person))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(DataAccessTests.DataAccessService.Visit))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(DataAccessTests.DataAccessService.Doctor))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(DataAccessTests.DataAccessService.Specialization))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(DataAccessTests.DataAccessService.Patient))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(DataAccessTests.DataAccessService.ProfileRequest))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(DataAccessTests.DataAccessService.User))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(DatabaseAccess.DataAccessService.Person))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(DatabaseAccess.DataAccessService.Visit))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(DatabaseAccess.DataAccessService.Doctor))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(DatabaseAccess.DataAccessService.Specialization))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(DatabaseAccess.DataAccessService.Patient))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(DatabaseAccess.DataAccessService.ProfileRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(DatabaseAccess.DataAccessService.User))]
     public partial class Entity : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
@@ -85,18 +85,18 @@ namespace DataAccessTests.DataAccessService {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Person", Namespace="http://schemas.datacontract.org/2004/07/DatabaseAccess.Model", IsReference=true)]
     [System.SerializableAttribute()]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(DataAccessTests.DataAccessService.Doctor))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(DataAccessTests.DataAccessService.Patient))]
-    public partial class Person : DataAccessTests.DataAccessService.Entity {
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(DatabaseAccess.DataAccessService.Doctor))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(DatabaseAccess.DataAccessService.Patient))]
+    public partial class Person : DatabaseAccess.DataAccessService.Entity {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private DataAccessTests.DataAccessService.User UserField;
+        private DatabaseAccess.DataAccessService.User UserField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private DataAccessTests.DataAccessService.Visit[] VisitsField;
+        private DatabaseAccess.DataAccessService.Visit[] VisitsField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public DataAccessTests.DataAccessService.User User {
+        public DatabaseAccess.DataAccessService.User User {
             get {
                 return this.UserField;
             }
@@ -109,7 +109,7 @@ namespace DataAccessTests.DataAccessService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public DataAccessTests.DataAccessService.Visit[] Visits {
+        public DatabaseAccess.DataAccessService.Visit[] Visits {
             get {
                 return this.VisitsField;
             }
@@ -126,16 +126,16 @@ namespace DataAccessTests.DataAccessService {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Visit", Namespace="http://schemas.datacontract.org/2004/07/DatabaseAccess.Model", IsReference=true)]
     [System.SerializableAttribute()]
-    public partial class Visit : DataAccessTests.DataAccessService.Entity {
+    public partial class Visit : DatabaseAccess.DataAccessService.Entity {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.DateTime DateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private DataAccessTests.DataAccessService.Doctor DoctorField;
+        private DatabaseAccess.DataAccessService.Doctor DoctorField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private DataAccessTests.DataAccessService.Patient PatientField;
+        private DatabaseAccess.DataAccessService.Patient PatientField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
         public System.DateTime Date {
@@ -151,7 +151,7 @@ namespace DataAccessTests.DataAccessService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public DataAccessTests.DataAccessService.Doctor Doctor {
+        public DatabaseAccess.DataAccessService.Doctor Doctor {
             get {
                 return this.DoctorField;
             }
@@ -164,7 +164,7 @@ namespace DataAccessTests.DataAccessService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public DataAccessTests.DataAccessService.Patient Patient {
+        public DatabaseAccess.DataAccessService.Patient Patient {
             get {
                 return this.PatientField;
             }
@@ -181,31 +181,31 @@ namespace DataAccessTests.DataAccessService {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Doctor", Namespace="http://schemas.datacontract.org/2004/07/DatabaseAccess.Model", IsReference=true)]
     [System.SerializableAttribute()]
-    public partial class Doctor : DataAccessTests.DataAccessService.Person {
+    public partial class Doctor : DatabaseAccess.DataAccessService.Person {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private DataAccessTests.DataAccessService.WorkingTime FridayWorkingTimeField;
+        private DatabaseAccess.DataAccessService.WorkingTime FridayWorkingTimeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private DataAccessTests.DataAccessService.WorkingTime MondayWorkingTimeField;
+        private DatabaseAccess.DataAccessService.WorkingTime MondayWorkingTimeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool ProfileAcceptedField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private DataAccessTests.DataAccessService.Specialization[] SpecializationField;
+        private DatabaseAccess.DataAccessService.Specialization[] SpecializationField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private DataAccessTests.DataAccessService.WorkingTime ThursdayWorkingTimeField;
+        private DatabaseAccess.DataAccessService.WorkingTime ThursdayWorkingTimeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private DataAccessTests.DataAccessService.WorkingTime TuesdayWorkingTimeField;
+        private DatabaseAccess.DataAccessService.WorkingTime TuesdayWorkingTimeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private DataAccessTests.DataAccessService.WorkingTime WednesdayWorkingTimeField;
+        private DatabaseAccess.DataAccessService.WorkingTime WednesdayWorkingTimeField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public DataAccessTests.DataAccessService.WorkingTime FridayWorkingTime {
+        public DatabaseAccess.DataAccessService.WorkingTime FridayWorkingTime {
             get {
                 return this.FridayWorkingTimeField;
             }
@@ -218,7 +218,7 @@ namespace DataAccessTests.DataAccessService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public DataAccessTests.DataAccessService.WorkingTime MondayWorkingTime {
+        public DatabaseAccess.DataAccessService.WorkingTime MondayWorkingTime {
             get {
                 return this.MondayWorkingTimeField;
             }
@@ -244,7 +244,7 @@ namespace DataAccessTests.DataAccessService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public DataAccessTests.DataAccessService.Specialization[] Specialization {
+        public DatabaseAccess.DataAccessService.Specialization[] Specialization {
             get {
                 return this.SpecializationField;
             }
@@ -257,7 +257,7 @@ namespace DataAccessTests.DataAccessService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public DataAccessTests.DataAccessService.WorkingTime ThursdayWorkingTime {
+        public DatabaseAccess.DataAccessService.WorkingTime ThursdayWorkingTime {
             get {
                 return this.ThursdayWorkingTimeField;
             }
@@ -270,7 +270,7 @@ namespace DataAccessTests.DataAccessService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public DataAccessTests.DataAccessService.WorkingTime TuesdayWorkingTime {
+        public DatabaseAccess.DataAccessService.WorkingTime TuesdayWorkingTime {
             get {
                 return this.TuesdayWorkingTimeField;
             }
@@ -283,7 +283,7 @@ namespace DataAccessTests.DataAccessService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public DataAccessTests.DataAccessService.WorkingTime WednesdayWorkingTime {
+        public DatabaseAccess.DataAccessService.WorkingTime WednesdayWorkingTime {
             get {
                 return this.WednesdayWorkingTimeField;
             }
@@ -300,16 +300,16 @@ namespace DataAccessTests.DataAccessService {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Specialization", Namespace="http://schemas.datacontract.org/2004/07/DatabaseAccess.Model", IsReference=true)]
     [System.SerializableAttribute()]
-    public partial class Specialization : DataAccessTests.DataAccessService.Entity {
+    public partial class Specialization : DatabaseAccess.DataAccessService.Entity {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private DataAccessTests.DataAccessService.Doctor[] DoctorsField;
+        private DatabaseAccess.DataAccessService.Doctor[] DoctorsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string NameField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public DataAccessTests.DataAccessService.Doctor[] Doctors {
+        public DatabaseAccess.DataAccessService.Doctor[] Doctors {
             get {
                 return this.DoctorsField;
             }
@@ -339,23 +339,23 @@ namespace DataAccessTests.DataAccessService {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Patient", Namespace="http://schemas.datacontract.org/2004/07/DatabaseAccess.Model", IsReference=true)]
     [System.SerializableAttribute()]
-    public partial class Patient : DataAccessTests.DataAccessService.Person {
+    public partial class Patient : DatabaseAccess.DataAccessService.Person {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ProfileRequest", Namespace="http://schemas.datacontract.org/2004/07/DatabaseAccess.Model", IsReference=true)]
     [System.SerializableAttribute()]
-    public partial class ProfileRequest : DataAccessTests.DataAccessService.Entity {
+    public partial class ProfileRequest : DatabaseAccess.DataAccessService.Entity {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private DataAccessTests.DataAccessService.Doctor NewProfileField;
+        private DatabaseAccess.DataAccessService.Doctor NewProfileField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private DataAccessTests.DataAccessService.Doctor OldProfileField;
+        private DatabaseAccess.DataAccessService.Doctor OldProfileField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public DataAccessTests.DataAccessService.Doctor NewProfile {
+        public DatabaseAccess.DataAccessService.Doctor NewProfile {
             get {
                 return this.NewProfileField;
             }
@@ -368,7 +368,7 @@ namespace DataAccessTests.DataAccessService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public DataAccessTests.DataAccessService.Doctor OldProfile {
+        public DatabaseAccess.DataAccessService.Doctor OldProfile {
             get {
                 return this.OldProfileField;
             }
@@ -385,19 +385,19 @@ namespace DataAccessTests.DataAccessService {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="User", Namespace="http://schemas.datacontract.org/2004/07/DatabaseAccess.Model", IsReference=true)]
     [System.SerializableAttribute()]
-    public partial class User : DataAccessTests.DataAccessService.Entity {
+    public partial class User : DatabaseAccess.DataAccessService.Entity {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool ActiveField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private DataAccessTests.DataAccessService.DocOrPat KindField;
+        private DatabaseAccess.DataAccessService.DocOrPat KindField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string MailField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private DataAccessTests.DataAccessService.PersonName NameField;
+        private DatabaseAccess.DataAccessService.PersonName NameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string PESELField;
@@ -419,7 +419,7 @@ namespace DataAccessTests.DataAccessService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public DataAccessTests.DataAccessService.DocOrPat Kind {
+        public DatabaseAccess.DataAccessService.DocOrPat Kind {
             get {
                 return this.KindField;
             }
@@ -445,7 +445,7 @@ namespace DataAccessTests.DataAccessService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public DataAccessTests.DataAccessService.PersonName Name {
+        public DatabaseAccess.DataAccessService.PersonName Name {
             get {
                 return this.NameField;
             }
@@ -622,40 +622,40 @@ namespace DataAccessTests.DataAccessService {
     public interface IDataService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetUserById", ReplyAction="http://tempuri.org/IDataService/GetUserByIdResponse")]
-        DataAccessTests.DataAccessService.User GetUserById(int value);
+        DatabaseAccess.DataAccessService.User GetUserById(int value);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetUserById", ReplyAction="http://tempuri.org/IDataService/GetUserByIdResponse")]
-        System.Threading.Tasks.Task<DataAccessTests.DataAccessService.User> GetUserByIdAsync(int value);
+        System.Threading.Tasks.Task<DatabaseAccess.DataAccessService.User> GetUserByIdAsync(int value);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetUser", ReplyAction="http://tempuri.org/IDataService/GetUserResponse")]
-        DataAccessTests.DataAccessService.User GetUser(string pes, string password);
+        DatabaseAccess.DataAccessService.User GetUser(string pes, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetUser", ReplyAction="http://tempuri.org/IDataService/GetUserResponse")]
-        System.Threading.Tasks.Task<DataAccessTests.DataAccessService.User> GetUserAsync(string pes, string password);
+        System.Threading.Tasks.Task<DatabaseAccess.DataAccessService.User> GetUserAsync(string pes, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetDoctorById", ReplyAction="http://tempuri.org/IDataService/GetDoctorByIdResponse")]
-        DataAccessTests.DataAccessService.Doctor GetDoctorById(int value);
+        DatabaseAccess.DataAccessService.Doctor GetDoctorById(int value);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetDoctorById", ReplyAction="http://tempuri.org/IDataService/GetDoctorByIdResponse")]
-        System.Threading.Tasks.Task<DataAccessTests.DataAccessService.Doctor> GetDoctorByIdAsync(int value);
+        System.Threading.Tasks.Task<DatabaseAccess.DataAccessService.Doctor> GetDoctorByIdAsync(int value);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetDoctorByUserId", ReplyAction="http://tempuri.org/IDataService/GetDoctorByUserIdResponse")]
-        DataAccessTests.DataAccessService.Doctor GetDoctorByUserId(int value);
+        DatabaseAccess.DataAccessService.Doctor GetDoctorByUserId(int value);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetDoctorByUserId", ReplyAction="http://tempuri.org/IDataService/GetDoctorByUserIdResponse")]
-        System.Threading.Tasks.Task<DataAccessTests.DataAccessService.Doctor> GetDoctorByUserIdAsync(int value);
+        System.Threading.Tasks.Task<DatabaseAccess.DataAccessService.Doctor> GetDoctorByUserIdAsync(int value);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetPatientById", ReplyAction="http://tempuri.org/IDataService/GetPatientByIdResponse")]
-        DataAccessTests.DataAccessService.Patient GetPatientById(int value);
+        DatabaseAccess.DataAccessService.Patient GetPatientById(int value);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetPatientById", ReplyAction="http://tempuri.org/IDataService/GetPatientByIdResponse")]
-        System.Threading.Tasks.Task<DataAccessTests.DataAccessService.Patient> GetPatientByIdAsync(int value);
+        System.Threading.Tasks.Task<DatabaseAccess.DataAccessService.Patient> GetPatientByIdAsync(int value);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetPatientByUserId", ReplyAction="http://tempuri.org/IDataService/GetPatientByUserIdResponse")]
-        DataAccessTests.DataAccessService.Patient GetPatientByUserId(int value);
+        DatabaseAccess.DataAccessService.Patient GetPatientByUserId(int value);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetPatientByUserId", ReplyAction="http://tempuri.org/IDataService/GetPatientByUserIdResponse")]
-        System.Threading.Tasks.Task<DataAccessTests.DataAccessService.Patient> GetPatientByUserIdAsync(int value);
+        System.Threading.Tasks.Task<DatabaseAccess.DataAccessService.Patient> GetPatientByUserIdAsync(int value);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/Fill", ReplyAction="http://tempuri.org/IDataService/FillResponse")]
         void Fill();
@@ -664,46 +664,46 @@ namespace DataAccessTests.DataAccessService {
         System.Threading.Tasks.Task FillAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetDoctorsList", ReplyAction="http://tempuri.org/IDataService/GetDoctorsListResponse")]
-        DataAccessTests.DataAccessService.Doctor[] GetDoctorsList();
+        DatabaseAccess.DataAccessService.Doctor[] GetDoctorsList();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetDoctorsList", ReplyAction="http://tempuri.org/IDataService/GetDoctorsListResponse")]
-        System.Threading.Tasks.Task<DataAccessTests.DataAccessService.Doctor[]> GetDoctorsListAsync();
+        System.Threading.Tasks.Task<DatabaseAccess.DataAccessService.Doctor[]> GetDoctorsListAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/SearchDoctorsList", ReplyAction="http://tempuri.org/IDataService/SearchDoctorsListResponse")]
-        DataAccessTests.DataAccessService.Doctor[] SearchDoctorsList(DataAccessTests.DataAccessService.Specialization spec, string name);
+        DatabaseAccess.DataAccessService.Doctor[] SearchDoctorsList(DatabaseAccess.DataAccessService.Specialization spec, string name);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/SearchDoctorsList", ReplyAction="http://tempuri.org/IDataService/SearchDoctorsListResponse")]
-        System.Threading.Tasks.Task<DataAccessTests.DataAccessService.Doctor[]> SearchDoctorsListAsync(DataAccessTests.DataAccessService.Specialization spec, string name);
+        System.Threading.Tasks.Task<DatabaseAccess.DataAccessService.Doctor[]> SearchDoctorsListAsync(DatabaseAccess.DataAccessService.Specialization spec, string name);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetSpecializationsList", ReplyAction="http://tempuri.org/IDataService/GetSpecializationsListResponse")]
-        DataAccessTests.DataAccessService.Specialization[] GetSpecializationsList();
+        DatabaseAccess.DataAccessService.Specialization[] GetSpecializationsList();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetSpecializationsList", ReplyAction="http://tempuri.org/IDataService/GetSpecializationsListResponse")]
-        System.Threading.Tasks.Task<DataAccessTests.DataAccessService.Specialization[]> GetSpecializationsListAsync();
+        System.Threading.Tasks.Task<DatabaseAccess.DataAccessService.Specialization[]> GetSpecializationsListAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetPatientVisits", ReplyAction="http://tempuri.org/IDataService/GetPatientVisitsResponse")]
-        DataAccessTests.DataAccessService.Visit[] GetPatientVisits(int id, bool arc);
+        DatabaseAccess.DataAccessService.Visit[] GetPatientVisits(int id, bool arc);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetPatientVisits", ReplyAction="http://tempuri.org/IDataService/GetPatientVisitsResponse")]
-        System.Threading.Tasks.Task<DataAccessTests.DataAccessService.Visit[]> GetPatientVisitsAsync(int id, bool arc);
+        System.Threading.Tasks.Task<DatabaseAccess.DataAccessService.Visit[]> GetPatientVisitsAsync(int id, bool arc);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetDoctorVisits", ReplyAction="http://tempuri.org/IDataService/GetDoctorVisitsResponse")]
-        DataAccessTests.DataAccessService.Visit[] GetDoctorVisits(int id, bool arc);
+        DatabaseAccess.DataAccessService.Visit[] GetDoctorVisits(int id, bool arc);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetDoctorVisits", ReplyAction="http://tempuri.org/IDataService/GetDoctorVisitsResponse")]
-        System.Threading.Tasks.Task<DataAccessTests.DataAccessService.Visit[]> GetDoctorVisitsAsync(int id, bool arc);
+        System.Threading.Tasks.Task<DatabaseAccess.DataAccessService.Visit[]> GetDoctorVisitsAsync(int id, bool arc);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetRequests", ReplyAction="http://tempuri.org/IDataService/GetRequestsResponse")]
-        DataAccessTests.DataAccessService.ProfileRequest[] GetRequests();
+        DatabaseAccess.DataAccessService.ProfileRequest[] GetRequests();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetRequests", ReplyAction="http://tempuri.org/IDataService/GetRequestsResponse")]
-        System.Threading.Tasks.Task<DataAccessTests.DataAccessService.ProfileRequest[]> GetRequestsAsync();
+        System.Threading.Tasks.Task<DatabaseAccess.DataAccessService.ProfileRequest[]> GetRequestsAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/UpdatePatient", ReplyAction="http://tempuri.org/IDataService/UpdatePatientResponse")]
-        bool UpdatePatient(DataAccessTests.DataAccessService.Patient toUpdate);
+        bool UpdatePatient(DatabaseAccess.DataAccessService.Patient toUpdate);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/UpdatePatient", ReplyAction="http://tempuri.org/IDataService/UpdatePatientResponse")]
-        System.Threading.Tasks.Task<bool> UpdatePatientAsync(DataAccessTests.DataAccessService.Patient toUpdate);
+        System.Threading.Tasks.Task<bool> UpdatePatientAsync(DatabaseAccess.DataAccessService.Patient toUpdate);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/UpdateUserPassword", ReplyAction="http://tempuri.org/IDataService/UpdateUserPasswordResponse")]
         bool UpdateUserPassword(int id, string pass);
@@ -712,64 +712,64 @@ namespace DataAccessTests.DataAccessService {
         System.Threading.Tasks.Task<bool> UpdateUserPasswordAsync(int id, string pass);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/UpdateDoctor", ReplyAction="http://tempuri.org/IDataService/UpdateDoctorResponse")]
-        bool UpdateDoctor(DataAccessTests.DataAccessService.Doctor toUpdate);
+        bool UpdateDoctor(DatabaseAccess.DataAccessService.Doctor toUpdate);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/UpdateDoctor", ReplyAction="http://tempuri.org/IDataService/UpdateDoctorResponse")]
-        System.Threading.Tasks.Task<bool> UpdateDoctorAsync(DataAccessTests.DataAccessService.Doctor toUpdate);
+        System.Threading.Tasks.Task<bool> UpdateDoctorAsync(DatabaseAccess.DataAccessService.Doctor toUpdate);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/UpdateSpecialization", ReplyAction="http://tempuri.org/IDataService/UpdateSpecializationResponse")]
-        bool UpdateSpecialization(DataAccessTests.DataAccessService.Specialization toUpdate);
+        bool UpdateSpecialization(DatabaseAccess.DataAccessService.Specialization toUpdate);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/UpdateSpecialization", ReplyAction="http://tempuri.org/IDataService/UpdateSpecializationResponse")]
-        System.Threading.Tasks.Task<bool> UpdateSpecializationAsync(DataAccessTests.DataAccessService.Specialization toUpdate);
+        System.Threading.Tasks.Task<bool> UpdateSpecializationAsync(DatabaseAccess.DataAccessService.Specialization toUpdate);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/DeleteDoctor", ReplyAction="http://tempuri.org/IDataService/DeleteDoctorResponse")]
-        bool DeleteDoctor(DataAccessTests.DataAccessService.Doctor toDelete);
+        bool DeleteDoctor(DatabaseAccess.DataAccessService.Doctor toDelete);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/DeleteDoctor", ReplyAction="http://tempuri.org/IDataService/DeleteDoctorResponse")]
-        System.Threading.Tasks.Task<bool> DeleteDoctorAsync(DataAccessTests.DataAccessService.Doctor toDelete);
+        System.Threading.Tasks.Task<bool> DeleteDoctorAsync(DatabaseAccess.DataAccessService.Doctor toDelete);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/DeletePatient", ReplyAction="http://tempuri.org/IDataService/DeletePatientResponse")]
-        bool DeletePatient(DataAccessTests.DataAccessService.Patient toDelete);
+        bool DeletePatient(DatabaseAccess.DataAccessService.Patient toDelete);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/DeletePatient", ReplyAction="http://tempuri.org/IDataService/DeletePatientResponse")]
-        System.Threading.Tasks.Task<bool> DeletePatientAsync(DataAccessTests.DataAccessService.Patient toDelete);
+        System.Threading.Tasks.Task<bool> DeletePatientAsync(DatabaseAccess.DataAccessService.Patient toDelete);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/DeleteSpecialization", ReplyAction="http://tempuri.org/IDataService/DeleteSpecializationResponse")]
-        bool DeleteSpecialization(DataAccessTests.DataAccessService.Specialization toDelete);
+        bool DeleteSpecialization(DatabaseAccess.DataAccessService.Specialization toDelete);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/DeleteSpecialization", ReplyAction="http://tempuri.org/IDataService/DeleteSpecializationResponse")]
-        System.Threading.Tasks.Task<bool> DeleteSpecializationAsync(DataAccessTests.DataAccessService.Specialization toDelete);
+        System.Threading.Tasks.Task<bool> DeleteSpecializationAsync(DatabaseAccess.DataAccessService.Specialization toDelete);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/DeleteRequest", ReplyAction="http://tempuri.org/IDataService/DeleteRequestResponse")]
-        bool DeleteRequest(DataAccessTests.DataAccessService.ProfileRequest toDelete);
+        bool DeleteRequest(DatabaseAccess.DataAccessService.ProfileRequest toDelete);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/DeleteRequest", ReplyAction="http://tempuri.org/IDataService/DeleteRequestResponse")]
-        System.Threading.Tasks.Task<bool> DeleteRequestAsync(DataAccessTests.DataAccessService.ProfileRequest toDelete);
+        System.Threading.Tasks.Task<bool> DeleteRequestAsync(DatabaseAccess.DataAccessService.ProfileRequest toDelete);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/AddPatient", ReplyAction="http://tempuri.org/IDataService/AddPatientResponse")]
-        bool AddPatient(DataAccessTests.DataAccessService.Patient toAdd);
+        bool AddPatient(DatabaseAccess.DataAccessService.Patient toAdd);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/AddPatient", ReplyAction="http://tempuri.org/IDataService/AddPatientResponse")]
-        System.Threading.Tasks.Task<bool> AddPatientAsync(DataAccessTests.DataAccessService.Patient toAdd);
+        System.Threading.Tasks.Task<bool> AddPatientAsync(DatabaseAccess.DataAccessService.Patient toAdd);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/AddDoctor", ReplyAction="http://tempuri.org/IDataService/AddDoctorResponse")]
-        bool AddDoctor(DataAccessTests.DataAccessService.Doctor toAdd);
+        bool AddDoctor(DatabaseAccess.DataAccessService.Doctor toAdd);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/AddDoctor", ReplyAction="http://tempuri.org/IDataService/AddDoctorResponse")]
-        System.Threading.Tasks.Task<bool> AddDoctorAsync(DataAccessTests.DataAccessService.Doctor toAdd);
+        System.Threading.Tasks.Task<bool> AddDoctorAsync(DatabaseAccess.DataAccessService.Doctor toAdd);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/AddSpecialization", ReplyAction="http://tempuri.org/IDataService/AddSpecializationResponse")]
-        bool AddSpecialization(DataAccessTests.DataAccessService.Specialization toAdd);
+        bool AddSpecialization(DatabaseAccess.DataAccessService.Specialization toAdd);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/AddSpecialization", ReplyAction="http://tempuri.org/IDataService/AddSpecializationResponse")]
-        System.Threading.Tasks.Task<bool> AddSpecializationAsync(DataAccessTests.DataAccessService.Specialization toAdd);
+        System.Threading.Tasks.Task<bool> AddSpecializationAsync(DatabaseAccess.DataAccessService.Specialization toAdd);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/AddRequest", ReplyAction="http://tempuri.org/IDataService/AddRequestResponse")]
-        bool AddRequest(DataAccessTests.DataAccessService.ProfileRequest toAdd);
+        bool AddRequest(DatabaseAccess.DataAccessService.ProfileRequest toAdd);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/AddRequest", ReplyAction="http://tempuri.org/IDataService/AddRequestResponse")]
-        System.Threading.Tasks.Task<bool> AddRequestAsync(DataAccessTests.DataAccessService.ProfileRequest toAdd);
+        System.Threading.Tasks.Task<bool> AddRequestAsync(DatabaseAccess.DataAccessService.ProfileRequest toAdd);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/RegisterVisit", ReplyAction="http://tempuri.org/IDataService/RegisterVisitResponse")]
         bool RegisterVisit(System.DateTime selected, int patientId, int doctorId);
@@ -778,10 +778,10 @@ namespace DataAccessTests.DataAccessService {
         System.Threading.Tasks.Task<bool> RegisterVisitAsync(System.DateTime selected, int patientId, int doctorId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/DeleteVisit", ReplyAction="http://tempuri.org/IDataService/DeleteVisitResponse")]
-        bool DeleteVisit(DataAccessTests.DataAccessService.Visit ToDelete);
+        bool DeleteVisit(DatabaseAccess.DataAccessService.Visit ToDelete);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/DeleteVisit", ReplyAction="http://tempuri.org/IDataService/DeleteVisitResponse")]
-        System.Threading.Tasks.Task<bool> DeleteVisitAsync(DataAccessTests.DataAccessService.Visit ToDelete);
+        System.Threading.Tasks.Task<bool> DeleteVisitAsync(DatabaseAccess.DataAccessService.Visit ToDelete);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetFirstFreeSlot", ReplyAction="http://tempuri.org/IDataService/GetFirstFreeSlotResponse")]
         System.DateTime GetFirstFreeSlot(int doctorId);
@@ -790,10 +790,10 @@ namespace DataAccessTests.DataAccessService {
         System.Threading.Tasks.Task<System.DateTime> GetFirstFreeSlotAsync(int doctorId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetPatients", ReplyAction="http://tempuri.org/IDataService/GetPatientsResponse")]
-        DataAccessTests.DataAccessService.Patient[] GetPatients();
+        DatabaseAccess.DataAccessService.Patient[] GetPatients();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetPatients", ReplyAction="http://tempuri.org/IDataService/GetPatientsResponse")]
-        System.Threading.Tasks.Task<DataAccessTests.DataAccessService.Patient[]> GetPatientsAsync();
+        System.Threading.Tasks.Task<DatabaseAccess.DataAccessService.Patient[]> GetPatientsAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/Dispose", ReplyAction="http://tempuri.org/IDataService/DisposeResponse")]
         void Dispose();
@@ -803,12 +803,12 @@ namespace DataAccessTests.DataAccessService {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IDataServiceChannel : DataAccessTests.DataAccessService.IDataService, System.ServiceModel.IClientChannel {
+    public interface IDataServiceChannel : DatabaseAccess.DataAccessService.IDataService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class DataServiceClient : System.ServiceModel.ClientBase<DataAccessTests.DataAccessService.IDataService>, DataAccessTests.DataAccessService.IDataService {
+    public partial class DataServiceClient : System.ServiceModel.ClientBase<DatabaseAccess.DataAccessService.IDataService>, DatabaseAccess.DataAccessService.IDataService {
         
         public DataServiceClient() {
         }
@@ -829,51 +829,51 @@ namespace DataAccessTests.DataAccessService {
                 base(binding, remoteAddress) {
         }
         
-        public DataAccessTests.DataAccessService.User GetUserById(int value) {
+        public DatabaseAccess.DataAccessService.User GetUserById(int value) {
             return base.Channel.GetUserById(value);
         }
         
-        public System.Threading.Tasks.Task<DataAccessTests.DataAccessService.User> GetUserByIdAsync(int value) {
+        public System.Threading.Tasks.Task<DatabaseAccess.DataAccessService.User> GetUserByIdAsync(int value) {
             return base.Channel.GetUserByIdAsync(value);
         }
         
-        public DataAccessTests.DataAccessService.User GetUser(string pes, string password) {
+        public DatabaseAccess.DataAccessService.User GetUser(string pes, string password) {
             return base.Channel.GetUser(pes, password);
         }
         
-        public System.Threading.Tasks.Task<DataAccessTests.DataAccessService.User> GetUserAsync(string pes, string password) {
+        public System.Threading.Tasks.Task<DatabaseAccess.DataAccessService.User> GetUserAsync(string pes, string password) {
             return base.Channel.GetUserAsync(pes, password);
         }
         
-        public DataAccessTests.DataAccessService.Doctor GetDoctorById(int value) {
+        public DatabaseAccess.DataAccessService.Doctor GetDoctorById(int value) {
             return base.Channel.GetDoctorById(value);
         }
         
-        public System.Threading.Tasks.Task<DataAccessTests.DataAccessService.Doctor> GetDoctorByIdAsync(int value) {
+        public System.Threading.Tasks.Task<DatabaseAccess.DataAccessService.Doctor> GetDoctorByIdAsync(int value) {
             return base.Channel.GetDoctorByIdAsync(value);
         }
         
-        public DataAccessTests.DataAccessService.Doctor GetDoctorByUserId(int value) {
+        public DatabaseAccess.DataAccessService.Doctor GetDoctorByUserId(int value) {
             return base.Channel.GetDoctorByUserId(value);
         }
         
-        public System.Threading.Tasks.Task<DataAccessTests.DataAccessService.Doctor> GetDoctorByUserIdAsync(int value) {
+        public System.Threading.Tasks.Task<DatabaseAccess.DataAccessService.Doctor> GetDoctorByUserIdAsync(int value) {
             return base.Channel.GetDoctorByUserIdAsync(value);
         }
         
-        public DataAccessTests.DataAccessService.Patient GetPatientById(int value) {
+        public DatabaseAccess.DataAccessService.Patient GetPatientById(int value) {
             return base.Channel.GetPatientById(value);
         }
         
-        public System.Threading.Tasks.Task<DataAccessTests.DataAccessService.Patient> GetPatientByIdAsync(int value) {
+        public System.Threading.Tasks.Task<DatabaseAccess.DataAccessService.Patient> GetPatientByIdAsync(int value) {
             return base.Channel.GetPatientByIdAsync(value);
         }
         
-        public DataAccessTests.DataAccessService.Patient GetPatientByUserId(int value) {
+        public DatabaseAccess.DataAccessService.Patient GetPatientByUserId(int value) {
             return base.Channel.GetPatientByUserId(value);
         }
         
-        public System.Threading.Tasks.Task<DataAccessTests.DataAccessService.Patient> GetPatientByUserIdAsync(int value) {
+        public System.Threading.Tasks.Task<DatabaseAccess.DataAccessService.Patient> GetPatientByUserIdAsync(int value) {
             return base.Channel.GetPatientByUserIdAsync(value);
         }
         
@@ -885,59 +885,59 @@ namespace DataAccessTests.DataAccessService {
             return base.Channel.FillAsync();
         }
         
-        public DataAccessTests.DataAccessService.Doctor[] GetDoctorsList() {
+        public DatabaseAccess.DataAccessService.Doctor[] GetDoctorsList() {
             return base.Channel.GetDoctorsList();
         }
         
-        public System.Threading.Tasks.Task<DataAccessTests.DataAccessService.Doctor[]> GetDoctorsListAsync() {
+        public System.Threading.Tasks.Task<DatabaseAccess.DataAccessService.Doctor[]> GetDoctorsListAsync() {
             return base.Channel.GetDoctorsListAsync();
         }
         
-        public DataAccessTests.DataAccessService.Doctor[] SearchDoctorsList(DataAccessTests.DataAccessService.Specialization spec, string name) {
+        public DatabaseAccess.DataAccessService.Doctor[] SearchDoctorsList(DatabaseAccess.DataAccessService.Specialization spec, string name) {
             return base.Channel.SearchDoctorsList(spec, name);
         }
         
-        public System.Threading.Tasks.Task<DataAccessTests.DataAccessService.Doctor[]> SearchDoctorsListAsync(DataAccessTests.DataAccessService.Specialization spec, string name) {
+        public System.Threading.Tasks.Task<DatabaseAccess.DataAccessService.Doctor[]> SearchDoctorsListAsync(DatabaseAccess.DataAccessService.Specialization spec, string name) {
             return base.Channel.SearchDoctorsListAsync(spec, name);
         }
         
-        public DataAccessTests.DataAccessService.Specialization[] GetSpecializationsList() {
+        public DatabaseAccess.DataAccessService.Specialization[] GetSpecializationsList() {
             return base.Channel.GetSpecializationsList();
         }
         
-        public System.Threading.Tasks.Task<DataAccessTests.DataAccessService.Specialization[]> GetSpecializationsListAsync() {
+        public System.Threading.Tasks.Task<DatabaseAccess.DataAccessService.Specialization[]> GetSpecializationsListAsync() {
             return base.Channel.GetSpecializationsListAsync();
         }
         
-        public DataAccessTests.DataAccessService.Visit[] GetPatientVisits(int id, bool arc) {
+        public DatabaseAccess.DataAccessService.Visit[] GetPatientVisits(int id, bool arc) {
             return base.Channel.GetPatientVisits(id, arc);
         }
         
-        public System.Threading.Tasks.Task<DataAccessTests.DataAccessService.Visit[]> GetPatientVisitsAsync(int id, bool arc) {
+        public System.Threading.Tasks.Task<DatabaseAccess.DataAccessService.Visit[]> GetPatientVisitsAsync(int id, bool arc) {
             return base.Channel.GetPatientVisitsAsync(id, arc);
         }
         
-        public DataAccessTests.DataAccessService.Visit[] GetDoctorVisits(int id, bool arc) {
+        public DatabaseAccess.DataAccessService.Visit[] GetDoctorVisits(int id, bool arc) {
             return base.Channel.GetDoctorVisits(id, arc);
         }
         
-        public System.Threading.Tasks.Task<DataAccessTests.DataAccessService.Visit[]> GetDoctorVisitsAsync(int id, bool arc) {
+        public System.Threading.Tasks.Task<DatabaseAccess.DataAccessService.Visit[]> GetDoctorVisitsAsync(int id, bool arc) {
             return base.Channel.GetDoctorVisitsAsync(id, arc);
         }
         
-        public DataAccessTests.DataAccessService.ProfileRequest[] GetRequests() {
+        public DatabaseAccess.DataAccessService.ProfileRequest[] GetRequests() {
             return base.Channel.GetRequests();
         }
         
-        public System.Threading.Tasks.Task<DataAccessTests.DataAccessService.ProfileRequest[]> GetRequestsAsync() {
+        public System.Threading.Tasks.Task<DatabaseAccess.DataAccessService.ProfileRequest[]> GetRequestsAsync() {
             return base.Channel.GetRequestsAsync();
         }
         
-        public bool UpdatePatient(DataAccessTests.DataAccessService.Patient toUpdate) {
+        public bool UpdatePatient(DatabaseAccess.DataAccessService.Patient toUpdate) {
             return base.Channel.UpdatePatient(toUpdate);
         }
         
-        public System.Threading.Tasks.Task<bool> UpdatePatientAsync(DataAccessTests.DataAccessService.Patient toUpdate) {
+        public System.Threading.Tasks.Task<bool> UpdatePatientAsync(DatabaseAccess.DataAccessService.Patient toUpdate) {
             return base.Channel.UpdatePatientAsync(toUpdate);
         }
         
@@ -949,83 +949,83 @@ namespace DataAccessTests.DataAccessService {
             return base.Channel.UpdateUserPasswordAsync(id, pass);
         }
         
-        public bool UpdateDoctor(DataAccessTests.DataAccessService.Doctor toUpdate) {
+        public bool UpdateDoctor(DatabaseAccess.DataAccessService.Doctor toUpdate) {
             return base.Channel.UpdateDoctor(toUpdate);
         }
         
-        public System.Threading.Tasks.Task<bool> UpdateDoctorAsync(DataAccessTests.DataAccessService.Doctor toUpdate) {
+        public System.Threading.Tasks.Task<bool> UpdateDoctorAsync(DatabaseAccess.DataAccessService.Doctor toUpdate) {
             return base.Channel.UpdateDoctorAsync(toUpdate);
         }
         
-        public bool UpdateSpecialization(DataAccessTests.DataAccessService.Specialization toUpdate) {
+        public bool UpdateSpecialization(DatabaseAccess.DataAccessService.Specialization toUpdate) {
             return base.Channel.UpdateSpecialization(toUpdate);
         }
         
-        public System.Threading.Tasks.Task<bool> UpdateSpecializationAsync(DataAccessTests.DataAccessService.Specialization toUpdate) {
+        public System.Threading.Tasks.Task<bool> UpdateSpecializationAsync(DatabaseAccess.DataAccessService.Specialization toUpdate) {
             return base.Channel.UpdateSpecializationAsync(toUpdate);
         }
         
-        public bool DeleteDoctor(DataAccessTests.DataAccessService.Doctor toDelete) {
+        public bool DeleteDoctor(DatabaseAccess.DataAccessService.Doctor toDelete) {
             return base.Channel.DeleteDoctor(toDelete);
         }
         
-        public System.Threading.Tasks.Task<bool> DeleteDoctorAsync(DataAccessTests.DataAccessService.Doctor toDelete) {
+        public System.Threading.Tasks.Task<bool> DeleteDoctorAsync(DatabaseAccess.DataAccessService.Doctor toDelete) {
             return base.Channel.DeleteDoctorAsync(toDelete);
         }
         
-        public bool DeletePatient(DataAccessTests.DataAccessService.Patient toDelete) {
+        public bool DeletePatient(DatabaseAccess.DataAccessService.Patient toDelete) {
             return base.Channel.DeletePatient(toDelete);
         }
         
-        public System.Threading.Tasks.Task<bool> DeletePatientAsync(DataAccessTests.DataAccessService.Patient toDelete) {
+        public System.Threading.Tasks.Task<bool> DeletePatientAsync(DatabaseAccess.DataAccessService.Patient toDelete) {
             return base.Channel.DeletePatientAsync(toDelete);
         }
         
-        public bool DeleteSpecialization(DataAccessTests.DataAccessService.Specialization toDelete) {
+        public bool DeleteSpecialization(DatabaseAccess.DataAccessService.Specialization toDelete) {
             return base.Channel.DeleteSpecialization(toDelete);
         }
         
-        public System.Threading.Tasks.Task<bool> DeleteSpecializationAsync(DataAccessTests.DataAccessService.Specialization toDelete) {
+        public System.Threading.Tasks.Task<bool> DeleteSpecializationAsync(DatabaseAccess.DataAccessService.Specialization toDelete) {
             return base.Channel.DeleteSpecializationAsync(toDelete);
         }
         
-        public bool DeleteRequest(DataAccessTests.DataAccessService.ProfileRequest toDelete) {
+        public bool DeleteRequest(DatabaseAccess.DataAccessService.ProfileRequest toDelete) {
             return base.Channel.DeleteRequest(toDelete);
         }
         
-        public System.Threading.Tasks.Task<bool> DeleteRequestAsync(DataAccessTests.DataAccessService.ProfileRequest toDelete) {
+        public System.Threading.Tasks.Task<bool> DeleteRequestAsync(DatabaseAccess.DataAccessService.ProfileRequest toDelete) {
             return base.Channel.DeleteRequestAsync(toDelete);
         }
         
-        public bool AddPatient(DataAccessTests.DataAccessService.Patient toAdd) {
+        public bool AddPatient(DatabaseAccess.DataAccessService.Patient toAdd) {
             return base.Channel.AddPatient(toAdd);
         }
         
-        public System.Threading.Tasks.Task<bool> AddPatientAsync(DataAccessTests.DataAccessService.Patient toAdd) {
+        public System.Threading.Tasks.Task<bool> AddPatientAsync(DatabaseAccess.DataAccessService.Patient toAdd) {
             return base.Channel.AddPatientAsync(toAdd);
         }
         
-        public bool AddDoctor(DataAccessTests.DataAccessService.Doctor toAdd) {
+        public bool AddDoctor(DatabaseAccess.DataAccessService.Doctor toAdd) {
             return base.Channel.AddDoctor(toAdd);
         }
         
-        public System.Threading.Tasks.Task<bool> AddDoctorAsync(DataAccessTests.DataAccessService.Doctor toAdd) {
+        public System.Threading.Tasks.Task<bool> AddDoctorAsync(DatabaseAccess.DataAccessService.Doctor toAdd) {
             return base.Channel.AddDoctorAsync(toAdd);
         }
         
-        public bool AddSpecialization(DataAccessTests.DataAccessService.Specialization toAdd) {
+        public bool AddSpecialization(DatabaseAccess.DataAccessService.Specialization toAdd) {
             return base.Channel.AddSpecialization(toAdd);
         }
         
-        public System.Threading.Tasks.Task<bool> AddSpecializationAsync(DataAccessTests.DataAccessService.Specialization toAdd) {
+        public System.Threading.Tasks.Task<bool> AddSpecializationAsync(DatabaseAccess.DataAccessService.Specialization toAdd) {
             return base.Channel.AddSpecializationAsync(toAdd);
         }
         
-        public bool AddRequest(DataAccessTests.DataAccessService.ProfileRequest toAdd) {
+        public bool AddRequest(DatabaseAccess.DataAccessService.ProfileRequest toAdd) {
             return base.Channel.AddRequest(toAdd);
         }
         
-        public System.Threading.Tasks.Task<bool> AddRequestAsync(DataAccessTests.DataAccessService.ProfileRequest toAdd) {
+        public System.Threading.Tasks.Task<bool> AddRequestAsync(DatabaseAccess.DataAccessService.ProfileRequest toAdd) {
             return base.Channel.AddRequestAsync(toAdd);
         }
         
@@ -1037,11 +1037,11 @@ namespace DataAccessTests.DataAccessService {
             return base.Channel.RegisterVisitAsync(selected, patientId, doctorId);
         }
         
-        public bool DeleteVisit(DataAccessTests.DataAccessService.Visit ToDelete) {
+        public bool DeleteVisit(DatabaseAccess.DataAccessService.Visit ToDelete) {
             return base.Channel.DeleteVisit(ToDelete);
         }
         
-        public System.Threading.Tasks.Task<bool> DeleteVisitAsync(DataAccessTests.DataAccessService.Visit ToDelete) {
+        public System.Threading.Tasks.Task<bool> DeleteVisitAsync(DatabaseAccess.DataAccessService.Visit ToDelete) {
             return base.Channel.DeleteVisitAsync(ToDelete);
         }
         
@@ -1053,11 +1053,11 @@ namespace DataAccessTests.DataAccessService {
             return base.Channel.GetFirstFreeSlotAsync(doctorId);
         }
         
-        public DataAccessTests.DataAccessService.Patient[] GetPatients() {
+        public DatabaseAccess.DataAccessService.Patient[] GetPatients() {
             return base.Channel.GetPatients();
         }
         
-        public System.Threading.Tasks.Task<DataAccessTests.DataAccessService.Patient[]> GetPatientsAsync() {
+        public System.Threading.Tasks.Task<DatabaseAccess.DataAccessService.Patient[]> GetPatientsAsync() {
             return base.Channel.GetPatientsAsync();
         }
         

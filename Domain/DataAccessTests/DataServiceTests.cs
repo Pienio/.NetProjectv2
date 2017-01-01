@@ -126,7 +126,7 @@ namespace UnitTestProject1
             var a = TestingExtension.GetService();
             Random r = new Random();
             int d = r.Next(0, 7);
-            DataAccessTests.DataAccessService.Specialization n = new DataAccessTests.DataAccessService.Specialization();
+            Specialization n = new Specialization();
 
             n.Name = specs[d].Name;
 
@@ -250,7 +250,7 @@ namespace UnitTestProject1
 
 
             var a = TestingExtension.GetService();
-            DataAccessTests.DataAccessService.Specialization nn= new DataAccessTests.DataAccessService.Specialization();
+            Specialization nn= new Specialization();
             nn.Name = "dddddd";
             a.AddSpecialization(nn);
             var list = a.GetSpecializationsList();
