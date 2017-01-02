@@ -32,7 +32,7 @@ namespace MailService
         {
             string content =
                 "Aby potwierdzić edycję, wpisz w wymaganym polu dany token: " + token;
-            SendMail(mailAddress, "Edycja konta", "System rezerwacji wizyt", "Potwierdzenie rejestracji", content);
+            SendMail(mailAddress, "Edycja konta", "System rezerwacji wizyt", "Potwierdzenie edycji konta", content);
         }
 
         public void SendMailChangeConfirmation(string mailAddress, string token)
@@ -71,7 +71,7 @@ namespace MailService
                     contentPac = "Lekarz " + visit.Doctor.User.Name + " odwołał wizytę w terminie " + visit.Date.ToString(CultureInfo.CurrentCulture) + ".";
                     break;
                 case DocOrPat.Patient:
-                    contentDoc = "Pacjent " + visit.Patient.User.Name + "odwołał wizytę w terminie " + visit.Date.ToString(CultureInfo.CurrentCulture) + ".";
+                    contentDoc = "Pacjent " + visit.Patient.User.Name + " odwołał wizytę w terminie " + visit.Date.ToString(CultureInfo.CurrentCulture) + ".";
                     contentPac = "Odwołano wizytę u lekarza " + visit.Doctor.User.Name + " w terminie " + visit.Date.ToString(CultureInfo.CurrentCulture) + ".";
                     break;
                 default:
