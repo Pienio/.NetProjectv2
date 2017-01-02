@@ -181,7 +181,7 @@ namespace DataAccessService
         public bool UpdatePatient(Patient toUpdate)
         {
             db.BeginTransaction();
-            var o = db.Patients.Find(toUpdate.Key);
+            var o = db.Patients.Select(p=>p).Where(p=>p.Key==toUpdate.Key).Include(p=>p.User).Include(p=>p.Visits).First();
             o.User.Name = toUpdate.User.Name;
             o.User.Mail = toUpdate.User.Mail;
             o.User.PESEL = toUpdate.User.PESEL;
