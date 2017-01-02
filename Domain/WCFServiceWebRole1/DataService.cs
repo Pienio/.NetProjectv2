@@ -161,7 +161,7 @@ namespace DataAccessService
             IEnumerable<Visit> a =
                 db.Visits.Select(p => p)
                     .Where(p => p.Patient.Key == id && (tr ? p.Date <= now : p.Date > now))
-                    .Include(p => p.Doctor).Include(p=>p.Patient);
+                    .Include(p => p.Doctor).Include(p=>p.Patient).Include(p => p.Patient.User).Include(p => p.Doctor.User);
             return a;
         }
         public IEnumerable<Visit> GetDoctorVisits(int id, bool tr)
@@ -170,7 +170,7 @@ namespace DataAccessService
             IEnumerable<Visit> a =
               db.Visits.Select(p => p)
                   .Where(p => p.Doctor.Key == id && (tr ? p.Date <= now : p.Date > now))
-                  .Include(p => p.Patient).Include(p=>p.Doctor);
+                  .Include(p => p.Patient).Include(p=>p.Doctor).Include(p=>p.Patient.User).Include(p => p.Doctor.User);
             return a;
         }
         public IEnumerable<ProfileRequest> GetRequests()
