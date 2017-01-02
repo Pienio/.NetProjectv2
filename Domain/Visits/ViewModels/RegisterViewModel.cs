@@ -395,6 +395,8 @@ namespace Visits.ViewModels
             var c = await Task.Run(() => _service.AddRequest(new ProfileRequest(null, item)));
             if (!c)
                 MessageBox.Show("Istnieje juz użytkownik o takim peselu");
+            MessageBox.Show(
+                "Prośba o rejestrację została wysłana do administratora. Gdy Twoje konto zostanie aktywowane, zostaniesz o tym powiadomiony mailowo.", App.Name, MessageBoxButton.OK, MessageBoxImage.Information);
             // await App.Current.Dispatcher.BeginInvoke((Action)(() => { _service.AddDoctor(item); }));
 
         }

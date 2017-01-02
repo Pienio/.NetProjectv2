@@ -41,6 +41,16 @@ namespace Visits.ViewModels
             var e = _service.GetUser(Pesel, pps);
             if (e != null)
             {
+                if (e.Kind == DocOrPat.Doctor)
+                {
+                    var doc = _service.GetDoctorByUserId((int)e.Key);
+                    if (doc != null && !doc.ProfileAccepted)
+                    {
+                        MessageBox.Show(
+                            "Twój profil nie został jeszcze zaakceptowany. Spróbuj ponownie, gdy dostaniesz maila z akceptacją rejestracji.", App.Name, MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                }
                 await _loggedUser.LogIn(e.PESEL, e.Password, _service);
                 OnCloseRequested(true);
             }
