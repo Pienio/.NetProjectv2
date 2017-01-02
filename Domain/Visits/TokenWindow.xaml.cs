@@ -43,7 +43,12 @@ namespace Visits
             }
             token = sb.ToString();
             MailService.MailServices mail = new MailService.MailServices();
-            mail.SendRegistrationConfirmation(mailAddress, token);
+            if (RorE)
+                mail.SendRegistrationConfirmation(mailAddress, token);
+            else
+            {
+                mail.SendEditConfirmation(mailAddress, token);
+            }
         }
 
         private void accept_Click(object sender, RoutedEventArgs e)
