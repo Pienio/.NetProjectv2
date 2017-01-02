@@ -345,56 +345,12 @@ namespace Visits.ViewModels
                 if (_loggedUser.Logged is Patient)
                 {
                     _service.DeletePatient(_loggedUser.Logged as Patient);
-                    //Patient asd = _loggedUser.Logged as Patient;
-                    //IEnumerable<Visit> obw = _service.GetPatientVisits((int)asd.Key,true);
-                    //if (obw.ToList().Count == 0)
-                    //{
-                    //    User adfg = asd.User;
-                    //    db.Patients.Attach(asd);
-                    //    db.Patients.Remove(asd);
-                    //    db.Users.Attach(adfg);
-                    //    db.Users.Remove(adfg);
-                    //}
-                    //else
-                    //{
-                    //    for (int i = 0; i < asd.Visits.Count; i++)
-                    //    {
-                    //        if (asd.Visits[i].Date > DateTime.Now)
-                    //        {
-                    //            db.Visits.Attach(asd.Visits[i]);
-                    //            db.Visits.Remove(asd.Visits[i]);
-
-                    //        }
-                    //    }
-                    //    asd.User.Active = false;
-                    //}
+                  
                 }
                 else
                 {
                     _service.DeleteDoctor(_loggedUser.Logged as Doctor);
-                    //Doctor asd = _loggedUser.Logged as Doctor;
-                    //IEnumerable<Visit> obw = db.Visits.Select(d => d).Where(d => d.Doctor.Key == asd.Key);
-                    //if (obw.ToList().Count == 0)
-                    //{
-                    //    User adfg = asd.User;
-                    //    db.Doctors.Attach(asd);
-                    //    db.Doctors.Remove(asd);
-                    //    db.Users.Attach(adfg);
-                    //    db.Users.Remove(adfg);
-                    //}
-                    //else
-                    //{
-                    //    for (int i = 0; i < asd.Visits.Count; i++)
-                    //    {
-                    //        if (asd.Visits[i].Date > DateTime.Now)
-                    //        {
-                    //            db.Visits.Attach(asd.Visits[i]);
-                    //            db.Visits.Remove(asd.Visits[i]);
-
-                    //        }
-                    //    }
-                    //    asd.User.Active = false;
-                    //}
+                  
                 }
                 _loggedUser.LogOut();
                 // db.Commit();

@@ -251,29 +251,6 @@ namespace UnitTestProject1
 
         }
 
-        //[TestMethod]
-        //public void CheckAddandDeleteSpec()
-        //{
-
-
-        //    var a = TestingExtension.GetService();
-
-        //    string Name = "dddddd";
-
-        //    a.AddSpecialization(new Specialization(Name));
-        //    var list = a.GetSpecializationsList();
-        //    var dd = list.ToList();
-        //    var added = dd.Find(p => p.Name == Name);
-        //    if (added == null)
-        //        Assert.Fail();
-
-        //    bool flag = a.DeleteSpecialization(added);
-        //    Assert.IsTrue(flag);
-
-
-
-
-
-        // }
+        
     }
 }
