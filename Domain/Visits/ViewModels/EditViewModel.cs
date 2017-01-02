@@ -373,7 +373,12 @@ namespace Visits.ViewModels
         });
         public ICommand AdSpec => new Command(p =>
         {
-
+            if (_newDoctor.Specialization.Any(s => s.Name == Spec.Name))
+            {
+                MessageBox.Show("Dana specjalizacja została już wybrana.", App.Name, MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+                return;
+            }
             _newDoctor.Specialization.Add(Spec);
             var d = new List<Specialization>();
             foreach (var VARIABLE in _newDoctor.Specialization)
