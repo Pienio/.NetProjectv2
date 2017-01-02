@@ -62,35 +62,18 @@ namespace Visits.ViewModels
 
             if (!_Who)
             {
-                //IEnumerable<User> asd = db.Users.Select(d => d).Where(d => d.PESEL == _Patient.User.PESEL);
-                //if (asd.Count() != 0)
-                //{
-                //    MessageBox.Show("Istnieje juz użytkownik o takim peselu");
-                //    return;
-                //}
-
-
                 await AddPatient(_Patient);
-                // await 
                 a = _Patient;
             }
             else
             {
-                //IEnumerable<User> asd = db.Users.Select(d => d).Where(d => d.PESEL == us.User.PESEL);
-                //if (asd.Count() != 0)
-                //{
-                //    MessageBox.Show("Istnieje juz użytkownik o takim peselu");
-                //    return;
-                //}
                 await AddDoctor(us);
                 a = us;
             }
 
-            //  db.Commit();
             if (a is Patient)
             {
                 await _loggedUser.LogIn(a.User.PESEL, a.User.Password, _service);
-               // _loggedUser.LogIn(a);
             }
            
 
@@ -101,10 +84,7 @@ namespace Visits.ViewModels
 
         });
 
-        public string Error
-        {
-            get { return String.Empty; }
-        }
+        public string Error => string.Empty;
 
         public string this[string fieldName]
         {
@@ -397,7 +377,6 @@ namespace Visits.ViewModels
                 MessageBox.Show("Istnieje juz użytkownik o takim peselu");
             MessageBox.Show(
                 "Prośba o rejestrację została wysłana do administratora. Gdy Twoje konto zostanie aktywowane, zostaniesz o tym powiadomiony mailowo.", App.Name, MessageBoxButton.OK, MessageBoxImage.Information);
-            // await App.Current.Dispatcher.BeginInvoke((Action)(() => { _service.AddDoctor(item); }));
 
         }
 
@@ -511,14 +490,8 @@ namespace Visits.ViewModels
         }
         public void Load()
         {
-            // var db = _applicationDataFactory.CreateApplicationData();
-
-            // var spec = new List<Specialization>();
-
-            //  spec.AddRange(db.Specializations);
             SpecList = _service.GetSpecializationsList();
             Spec = SpecList.First();
-            //// OnPropertyChanged(nameof(SpecList));
         }
 
     }

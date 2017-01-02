@@ -73,7 +73,6 @@ namespace DataAccessService
 
         public IEnumerable<Doctor> GetDoctorsList()
         {
-            //return null;
             IEnumerable<Doctor> a = db.Doctors.Select(b => b).Where(p=>p.ProfileAccepted).Include(p => p.User).Include(p => p.Specialization).Include(p => p.Visits);
             return a;
         }
@@ -82,19 +81,6 @@ namespace DataAccessService
         {
             IEnumerable<Doctor> w;
             string namez = name?.ToLower();
-            //if (spec == null)
-            //    w = db.Doctors.Select(p => p).Where(p => p.ProfileAccepted).Include(p => p.User).Include(p => p.Visits).Where(p=>p.User.Active);
-            //else
-            //    w = db.Doctors.Select(p => p).Where(p => p.Specialization.Contains(spec) && p.User.Active&& p.ProfileAccepted).Include(p=>p.User).Include(p=>p.Visits).Include(p=>p.Specialization);
-            //if (string.IsNullOrWhiteSpace(namez))
-            //{
-            //    w = w.Select(p => p).Where(p => p.User.Active&& p.ProfileAccepted);
-
-            //}
-            //else
-            //{
-            //    w = w.Select(p => p).Where(p => p.User.Name.ToString().ToLower().Contains(namez) && p.User.Active&& p.ProfileAccepted);
-            //}
 
             if (spec == null)
             {
@@ -219,7 +205,6 @@ namespace DataAccessService
         {
             db.BeginTransaction();
             var o = db.Doctors.Select(p=>p).Where(p=>p.Key==toUpdate.Key).Include(p=>p.User).Include(p=>p.Specialization).Include(p=>p.Visits).First();
-           // toUpdate.Specialization.Doctors.Add(toUpdate);
             o.User.Name = toUpdate.User.Name;
             o.User.Mail = toUpdate.User.Mail;
             o.ProfileAccepted = toUpdate.ProfileAccepted;
@@ -243,7 +228,6 @@ namespace DataAccessService
                 nn.Add(asdf);
             }
             o.Specialization = nn;
-            //o.Specialization = toUpdate.Specialization;
          
             
             try
@@ -276,7 +260,6 @@ namespace DataAccessService
         public bool DeleteDoctor(Doctor toDelete)
         {
             db.BeginTransaction();
-            // Patient asd = _loggedUser.Logged as Patient;
             var b = db.Doctors.Select(p=>p).Where(p=>p.Key==toDelete.Key).Include(p=>p.User).Include(p=>p.Specialization).Include(p=>p.Visits).First();
             IEnumerable<Visit> obw = GetDoctorVisits((int)b.Key, true);
             if (obw == null || obw.ToList().Count == 0)
@@ -373,7 +356,6 @@ namespace DataAccessService
         public bool DeleteRequest(ProfileRequest toDelete)
         {
             db.BeginTransaction();
-            //db.Requests.Attach(toDelete);
             if (toDelete.OldProfile != null)
             {
                 Doctor a = GetDoctorById((int)toDelete.NewProfile.Key);
@@ -403,23 +385,14 @@ namespace DataAccessService
         public bool AddPatient(Patient toAdd)
         {
             db.BeginTransaction();
-            //IEnumerable<User> asd = db.Users.Select(d => d).Where(d => d.PESEL == toAdd.User.PESEL);
-            //if (asd.Count() != 0)
-            //{
-            //    return false;
-            //    // MessageBox.Show("Istnieje juz użytkownik o takim peselu");
-            //    // return;
-            //}
+
             Patient c = new Patient();
             c.User = new User();
             c.User.Name = new PersonName();
             c.User.Kind = DocOrPat.Patient;
              c.User.Name = toAdd.User.Name;
-           // c.User.Name.Name = "asd";
-          //  c.User.Name.Surname = "aas";
             c.User.PESEL = toAdd.User.PESEL;
             c.User.Password = toAdd.User.Password;
-           // c.Visits=new List<Visit>();
             
 
             db.Patients.Add(toAdd);
@@ -473,10 +446,6 @@ namespace DataAccessService
             if (toAdd.OldProfile != null)
                 if (db.Requests.Any(r => r.NewProfile.Key == toAdd.NewProfile.Key || r.NewProfile.User.Key == toAdd.NewProfile.User.Key))
                     return false;   
-          //  db.Commit();
-          //  AddDoctor(toAdd.NewProfile);
-           // db.BeginTransaction();
-            //ProfileRequest a = new ProfileRequest();
             toAdd.NewProfile.FirstFreeSlot=DateTime.Now;
             List<Specialization> nn = new List<Specialization>();
             foreach (var VARIABLE in toAdd.NewProfile.Specialization)

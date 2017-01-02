@@ -54,7 +54,7 @@ namespace Visits.ViewModels
             set { _searchByName = value; OnPropertyChanged(nameof(SearchByNameText)); }
         }
 
-        public bool AnyDoctors => _doctors == null ? false : _doctors.Count() > 0;
+        public bool AnyDoctors => _doctors != null && _doctors.Any();
 
         public MainWindowViewModel(ILogUserService user) : base(user)
         {
@@ -97,7 +97,6 @@ namespace Visits.ViewModels
 
         public ICommand RegisterVisitCmd => new Command(parameter =>
         {
-        //    var db = _applicationDataFactory.CreateApplicationData();
             var wnd = App.Container.Resolve<RegVisit>();
            wnd.SelectedDoctor = SelectedDoctor;
             wnd.Show();
@@ -106,7 +105,6 @@ namespace Visits.ViewModels
             return !(_loggedUser.Logged is Doctor) && SelectedDoctor != null;
         });
 
-        //async 
         public ICommand SearchCmd => new Command(p =>
         {
             Doctors = _service.SearchDoctorsList(SelectedSpecialization, SearchByNameText);
@@ -114,30 +112,10 @@ namespace Visits.ViewModels
             {
                 VARIABLE.FirstFreeSlot = _service.GetFirstFreeSlot((int)VARIABLE.Key);
             }
-            //var db = _applicationDataFactory.CreateApplicationData();
-            //db.Doctors.Load();
-
-            //IList<Doctor> doctors;
-            //string name = SearchByNameText?.ToLower();
-            //if (SelectedSpecialization == null)
-            //    doctors = db.Doctors.Local;
-            //else
-            //    doctors = SelectedSpecialization.Doctors;
-            //if (string.IsNullOrWhiteSpace(name))
-            //{
-            //    Doctors = from d in doctors
-            //              where d.User.Active
-            //              select d;
-            //    return;
-            //}
-            //Doctors = await Task.Run(() => from d in db.Doctors.Local
-            //                               where d.User.Name.ToString().ToLower().Contains(name)&&d.User.Active
-            //                               select d);
         });
 
         public ICommand EditProfileCmd => new Command(parameter =>
         {
-            //var db = _applicationDataFactory.CreateApplicationData();
             var wnd = App.Container.Resolve<Edit>();
             wnd.ShowDialog();
             OnPropertyChanged(nameof(LoggedUserName));
@@ -147,18 +125,12 @@ namespace Visits.ViewModels
 
         public ICommand VisitsViewCmd => new Command(p =>
         {
-            //var db = _applicationDataFactory.CreateApplicationData();
-            //DateTime now = DateTime.Now;
-
-            //db.Visits.Load();
             var wnd = App.Container.Resolve<WizList>();
             wnd.ShowDialog();
         });
 
         public ICommand ClearFilters => new Command(p =>
         {
-            //MailService.MailServices a = new MailService.MailServices();
-            //a.SendSimpleMail();
             SelectedSpecialization = null;
             SearchByNameText = "";
 
@@ -175,14 +147,6 @@ namespace Visits.ViewModels
             {
                 VARIABLE.FirstFreeSlot = _service.GetFirstFreeSlot((int)VARIABLE.Key);
             }
-            //var db = _applicationDataFactory.CreateApplicationData();
-
-            //db.Specializations.Load();
-            //Specializations = db.Specializations.Local;
-
-            //db.Users.Load();
-            //db.Doctors.Load();
-            //Doctors = db.Doctors.Local;
         }
     }
 }

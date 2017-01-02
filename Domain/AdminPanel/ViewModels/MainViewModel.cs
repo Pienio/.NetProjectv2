@@ -88,8 +88,6 @@ namespace AdminPanel.ViewModels
             if (res&&request.OldProfile==null)
             {
                 res =  await _service.DeleteDoctorAsync(request.NewProfile);
-                //if (res)
-                //    Requests.Remove(request);
             }
 
             if (!res)
@@ -108,7 +106,6 @@ namespace AdminPanel.ViewModels
             {
                 ans.SendEditRejectionMail(request.NewProfile.User.Mail, reason);
             }
-            // wyślij maila
         });
         public ICommand RefreshCommand => new Command(async p =>
         {

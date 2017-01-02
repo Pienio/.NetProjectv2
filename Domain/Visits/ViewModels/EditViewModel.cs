@@ -298,8 +298,6 @@ namespace Visits.ViewModels
         });
         public ICommand ChangePassword => new Command(p =>
         {
-
-            //var db = _applicationDataFactory.CreateApplicationData();
             var wnd = App.Container.Resolve<ChangePass>();
             wnd.ShowDialog();
 
@@ -341,22 +339,15 @@ namespace Visits.ViewModels
                 if (MessageBox.Show("Czy na pewno chcesz usunąć konto", App.Name, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
                     return;
 
-                //var db = _applicationDataFactory.CreateTransactionalApplicationData();
                 if (_loggedUser.Logged is Patient)
                 {
                     _service.DeletePatient(_loggedUser.Logged as Patient);
-                  
                 }
                 else
                 {
                     _service.DeleteDoctor(_loggedUser.Logged as Doctor);
-                  
                 }
                 _loggedUser.LogOut();
-                // db.Commit();
-
-
-
 
                 Window k = p as Window;
                 k.Close();
@@ -423,8 +414,6 @@ namespace Visits.ViewModels
         }
         public void Initialize()
         {
-
-            // var db = _applicationDataFactory.CreateApplicationData();
             if (_loggedUser.Logged is Patient)
             {
                 _Patient = _loggedUser.Logged as Patient;
@@ -443,20 +432,10 @@ namespace Visits.ViewModels
                 _newDoctor.ThursdayWorkingTime = new WorkingTime();
                 _newDoctor.FridayWorkingTime = new WorkingTime();
                 _newDoctor.CopyFrom(_oldDoctor);
-                //_newDoctor = _oldDoctor;
                 _User = _newDoctor.User;
                 Who = true;
                 var spec = _service.GetSpecializationsList();
-
-                //foreach (var VARIABLE in spec)
-                //{
-                //    if (VARIABLE.Key == _newDoctor.Specialization.Key)
-                //    {
-                //        Spec = VARIABLE;
-                //        break;
-                //    }
-                //}
-                //Spec = us.Specialization;
+                
                 SpecList = spec;
                 OnPropertyChanged("PS");
                 OnPropertyChanged("PE");

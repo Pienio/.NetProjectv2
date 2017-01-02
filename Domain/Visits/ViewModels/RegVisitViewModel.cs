@@ -41,7 +41,7 @@ namespace Visits.ViewModels
         public ICommand RegisterVisitCmd => new Command(async p =>
         {
             var selectedDate = (DateTime)p;
-            //var db = _applicationDataFactory.CreateApplicationData();
+
             if (LoggedPatient == null)
             {
 
@@ -61,24 +61,15 @@ namespace Visits.ViewModels
                 CurrentDoctor.User.Name, selectedDate), App.ResourceAssembly.GetName().Name,
                 MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
                 return;
-            //dodac sprawdzenie, czy na pewno dany termin jest wolny
 
-         //   var db1 = _applicationDataFactory.CreateTransactionalApplicationData();
-           // bool contains = await Task.Run(() => (from v in db.Visits
-                                               //   where v.Date == selectedDate && v.Doctor.Key == CurrentDoctor.Key
-                                              //    select v).Any());
         bool contains = await Task.Run(() => ((_service.GetDoctorVisits((int)CurrentDoctor.Key,false)).Where(d=>d.Date==selectedDate)).Any());
             if (contains)
                 MessageBox.Show("Dany termin został już zajęty. Nastąpi odświeżenie widoku", App.Name, MessageBoxButton.OK, MessageBoxImage.Error);
             else
                 await Task.Run(() => _service.RegisterVisit(selectedDate,(int)LoggedPatient.Key,(int)CurrentDoctor.Key));
-            //await Task.Run(() => LoggedPatient.Visits.Add(new Visit(LoggedPatient, (from d in db1.Doctors where d.Key == CurrentDoctor.Key select d).First(), selectedDate)));
-
-            // db1.Commit();
-            // CurrentWeek = await _service.GetNewWeek(CurrentDoctor,CurrentWeek.Days[0].Date);Week.Create(CurrentDoctor, CurrentWeek.Days[0].Date, db1);
 
             CurrentDoctor =await _service.GetDoctorByIdAsync((int)CurrentDoctor.Key);
-            CurrentWeek =await Week.Create(CurrentDoctor,CurrentWeek.Days[0].Date);//_service.GetNewWeek(CurrentDoctor, CurrentWeek.Days[0].Date);
+            CurrentWeek =await Week.Create(CurrentDoctor,CurrentWeek.Days[0].Date);
             if (!contains)
             {
                 MessageBox.Show("Wizyta została zarejestrowana", App.ResourceAssembly.GetName().Name, MessageBoxButton.OK, MessageBoxImage.Information);
@@ -93,99 +84,18 @@ namespace Visits.ViewModels
                 throw new InvalidOperationException("Widok rejestracji wizyt jest dostępny tylko dla pacjentów i anonimowych użytkowników.");
         }
 
-        public  async Task Load()//void Load()//
+        public  async Task Load()
         {
-            // var first = CurrentDoctor.FirstFreeSlot;
             var first = _service.GetFirstFreeSlot((int)CurrentDoctor.Key);
             first = first.AddDays(-Week.DayOfWeekNo(first));
-            //CurrentWeek = await Week.Create(CurrentDoctor, first.Date, _applicationDataFactory.CreateApplicationData());
-            //CurrentWeek = _service.GetNewWeek(CurrentDoctor, first.Date);
             var a = _service.GetDoctorById((int)CurrentDoctor.Key);
             CurrentWeek =await Week.Create(a, first);
         }
 
-        //private async Task AddVisit(Visit item, ITransactionalApplicationData context)
-        //{
-        //    await Task.Run(() => context.Visits.Add(item));
-        //}
-
         public void Initialize(Doctor doctor) //async 
         {
             CurrentDoctor = doctor;
-            //await Load();
             Load();
         }
-
-        //public class Week
-        //{
-        //    public Day[] Days { get; }
-        //    public DateTime From { get; }
-        //    public string Title => string.Format("Aktualny tydzień: {0:dd.MM.yyyy} - {1:dd.MM.yyyy}", From, From.AddDays(6));
-
-           
-        //    public Week(DateTime monday, Day[] days)
-        //    {
-        //        Days = days;
-        //        From = monday;
-        //    }
-
-        //    //public async static Task<Week> Create(Doctor doc, DateTime monday, IApplicationData db)
-        //    //{
-        //    //    if (doc == null)
-        //    //        throw new ArgumentNullException(nameof(doc));
-        //    //    int i = 0;
-        //    //    List<Day> days = new List<Day>();
-        //    //    foreach (var time in doc.WeeklyWorkingTime)
-        //    //    {
-        //    //        List<DateTime> slots = new List<DateTime>();
-        //    //        DateTime current = monday.AddDays(i - DayOfWeekNo(monday));
-        //    //        if (time != null)
-        //    //        {
-        //    //            current = new DateTime(current.Year, current.Month, current.Day, time.Start, 0, 0);
-        //    //            var visits = await Task.Run(() => (from v in doc.Visits
-        //    //                                               where v.Date.Year == current.Year && v.Date.Month == current.Month && v.Date.Day == current.Day
-        //    //                                               select v.Date));
-        //    //            for (DateTime s = current; s.Hour < time.End; s = s.AddMinutes(30))
-        //    //                if (!visits.Contains(s) && s >= DateTime.Now.AddHours(1))
-        //    //                    slots.Add(s);
-        //    //        }
-        //    //        if (slots.Count > 0)
-        //    //            days.Add(new Day(current.Date, slots.ToArray()));
-        //    //        i++;
-        //    //    }
-        //    //    return new Week(monday, days.ToArray());
-        //    //}
-
-        //    public static int DayOfWeekNo(DateTime day)
-        //    {
-        //        switch (day.DayOfWeek)
-        //        {
-        //            case DayOfWeek.Monday:
-        //                return 0;
-        //            case DayOfWeek.Tuesday:
-        //                return 1;
-        //            case DayOfWeek.Wednesday:
-        //                return 2;
-        //            case DayOfWeek.Thursday:
-        //                return 3;
-        //            case DayOfWeek.Friday:
-        //                return 4;
-        //        }
-        //        throw new ArgumentException("Dzień nie może być sobotą ani niedzielą.", nameof(day));
-        //    }
-        //}
-
-        //public class Day
-        //{
-        //    public string DayName => new CultureInfo("pl-PL").DateTimeFormat.GetDayName(Date.DayOfWeek);
-        //    public DateTime Date { get; }
-        //    public DateTime[] Slots { get; }
-
-        //    public Day(DateTime date, DateTime[] slots)
-        //    {
-        //        Date = date;
-        //        Slots = slots;
-        //    }
-        //}
     }
 }

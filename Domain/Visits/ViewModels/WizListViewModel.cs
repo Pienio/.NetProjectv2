@@ -57,10 +57,6 @@ namespace Visits.ViewModels
             if (MessageBox.Show("Czy na pewno chcesz odwołać zaznaczoną wizytę?", App.Name, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
                 return;
             bool a= await _service.DeleteVisitAsync(v);
-            //var db = _applicationDataFactory.CreateTransactionalApplicationData();
-            //await Task.Run(() => db.Visits.Remove(v));
-            //db.Commit();
-
             await SetVisits();
             if (a)
             {
@@ -81,14 +77,10 @@ namespace Visits.ViewModels
         }
         private async Task SetVisits()
         {
-            //var db = _applicationDataFactory.CreateApplicationData();
             DateTime now = DateTime.Now;
             IEnumerable<Visit> visits = null;
             if (_loggedUser.Logged is Patient)
             {
-                //visits = await Task.Run(() => from v in db.Visits.Local
-                //                              where v.Patient.Key == _loggedUser.Logged.Key && (SelectedType == VisitsType.Archiwalne ? v.Date <= now : v.Date > now)
-                //                              select v);
                 visits = await Task.Run(() => _service.GetPatientVisits((int)_loggedUser.Logged.Key, (SelectedType == VisitsType.Archiwalne ? true : false)));
                 foreach (var VARIABLE in visits)
                 {
@@ -97,9 +89,6 @@ namespace Visits.ViewModels
             }
             else if (_loggedUser.Logged is Doctor)
             {
-                //visits = await Task.Run(() => from v in db.Visits.Local
-                //                              where v.Doctor.Key == _loggedUser.Logged.Key && (SelectedType == VisitsType.Archiwalne ? v.Date <= now : v.Date > now)
-                //                              select v);
                 visits = await Task.Run(() => _service.GetDoctorVisits((int)_loggedUser.Logged.Key, (SelectedType == VisitsType.Archiwalne ? true : false)));
                 foreach (var VARIABLE in visits)
                 {
