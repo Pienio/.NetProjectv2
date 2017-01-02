@@ -298,8 +298,6 @@ namespace Visits.ViewModels
         });
         public ICommand ChangePassword => new Command(p =>
         {
-
-           
             var wnd = App.Container.Resolve<ChangePass>();
             wnd.ShowDialog();
 
@@ -341,22 +339,15 @@ namespace Visits.ViewModels
                 if (MessageBox.Show("Czy na pewno chcesz usunąć konto", App.Name, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
                     return;
 
-               
                 if (_loggedUser.Logged is Patient)
                 {
                     _service.DeletePatient(_loggedUser.Logged as Patient);
-                  
                 }
                 else
                 {
                     _service.DeleteDoctor(_loggedUser.Logged as Doctor);
-                  
                 }
                 _loggedUser.LogOut();
-               
-
-
-
 
                 Window k = p as Window;
                 k.Close();
@@ -423,8 +414,6 @@ namespace Visits.ViewModels
         }
         public void Initialize()
         {
-
-            
             if (_loggedUser.Logged is Patient)
             {
                 _Patient = _loggedUser.Logged as Patient;
@@ -443,11 +432,9 @@ namespace Visits.ViewModels
                 _newDoctor.ThursdayWorkingTime = new WorkingTime();
                 _newDoctor.FridayWorkingTime = new WorkingTime();
                 _newDoctor.CopyFrom(_oldDoctor);
-                
                 _User = _newDoctor.User;
                 Who = true;
                 var spec = _service.GetSpecializationsList();
-
                 
                 SpecList = spec;
                 OnPropertyChanged("PS");

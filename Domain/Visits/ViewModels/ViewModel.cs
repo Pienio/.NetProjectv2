@@ -20,7 +20,6 @@ namespace Visits.ViewModels
 
         protected ViewModel( ILogUserService userLog)
         {
-          
             _loggedUser = userLog;
         }
 

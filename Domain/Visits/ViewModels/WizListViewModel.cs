@@ -57,8 +57,6 @@ namespace Visits.ViewModels
             if (MessageBox.Show("Czy na pewno chcesz odwołać zaznaczoną wizytę?", App.Name, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
                 return;
             bool a= await _service.DeleteVisitAsync(v);
-           
-
             await SetVisits();
             if (a)
             {
@@ -79,12 +77,11 @@ namespace Visits.ViewModels
         }
         private async Task SetVisits()
         {
-            
             DateTime now = DateTime.Now;
             IEnumerable<Visit> visits = null;
             if (_loggedUser.Logged is Patient)
             {
-               visits = await Task.Run(() => _service.GetPatientVisits((int)_loggedUser.Logged.Key, (SelectedType == VisitsType.Archiwalne ? true : false)));
+                visits = await Task.Run(() => _service.GetPatientVisits((int)_loggedUser.Logged.Key, (SelectedType == VisitsType.Archiwalne ? true : false)));
                 foreach (var VARIABLE in visits)
                 {
                     VARIABLE.Doctor = _service.GetDoctorById((int)VARIABLE.Doctor.Key);
@@ -92,7 +89,7 @@ namespace Visits.ViewModels
             }
             else if (_loggedUser.Logged is Doctor)
             {
-               visits = await Task.Run(() => _service.GetDoctorVisits((int)_loggedUser.Logged.Key, (SelectedType == VisitsType.Archiwalne ? true : false)));
+                visits = await Task.Run(() => _service.GetDoctorVisits((int)_loggedUser.Logged.Key, (SelectedType == VisitsType.Archiwalne ? true : false)));
                 foreach (var VARIABLE in visits)
                 {
                     VARIABLE.Patient = _service.GetPatientById((int)VARIABLE.Patient.Key);

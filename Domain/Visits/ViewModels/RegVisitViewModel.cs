@@ -41,7 +41,7 @@ namespace Visits.ViewModels
         public ICommand RegisterVisitCmd => new Command(async p =>
         {
             var selectedDate = (DateTime)p;
-           
+
             if (LoggedPatient == null)
             {
 
@@ -61,13 +61,13 @@ namespace Visits.ViewModels
                 CurrentDoctor.User.Name, selectedDate), App.ResourceAssembly.GetName().Name,
                 MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
                 return;
-         
+
         bool contains = await Task.Run(() => ((_service.GetDoctorVisits((int)CurrentDoctor.Key,false)).Where(d=>d.Date==selectedDate)).Any());
             if (contains)
                 MessageBox.Show("Dany termin został już zajęty. Nastąpi odświeżenie widoku", App.Name, MessageBoxButton.OK, MessageBoxImage.Error);
             else
                 await Task.Run(() => _service.RegisterVisit(selectedDate,(int)LoggedPatient.Key,(int)CurrentDoctor.Key));
-            
+
             CurrentDoctor =await _service.GetDoctorByIdAsync((int)CurrentDoctor.Key);
             CurrentWeek =await Week.Create(CurrentDoctor,CurrentWeek.Days[0].Date);
             if (!contains)
@@ -86,22 +86,16 @@ namespace Visits.ViewModels
 
         public  async Task Load()
         {
-            ;
             var first = _service.GetFirstFreeSlot((int)CurrentDoctor.Key);
             first = first.AddDays(-Week.DayOfWeekNo(first));
-           var a = _service.GetDoctorById((int)CurrentDoctor.Key);
+            var a = _service.GetDoctorById((int)CurrentDoctor.Key);
             CurrentWeek =await Week.Create(a, first);
         }
 
-       
-
-        public void Initialize(Doctor doctor) 
+        public void Initialize(Doctor doctor) //async 
         {
             CurrentDoctor = doctor;
-           
             Load();
         }
-
-       
     }
 }

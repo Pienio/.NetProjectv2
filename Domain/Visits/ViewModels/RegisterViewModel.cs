@@ -62,25 +62,18 @@ namespace Visits.ViewModels
 
             if (!_Who)
             {
-               
-
-
                 await AddPatient(_Patient);
-                
                 a = _Patient;
             }
             else
             {
-               
                 await AddDoctor(us);
                 a = us;
             }
 
-            
             if (a is Patient)
             {
                 await _loggedUser.LogIn(a.User.PESEL, a.User.Password, _service);
-               
             }
            
 
@@ -91,10 +84,7 @@ namespace Visits.ViewModels
 
         });
 
-        public string Error
-        {
-            get { return String.Empty; }
-        }
+        public string Error => string.Empty;
 
         public string this[string fieldName]
         {
@@ -387,7 +377,6 @@ namespace Visits.ViewModels
                 MessageBox.Show("Istnieje juz użytkownik o takim peselu");
             MessageBox.Show(
                 "Prośba o rejestrację została wysłana do administratora. Gdy Twoje konto zostanie aktywowane, zostaniesz o tym powiadomiony mailowo.", App.Name, MessageBoxButton.OK, MessageBoxImage.Information);
-           
 
         }
 
@@ -501,10 +490,8 @@ namespace Visits.ViewModels
         }
         public void Load()
         {
-           
             SpecList = _service.GetSpecializationsList();
             Spec = SpecList.First();
-            
         }
 
     }

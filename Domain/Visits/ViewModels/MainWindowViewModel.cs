@@ -54,7 +54,7 @@ namespace Visits.ViewModels
             set { _searchByName = value; OnPropertyChanged(nameof(SearchByNameText)); }
         }
 
-        public bool AnyDoctors => _doctors == null ? false : _doctors.Count() > 0;
+        public bool AnyDoctors => _doctors != null && _doctors.Any();
 
         public MainWindowViewModel(ILogUserService user) : base(user)
         {
@@ -97,7 +97,6 @@ namespace Visits.ViewModels
 
         public ICommand RegisterVisitCmd => new Command(parameter =>
         {
-       
             var wnd = App.Container.Resolve<RegVisit>();
            wnd.SelectedDoctor = SelectedDoctor;
             wnd.Show();
@@ -106,7 +105,6 @@ namespace Visits.ViewModels
             return !(_loggedUser.Logged is Doctor) && SelectedDoctor != null;
         });
 
-        //async 
         public ICommand SearchCmd => new Command(p =>
         {
             Doctors = _service.SearchDoctorsList(SelectedSpecialization, SearchByNameText);
@@ -114,12 +112,10 @@ namespace Visits.ViewModels
             {
                 VARIABLE.FirstFreeSlot = _service.GetFirstFreeSlot((int)VARIABLE.Key);
             }
-           
         });
 
         public ICommand EditProfileCmd => new Command(parameter =>
         {
-           
             var wnd = App.Container.Resolve<Edit>();
             wnd.ShowDialog();
             OnPropertyChanged(nameof(LoggedUserName));
@@ -129,7 +125,6 @@ namespace Visits.ViewModels
 
         public ICommand VisitsViewCmd => new Command(p =>
         {
-            
             var wnd = App.Container.Resolve<WizList>();
             wnd.ShowDialog();
         });
@@ -152,7 +147,6 @@ namespace Visits.ViewModels
             {
                 VARIABLE.FirstFreeSlot = _service.GetFirstFreeSlot((int)VARIABLE.Key);
             }
-           
         }
     }
 }
