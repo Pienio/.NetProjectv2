@@ -36,7 +36,7 @@ namespace Visits.ViewModels
 
         public ICommand LoginUser => new Command(async p =>
         {
-            //var db = _applicationDataFactory.CreateApplicationData();
+           
             string pps = PasswordHasher.CreateHash(((PasswordBox)p).Password);
             var e = _service.GetUser(Pesel, pps);
             if (e != null)

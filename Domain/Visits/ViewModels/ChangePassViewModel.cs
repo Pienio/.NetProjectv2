@@ -106,13 +106,13 @@ namespace Visits.ViewModels
         public ICommand UpdatePassword => new Command(p =>
         {
 
-            //var db = _applicationDataFactory.CreateTransactionalApplicationData();
+          
 
             if (PasswordHasher.CreateHash(Org) == _loggedUser.Logged.User.Password)
             {
                 _loggedUser.Logged.User.Password = PasswordHasher.CreateHash(Pasp);
                 _service.UpdateUserPassword((int)_loggedUser.Logged.User.Key, _loggedUser.Logged.User.Password);
-               // db.Commit();
+              
                 Window k = p as Window;
                 k.Close();
             }
@@ -138,8 +138,7 @@ namespace Visits.ViewModels
         });
         public void Initialize()
         {
-            //OnPropertyChanged("Org");
-            //OnPropertyChanged("Pas");
+           
         }
       
     }

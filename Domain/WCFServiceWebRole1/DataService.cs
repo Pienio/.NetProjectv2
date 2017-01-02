@@ -82,19 +82,7 @@ namespace DataAccessService
         {
             IEnumerable<Doctor> w;
             string namez = name?.ToLower();
-            //if (spec == null)
-            //    w = db.Doctors.Select(p => p).Where(p => p.ProfileAccepted).Include(p => p.User).Include(p => p.Visits).Where(p=>p.User.Active);
-            //else
-            //    w = db.Doctors.Select(p => p).Where(p => p.Specialization.Contains(spec) && p.User.Active&& p.ProfileAccepted).Include(p=>p.User).Include(p=>p.Visits).Include(p=>p.Specialization);
-            //if (string.IsNullOrWhiteSpace(namez))
-            //{
-            //    w = w.Select(p => p).Where(p => p.User.Active&& p.ProfileAccepted);
-
-            //}
-            //else
-            //{
-            //    w = w.Select(p => p).Where(p => p.User.Name.ToString().ToLower().Contains(namez) && p.User.Active&& p.ProfileAccepted);
-            //}
+           
 
             if (spec == null)
             {
@@ -403,23 +391,16 @@ namespace DataAccessService
         public bool AddPatient(Patient toAdd)
         {
             db.BeginTransaction();
-            //IEnumerable<User> asd = db.Users.Select(d => d).Where(d => d.PESEL == toAdd.User.PESEL);
-            //if (asd.Count() != 0)
-            //{
-            //    return false;
-            //    // MessageBox.Show("Istnieje juz użytkownik o takim peselu");
-            //    // return;
-            //}
+            
             Patient c = new Patient();
             c.User = new User();
             c.User.Name = new PersonName();
             c.User.Kind = DocOrPat.Patient;
              c.User.Name = toAdd.User.Name;
-           // c.User.Name.Name = "asd";
-          //  c.User.Name.Surname = "aas";
+         
             c.User.PESEL = toAdd.User.PESEL;
             c.User.Password = toAdd.User.Password;
-           // c.Visits=new List<Visit>();
+          
             
 
             db.Patients.Add(toAdd);
@@ -473,10 +454,7 @@ namespace DataAccessService
             if (toAdd.OldProfile != null)
                 if (db.Requests.Any(r => r.NewProfile.Key == toAdd.NewProfile.Key || r.NewProfile.User.Key == toAdd.NewProfile.User.Key))
                     return false;   
-          //  db.Commit();
-          //  AddDoctor(toAdd.NewProfile);
-           // db.BeginTransaction();
-            //ProfileRequest a = new ProfileRequest();
+       
             toAdd.NewProfile.FirstFreeSlot=DateTime.Now;
             List<Specialization> nn = new List<Specialization>();
             foreach (var VARIABLE in toAdd.NewProfile.Specialization)
