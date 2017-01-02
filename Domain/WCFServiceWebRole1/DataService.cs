@@ -343,10 +343,12 @@ namespace DataAccessService
         public bool DeleteSpecialization(Specialization toDelete)
         {
             db.BeginTransaction();
-            if (db.Doctors.Any(d => d.Specialization.Contains(toDelete)))
-                return false;
-            db.Specializations.Attach(toDelete);
-            db.Specializations.Remove(toDelete);
+            var c = db.Specializations.Select(p => p).Where(p => p.Name == toDelete.Name).First();
+            
+            //if (db.Doctors.Any(d => d.Specialization.Contains(c)))
+            //    return false;
+             //db.Specializations.Attach(toDelete);
+            db.Specializations.Remove(c);
             try
             {
                 db.Commit();
