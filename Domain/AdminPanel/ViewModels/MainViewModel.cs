@@ -7,7 +7,6 @@ using System.Windows;
 using System.Windows.Input;
 using DatabaseAccess.Model;
 using MailService;
-using Visits.Utils;
 
 namespace AdminPanel.ViewModels
 {
@@ -156,12 +155,16 @@ namespace AdminPanel.ViewModels
         });
         public ICommand DeleteSpecializationCommand => new Command(async p =>
         {
-            bool res = await _service.DeleteSpecializationAsync(p as Specialization);
-            if (!res)
+            var spec = p as Specialization;
+            if (spec == null)
+                return;
+            var doctors = await _service.GetDoctorsListAsync();
+            if (doctors != null && doctors.Any(d => d.Specialization.Any(s => s.Key == spec.Key)))
             {
                 MessageBox.Show("Nie udało się usunąć specjalizacji, ponieważ istnieją lekarze z daną specjalizacją.", App.Name, MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
+            await _service.DeleteSpecializationAsync(spec);
             var specs = await _service.GetSpecializationsListAsync();
             Specializations = specs.ToList();
         });

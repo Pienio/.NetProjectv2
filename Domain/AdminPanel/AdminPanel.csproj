@@ -65,6 +65,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Command.cs" />
     <Compile Include="Converters\RequestTypeConverter.cs" />
     <Compile Include="TextWindow.xaml.cs">
       <DependentUpon>TextWindow.xaml</DependentUpon>
@@ -146,10 +147,6 @@
     <ProjectReference Include="..\MailService\MailService.csproj">
       <Project>{239BD250-2253-4238-81AE-2B253A6AFCFC}</Project>
       <Name>MailService</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Visits\Visits.csproj">
-      <Project>{57574697-10c2-45e8-8ebf-012a0c780f83}</Project>
-      <Name>Visits</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

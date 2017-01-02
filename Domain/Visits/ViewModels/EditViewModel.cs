@@ -336,7 +336,7 @@ namespace Visits.ViewModels
         {
             if (Pas == _User.Password)
             {
-                if (MessageBox.Show("Czy na pewno chcesz usunąć konto", App.Name, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
+                if (MessageBox.Show("Czy na pewno chcesz usunąć konto? Jeżeli masz umówione wizyty, zostaną one automatycznie odwołane.", App.Name, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
                     return;
 
                 if (_loggedUser.Logged is Patient)
@@ -354,7 +354,7 @@ namespace Visits.ViewModels
             }
             else
             {
-                MessageBox.Show("Hasło nieprawidłowe");
+                MessageBox.Show("Hasło nieprawidłowe", App.Name, MessageBoxButton.OK, MessageBoxImage.Error);
                 Pas = "";
             }
 
