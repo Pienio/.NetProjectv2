@@ -202,7 +202,7 @@ namespace DataAccessService
         public bool UpdateUserPassword(int id, string pass)
         {
             db.BeginTransaction();
-            var c = db.Users.Find(id);
+            var c = db.Users.Select(p=>p).Where(p=>p.Key==id).First();
             c.Password = pass;
             try
             {

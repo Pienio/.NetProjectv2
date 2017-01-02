@@ -70,7 +70,7 @@ namespace UnitTestProject1
 
             
 
-            if (d <= 9)
+            if (d <= 7)
             {
                 doc = a.GetUser(pesels[d], password);
                 if (doc == null)
